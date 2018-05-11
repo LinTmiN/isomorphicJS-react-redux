@@ -1,0 +1,39 @@
+{
+  "name": "serverbyexpress",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "babel-core": "6.14.0",
+    "babel-polyfill": "^6.26.0",
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "jsonwebtoken": "^8.2.1",
+    "sql.js": "0.3.2"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "babel-node server.js --presets es2015,stage-2",
+    "client": "node start-client.js",
+    "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
+    "cookie-parser": "^1.4.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "14.1.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "4.0.0",
+    "eslint-plugin-react": "6.9.0",
+    "mongoose": "^5.1.0",
+    "morgan": "^1.9.0",
+    "uuid": "^3.2.1"
+  }
+}
