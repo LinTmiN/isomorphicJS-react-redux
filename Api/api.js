@@ -25,6 +25,19 @@ apiRoutes.post('/login',function(req,res){
 	 	}
 	})
 });
+apiRoutes.get('/setup',(req,res)=>{
+   const sampleUser=new User({
+   	   username:'laaa',
+   	   email:'123456@126.com',
+   	   password:'123456',
+   	   avatar:'wwwww'
+   })
+   sampleUser.save((err)=>{
+   	 if(err) throw err;
+   	 console.log('setup success')
+   	 res.json({success:true,message:'init'})
+   })
+});
 apiRoutes.post('/signup',function(req,res){
     User.finOne({email:req.body.email},(err,user)=>{
           if(err) throw err;
@@ -35,7 +48,8 @@ apiRoutes.post('/signup',function(req,res){
           	  	  	id:uuid(),
           	  	    username:req.body.username,
           	  	    email:req.body.email,
-          	  	    password:req.body.password
+          	  	    password:req.body.password,
+          	  	    avatar:req.body.avatar
           	  });
           	  newUser.save((err)=>{
           	  	if(err) throw err;
