@@ -6,6 +6,7 @@ import uuid from 'uuid/v1'
 const app = new Express();
 const apiRoutes = Express.Router();
 app.set('superSecrect',config.secrect);
+console.log(app.get('superSecrect'))
 apiRoutes.post('/login',function(req,res){
 	User.findOne({
 		email:req.body.email
@@ -17,7 +18,7 @@ apiRoutes.post('/login',function(req,res){
 	 		if(user.password!=req.body.password){
 	 			res.json({success: false,message:'Authentication failed. Wrong password'})
 	 		}else{
-	 			const token=jwt.sign({email:user.email,username:user.username},app.get('superSecrect'),{
+	 			const token=jwt.sign({email:user.email,username:user.username},'abc',{
 	 				expiresIn:60*60*24
 	 			})
 	 			res.json({success:true,message:'login success',token:token,user:{username:user.username,emaiL:user.email,avatar:user.avatar}})
@@ -39,13 +40,14 @@ apiRoutes.get('/setup',(req,res)=>{
    })
 });
 apiRoutes.post('/register',function(req,res){
-    User.finOne({email:req.body.email},(err,user)=>{
+    User.findOne({
+    	email:req.body.email
+    },(err,user)=>{
           if(err) throw err;
           if(user){
           	res.json({sucess:false,message:'email was used'})
           }else if(!user){
           	  const newUser=new User({
-          	  	  	id:uuid(),
           	  	    username:req.body.username,
           	  	    email:req.body.email,
           	  	    password:req.body.password,
@@ -65,7 +67,7 @@ apiRoutes.post('/register',function(req,res){
 apiRoutes.use((req,res,next)=>{
 	var token = req.body.token || req.query.token ||req.headers['x-access-token'];
 	if(token){
-		jwt.verify(token,app.get('superSecrect'),(err,decoded)=>{
+		jwt.verify(token,'abc',(err,decoded)=>{
 			if(err){
 				return res.json({success:false,message:'Failed to authenticate token'})
 			}else{

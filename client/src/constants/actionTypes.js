@@ -1,12 +1,13 @@
 
 //User
 export const REQUEST_LOGIN ='REQUEST_LOGIN';
-export const RECEIVE_USER = 'RECEIVE_USER',
+export const RECEIVE_USER = 'RECEIVE_USER';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const CHECK_AUTH ='CHECK_AUTH';
 export const SET_AUTH ='SET_AUTH';
 export const LOGIN ='LOGIN';
-export cosnt LOGOUT ='LOGOUT'
+export const LOGOUT ='LOGOUT';
+export const SWITCH_TYPE='SWITCH_TYPE';
 //REGISTER
 export const REGISTER_START ='REGISTER_START';
 export const REGISTER_SUCCESS ='REGISTER_SUCCESS';

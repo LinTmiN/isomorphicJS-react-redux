@@ -13,12 +13,12 @@
 	background-repeat:no-repeat;
 	background-size: 217px 365px;
 	background-position: 99px 80px;
-	background-image: url('https://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg');
+	background-image: url('../../media/home1.jpg');
 }
 @keyframes mymove{
-	0% {background-image: url('https://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg')}
-	25% {background-image: url('https://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg')}
-	50% {background-image: url('https://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg')}
-	75% {background-image: url('https://www.instagram.com/static/images/homepage/screenshot4.jpg/001bc33056c1.jpg')}
-	100% {background-image: url('https://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg')}
+	0% {background-image: url('../../media/home1.jpg')}
+	25% {background-image: url('../../media/home2.jpg')}
+	50% {background-image: url('../../media/home3.jpg')}
+	75% {background-image: url('../../media/home4.jpg')}
+	100% {background-image: url('../../media/home1.jpg')}
 }

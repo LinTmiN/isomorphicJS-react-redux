@@ -1,4 +1,4 @@
-import { createStore, applyMiddleWare } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
 import Immutable from 'immutable';
@@ -8,5 +8,5 @@ const initialState=Immutable.Map();
 export default createStore(
 	rootReducer,
 	initialState,
-	applyMiddleWare(promise,reduxThunk)
+	applyMiddleware(promise,reduxThunk)
 )

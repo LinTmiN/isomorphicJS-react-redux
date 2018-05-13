@@ -6,6 +6,7 @@ export const UserState=Immutable.fromJS({
 	isAuthorized:false,
 	isLoging:false,
 	isRegister:false,
+	switchType:'login'
 });
 export const SearchState = Immutable.fromJS({
 	result:[],

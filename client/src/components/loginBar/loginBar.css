@@ -1,7 +1,7 @@
 
 
 .loginBackground{
-	background: linear-gradient(to right,#C53E72, #FA0559,#F80EA5,#F43B3B,#C53E72)!important;
+	background: linear-gradient(to right,#F6076C, #F6105F,#F83F33,#F68113,#F6076C)!important;
 	background-size:1400% 300%!important;
 	animation:move 20s ease infinite;  
 	-webkit-animation:move 20s ease infinite;

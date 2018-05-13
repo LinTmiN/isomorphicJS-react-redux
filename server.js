@@ -5,9 +5,9 @@ import mongoose from 'mongoose';
 import config from './config';
 import apiRoutes from './Api/api.js';
 import morgan from 'morgan';
-
+console.log(process.env.NODE_ENV)
 const app = new Express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 mongoose.connect(config.database);
 app.set('env','production');
 app.use(cookieParser());

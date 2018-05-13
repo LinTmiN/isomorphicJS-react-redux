@@ -5,13 +5,12 @@ import {
 	loginError,
 	registerStart,
 	registerSuccess,
-	chekAuth,
 	setAuth,
 	registerFailed,
 } from '../actions';
 
-function getCookie(ketName){
-	var name=KeyName+'=';
+function getCookie(keyName){
+	var name=keyName+'=';
 	const cookies = document.cookie.split(';');
 	for (let i=0;i<cookies.length;i++){
 		let cookie =cookies[i].trim();
@@ -24,13 +23,13 @@ function getCookie(ketName){
 export default {
 	login:(dispatch,email,password)=>{
 		dispatch(requestLogin())
-		axios.post('/api/login',{
+		console.log('login '+email+password)
+		axios.post('api/login',{
 			email:email,
 			password:password
 		}).then((res)=>{
 			if(res.data.success === false){
 				dispatch(loginError())
-				alert(res.data.message?response.data.message:'发生错误，再次请求')
 				window.location.reload();
 			}else{
 				if(!document.cookie.token){
@@ -52,8 +51,8 @@ export default {
 		document.cookie ='token=;'+'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 		dispatch(setAuth({value:false}))
 	},
-	checkauth:(dispatch,token)=>{
-		axios.post('/api/authenicate',{
+	checkAuth:(dispatch,token)=>{
+		axios.post('api/authenicate',{
 			token:token
 		})
 		.then((res)=>{
@@ -68,8 +67,9 @@ export default {
 		})
 	},
 	register:(dispatch,user)=>{
+		console.log('reg '+user)
 		dispatch(registerStart())
-		axios.post('/api/register',user).then((res)=>{
+		axios.post('api/register',user).then((res)=>{
 			if(res.data.success===false){
 				dispatch(registerFailed())
 			}else{

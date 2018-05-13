@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 import WebAPI from '../utils/WebAPI'
 import {
 	REQUEST_LOGIN,
-	RECEIVE_USER.
+	RECEIVE_USER,
 	LOGIN_ERROR,
 	CHECK_AUTH,
 	REGISTER_START,
@@ -12,16 +12,18 @@ import {
 	REGISTER,
 	LOGIN,
 	LOGOUT,
+	SWITCH_TYPE,
 } from '../constants/actionTypes';
-export const requestLogin = createAction('AUTH_START');
+export const requestLogin = createAction('REQUEST_LOGIN');
 export const receiveUser = createAction('RECEIVE_USER');
 export const loginError = createAction('LOGIN_ERROR');
-export const chekAuth = createAction('CHECK_AUTH');
+export const checkAuth = createAction('CHECK_AUTH',WebAPI.checkAuth);
 export const registerStart = createAction('REGISTER_START');
 export const registerSuccess = createAction ('REGISTER_SUCCESS');
 export const setAuth= createAction('SET_AUTH');
-export const registerFiled = createAction('REGISTER_FAILED');
+export const registerFailed = createAction('REGISTER_FAILED');
 export const register = createAction('REGISTER',WebAPI.register);
 export const login =createAction('LOGIN',WebAPI.login);
-export const logout =createAction('LOGOUT',WebAPI.logout)
+export const logout =createAction('LOGOUT',WebAPI.logout);
+export const switchType = createAction('SWITCH_TYPE')
 
