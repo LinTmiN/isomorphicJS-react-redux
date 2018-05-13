@@ -1,0 +1,29 @@
+
+//User
+export const REQUEST_LOGIN ='REQUEST_LOGIN';
+export const RECEIVE_USER = 'RECEIVE_USER',
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const CHECK_AUTH ='CHECK_AUTH';
+export const SET_AUTH ='SET_AUTH';
+export const LOGIN ='LOGIN';
+export cosnt LOGOUT ='LOGOUT'
+//REGISTER
+export const REGISTER_START ='REGISTER_START';
+export const REGISTER_SUCCESS ='REGISTER_SUCCESS';
+export const REGISTER_FAILED ='REGISTER_FAILED'
+export const REGISTER ='REGISTER'
+
+//SEARCH
+export const REQUEST_DATA ='REQUEST_DATA';
+export const RECEIVE_DATA ='RECEIVE_DATA';
+export const VALUE_CHANGE ='VALUE_CHANGE'
+export const ADD_HISTORY ='ADD_HISTORY';
+export const CLEAN_RESULT ='CLEAN_RESULT';
+
+//COLLECT
+export const REQUEST_COLLECT ='REQUEST_COLLECT';
+export const RECEIVE_COLLECT ='RECEIVE_COLLECT'
+export const ADD_COLLECT ='ADD_COLLECT';
+export const DELETE_COLLECT ='DELETE_COLLECT'
+//
+export const SET_INPUT = 'SET_INPUT'

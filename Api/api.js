@@ -20,7 +20,7 @@ apiRoutes.post('/login',function(req,res){
 	 			const token=jwt.sign({email:user.email,username:user.username},app.get('superSecrect'),{
 	 				expiresIn:60*60*24
 	 			})
-	 			res.json({success:true,message:'login success',token:token,user:user})
+	 			res.json({success:true,message:'login success',token:token,user:{username:user.username,emaiL:user.email,avatar:user.avatar}})
 	 		}
 	 	}
 	})
@@ -38,7 +38,7 @@ apiRoutes.get('/setup',(req,res)=>{
    	 res.json({success:true,message:'init'})
    })
 });
-apiRoutes.post('/signup',function(req,res){
+apiRoutes.post('/register',function(req,res){
     User.finOne({email:req.body.email},(err,user)=>{
           if(err) throw err;
           if(user){
@@ -53,7 +53,10 @@ apiRoutes.post('/signup',function(req,res){
           	  });
           	  newUser.save((err)=>{
           	  	if(err) throw err;
-          	  	res.json({sucess:true,message:'sign up success '})
+          	  	res.json({sucess:true,message:'register success ',user:{
+          	  		 email:req.body.email,
+          	  	    password:req.body.password
+          	  	}})
 
           	  })
           }
