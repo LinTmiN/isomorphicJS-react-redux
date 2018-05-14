@@ -20,6 +20,7 @@ export const RECEIVE_DATA ='RECEIVE_DATA';
 export const VALUE_CHANGE ='VALUE_CHANGE'
 export const ADD_HISTORY ='ADD_HISTORY';
 export const CLEAN_RESULT ='CLEAN_RESULT';
+export const GET_KEY='GET_KEY'
 
 //COLLECT
 export const REQUEST_COLLECT ='REQUEST_COLLECT';

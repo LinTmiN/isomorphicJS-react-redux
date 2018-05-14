@@ -10,12 +10,12 @@ export const UserState=Immutable.fromJS({
 });
 export const SearchState = Immutable.fromJS({
 	result:[],
-	type:'',//video||image
 	history:[],
-	value:'',
-	resultpage:'',
+	page:'',
 	resultcount:'',
     issearching:false,
+    key:[],
+    resultsShow:false
 })
 export const InputState = Immutable.fromJS({
 	email:'',
@@ -24,4 +24,5 @@ export const InputState = Immutable.fromJS({
 	username:'',
 	searchtype:'',
 	searchvalue:'',
+
 })

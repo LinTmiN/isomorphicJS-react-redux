@@ -108,4 +108,6 @@ apiRoutes.delete('/collect/:username',(req,res)=>{
 		res.json({success:true})
 	})
 })
+
+
 export default apiRoutes;

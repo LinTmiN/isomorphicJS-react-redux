@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form,Segment,Button,Message,Grid,Container,Header} from 'semantic-ui-react';
-import './loginBox.css'
+import './loginBox.css';
+import Immutable from 'immutable';
 const LoginBox = ({
   email,
   password,
@@ -44,7 +45,7 @@ const loginForm=(
     </Segment>
   </Form>
   <Message>
-    New to us? <Button onClick={onSwitchType('register')}>Sign Up</Button>
+    New to us? <a href='#' onClick={onSwitchType('register')}>Sign Up</a >
   </Message>
 </Grid.Column>
 
@@ -95,7 +96,7 @@ const registerForm =(
       </Segment>
     </Form>
       <Message>
-        Has account? <Button onClick={onSwitchType('login')}>Login In</Button>
+        Has account? <a href='#' onClick={onSwitchType('login')}>Login In</a>
       </Message>
   </Grid.Column>
   )

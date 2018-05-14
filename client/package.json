@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/api":{"target":"http://localhost:5000"}
+    "/api":{
+      "target":"http://localhost:5000",
+      "bypass":"function(req,res,proxyOptions){if(req.headers.accept.indexOf('html')!==-1){console.log('ss')return '/index.html'}}"
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
