@@ -3,10 +3,11 @@ import { SearchState } from '../constants/models';
 
 const searchReducer =handleActions({
 	REQUEST_DATA:(state,{payload})=>{
-		return state.merge({issearching:payload}).merge({resultsShow:true})
+		return state.merge({issearching:payload})
 	},
 	RECEIVE_DATA:(state,{payload})=>{
-		return state.update('result',result=>result.concat(payload)).merge({issearching:false}).merge({resultsShow:false})
+		console.log('rec'+payload)
+		return state.update('result',result=>result.concat(payload)).merge({issearching:false})
 	},
 	ADD_HISTORY:(state,{payload})=>{
        return state.update('history',history=>history.push(payload))
@@ -20,6 +21,9 @@ const searchReducer =handleActions({
 	},
 	SET_PAGE:(state,{payload})=>(
 		state.merge({page:payload})
+	),
+	TOGGLE_RESULTS:(state,{payload})=>(
+		state.merge({resultsShow:payload})
 	)
 
 },SearchState)

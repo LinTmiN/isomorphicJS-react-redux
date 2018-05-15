@@ -47,6 +47,7 @@ export default {
 					document.cookie = 'token='+res.data.token+';'+expires;
 					dispatch(receiveUser(res.data.user))
 					dispatch(setAuth({value:true}))
+					this.getResult(dispatch,'image','yellow')
 				}
 			}
 			
@@ -106,7 +107,7 @@ export default {
 		if(typeof(page)==='undefined'){
 			dispatch(cleanResult())
 		}
-		var value=value.trim().replace(/\s+/ig,'+')
+		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
 		if(page){page='&pageToken='+page}else{page=''}
 		if(type=='video'){
 			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&'+page+'q='+value+'&regionCode=US&relevanceLanguage=en&type=video&fields=items(id%2FvideoId%2Csnippet(description%2Ctitle))%2CnextPageToken&key=AIzaSyBH0BE8DjAhsgEFygiZLLBDWxzAiAiZpX4')
@@ -118,7 +119,7 @@ export default {
 		}
 		else{
 			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=photo&page='+page).then((data)=>{
-				dispatch(receiveData(data.hits))
+				dispatch(receiveData(data.data.hits))
 				dispatch(setPage(page+1))
 				
 			})

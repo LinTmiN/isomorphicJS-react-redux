@@ -5,7 +5,8 @@ import {
 	inputSearch,
 	confirmSearch,
 	setInput,
-	requestData
+	requestData,
+	toggleResults
 } from '../../actions'
 
 export default connect(
@@ -24,22 +25,28 @@ export default connect(
 		},
 		onSearchChange:(event,{value})=>{
 			
-		    
+		    dispatch(toggleResults(true))
 			dispatch(setInput({key:'searchvalue',value:value}))
-			if(value===''){return}
+			if(value===''){dispatch(toggleResults(false))
+				return}
 			dispatch(inputSearch(dispatch,value))
 		},
 		onConfirmSearch:(type)=>(e,{result})=>{
+
 			dispatch(setInput({key:'searchvalue',value:result.title}))
 			dispatch(confirmSearch(dispatch,type,result.title))
+			dispatch(toggleResults(false))
 		},
 		onBlur:()=>{
 			dispatch(requestData(false))
+			setTimeout(()=>{dispatch(toggleResults(false))},200)
+			
 		},
 		onPressEnter:(type,value)=>(e)=>{
 			console.log(e.keyCode)
 			 if(e.keyCode===13){
 			 	dispatch(confirmSearch(dispatch,type,value))
+			 	dispatch(toggleResults(false))
 			 }
 		}
 		

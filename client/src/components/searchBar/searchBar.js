@@ -1,6 +1,8 @@
 import React from 'react';
 import {Search,Dropdown,Label} from 'semantic-ui-react';
 import axios from 'axios'
+
+
 const SearchBar =({
     issearching,
     searchtype,
@@ -17,7 +19,7 @@ const SearchBar =({
   
   var result
     typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));
-    
+   
 	return ( <div style={{width:'100%'
           }} >
 
@@ -46,7 +48,7 @@ const SearchBar =({
               onResultSelect={onConfirmSearch}
               open={resultsShow}
               results={result}
-              resultRenderer={({title})=><Label content={title}/>}
+              // resultRenderer={({title})=><Label content={title}/>}
               onClick={onBlur}
               placeholder='search'
                 style={{ margin: "0 auto", marginTop: "5px" }}

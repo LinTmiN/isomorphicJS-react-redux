@@ -1,0 +1,25 @@
+.imgExplore{
+  display: flex;
+  flex-wrap: wrap;
+justify-content: space-between;
+
+
+}
+
+.iep1{
+   width:987px;
+   margin:0 auto;
+}
+.iep1>h1{
+  text-align:left;
+  font-size:14px;
+  font-weight: 600;
+  color:#999;
+    
+}
+@media screen and (max-width: 876px){
+  .iep1{
+     padding-top: 100px;
+     width:100%;
+  }
+}

@@ -4,16 +4,16 @@ import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
 const MainBar =()=>(
 	  <div>
-	    <Menu attached={true} borderless >
+	    <Menu fixed={'top'} borderless >
 	   <Container>
         <Menu.Item >
          <Icon size='big'  name='openid' />
           <span  className='_A1'>REXtube</span>
         </Menu.Item>
-
+        <Menu.Item className='search2' >
        	<SearchBar />
-      
-      	<Menu.Item position='right'>
+        </Menu.Item>
+      	<div className='right' position='right'>
       	<span className='_A2'>
          <Icon size='large'  name='spinner' />
          </span>
@@ -23,7 +23,7 @@ const MainBar =()=>(
          <span className='_A2'>
          <Icon  size='large'  name='user outline' />
          </span>
-        </Menu.Item>
+        </div>
     </Container>
 
       </Menu>

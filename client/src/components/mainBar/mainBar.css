@@ -7,3 +7,22 @@
 ._A2{
 	padding:10px;
 }
+.right{
+	line-height: 85px;
+
+}
+.search2{
+	margin:0 auto;
+	
+}
+@media screen and (max-width: 986px){
+	._A1{
+	display: none;
+}
+   .search2{
+   	width:100%;
+   	bottom:0;
+   	position: fixed!important;
+   	
+   }
+}
