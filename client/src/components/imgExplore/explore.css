@@ -5,6 +5,11 @@ justify-content: space-between;
 
 
 }
+.videoExplore{
+  display: flex;
+  flex-wrap: wrap;
+justify-content: space-between;
+}
 
 .iep1{
    width:987px;
@@ -22,4 +27,5 @@ justify-content: space-between;
      padding-top: 100px;
      width:100%;
   }
+  
 }

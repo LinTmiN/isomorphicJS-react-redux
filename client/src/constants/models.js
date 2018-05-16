@@ -9,11 +9,11 @@ export const UserState=Immutable.fromJS({
 	switchType:'login'
 });
 export const SearchState = Immutable.fromJS({
-	result:[],
-	history:[],
-	page:'',
-	resultcount:'',
-    issearching:false,
+	imageResult:[],
+	videoResult:[],
+	preSearchValue:'',
+	page:'1',
+    isSearching:false,
     key:[],
     resultsShow:false
 })
@@ -22,7 +22,7 @@ export const InputState = Immutable.fromJS({
 	password:'',
 	avatar:'',
 	username:'',
-	searchtype:'',
+	searchtype:'image',
 	searchvalue:'',
 
 })

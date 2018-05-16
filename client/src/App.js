@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import SwitchC from './containers/switchContainer';
 import { Provider } from 'react-redux';
 import store from './store/configStore'
+
+ 
+
 const styles={
   fontFamily: 'sans-serif',
   textAlign: 'center',

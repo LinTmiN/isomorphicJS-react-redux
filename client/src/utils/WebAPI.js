@@ -10,11 +10,9 @@ import {
 	registerFailed,
 	requestData,
 	getKey,
-	addHistory,
-	receiveData,
-	cleanResult,
 	setPage,
-	setInput
+	setInput,
+	preValue,initResult,addResult
 } from '../actions';
 
 function getCookie(keyName){
@@ -101,27 +99,44 @@ export default {
         	 
              } 
 	})},
-	getResult:(dispatch,type,value,page)=>{
-		dispatch(requestData(true))
-		dispatch(addHistory(value))
-		if(typeof(page)==='undefined'){
-			dispatch(cleanResult())
-		}
-		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
-		if(page){page='&pageToken='+page}else{page=''}
-		if(type=='video'){
-			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&'+page+'q='+value+'&regionCode=US&relevanceLanguage=en&type=video&fields=items(id%2FvideoId%2Csnippet(description%2Ctitle))%2CnextPageToken&key=AIzaSyBH0BE8DjAhsgEFygiZLLBDWxzAiAiZpX4')
+    onSearch:(dispatch,type,value)=>{
+    	dispatch(requestData(true))
+    	console.log(value)
+    	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
+    		if(type=='video'){
+			
+			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page=1&per_page=9&query='+value+'&sort=relevant')
 			.then((data)=>{
-				dispatch(receiveData(data.items))
-				dispatch(setPage(data.nextPageToken))
+				dispatch(initResult({key:'videoResult',value:data.data}))
+				dispatch(preValue(value))
+				dispatch(setPage(1))
+			})
+		}
+		else if (type=='image'){
+			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=9&page=1').then((data)=>{
+				dispatch(initResult({key:'imageResult',value:data.data.hits}))
+				dispatch(preValue(value))
+				dispatch(setPage(1))
+			})
+		}
+    },
+	addResult:(dispatch,type,value,page)=>{   
+		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
+		
+		if(type=='video'){
+			
+			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=9&query='+value+'&sort=relevant')
+			.then((data)=>{
+				dispatch(addResult({key:'videoResult',value:data.data}))
+				dispatch(setPage((page+1)))
 				
 			})
 		}
-		else{
-			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=photo&page='+page).then((data)=>{
-				dispatch(receiveData(data.data.hits))
-				dispatch(setPage(page+1))
+		else if (type=='image'){
+			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=9&page='+(page+1)).then((data)=>{
 				
+				dispatch(addResult({'key':'imageResult',value:data.data.hits}))		
+				dispatch(setPage(page+1))			
 			})
 		}
 		

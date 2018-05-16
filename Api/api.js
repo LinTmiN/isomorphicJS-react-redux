@@ -6,7 +6,7 @@ import uuid from 'uuid/v1'
 const app = new Express();
 const apiRoutes = Express.Router();
 app.set('superSecrect',config.secrect);
-console.log(app.get('superSecrect'))
+
 apiRoutes.post('/login',function(req,res){
 	User.findOne({
 		email:req.body.email
