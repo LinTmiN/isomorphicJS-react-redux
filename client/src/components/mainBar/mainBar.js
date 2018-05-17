@@ -4,6 +4,7 @@ import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
 const MainBar =()=>{
    const screenW=document.documentElement.clientWidth||document.body.clientWidth;
+   console.log('rec'+this.props)
    let fid
     if (screenW<660){fid='bottom'} else{fid='top'}
      

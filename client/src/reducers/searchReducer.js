@@ -6,16 +6,14 @@ const searchReducer =handleActions({
 		return state.merge({issearching:payload})
 	},
 	INIT_RESULT:(state,{payload})=>{
-		 console.log(payload)
+		 
 		return state.update(payload.key,result=>payload.value).merge({isSearching:false})
 	}
 	,
 	ADD_RESULT:(state,{payload})=>{
-
        return state.update(payload.key,result=>result.concat(payload.value)).merge({isSearching:false})
 	},
 	GET_KEY:(state,{payload})=>{
-		
 		return state.merge({"key":payload})
 	},
 	PRE_VALUE:(state,{payload})=>{
@@ -23,11 +21,16 @@ const searchReducer =handleActions({
 	}
 	,
 	SET_PAGE:(state,{payload})=>{
-		
 		return state.merge({page:payload})
 	},
 	TOGGLE_RESULTS:(state,{payload})=>(
 		state.merge({resultsShow:payload})
+	),
+	IS_ADDING:(state,{payload})=>(
+		state.set('isAdding',payload)
+	),
+	IS_INIT:(state,{payload})=>(
+		state.set('isInit',payload)
 	)
 
 },SearchState)

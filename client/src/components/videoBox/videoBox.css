@@ -7,7 +7,7 @@
   flex-shrink: 1;
   position: relative;
 }
-.videoItem>img{
+.videoItem img{
 	width:100%;
 }
 .videotitle{
@@ -27,13 +27,17 @@
   margin:0 0;
 
 }
+.conss{
+	position: relative;;
+	width:100%;
+}
 .videomodal{
 	background:rgba(0,0,0,0.4);
 	color:white;
 	font-size: 11px;
 	position:absolute;
 	width:100%;
-	height:calc(100% - 47px);
+	height:calc(100% - 5px);
 	font-weight: bold;
 	top:0;
 

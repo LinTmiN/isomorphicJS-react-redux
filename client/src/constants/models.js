@@ -15,14 +15,16 @@ export const SearchState = Immutable.fromJS({
 	page:'1',
     isSearching:false,
     key:[],
-    resultsShow:false
+    resultsShow:false,
+    isAdding:false,
+    isInit:false,
 })
 export const InputState = Immutable.fromJS({
 	email:'',
 	password:'',
 	avatar:'',
 	username:'',
-	searchtype:'image',
+	searchtype:'video',
 	searchvalue:'',
 
 })

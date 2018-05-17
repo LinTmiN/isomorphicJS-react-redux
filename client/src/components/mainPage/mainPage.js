@@ -1,21 +1,27 @@
 import React from 'react';
 import MainBar from '../mainBar';
 import SuggestCard from '../suggestCard'
-
+import { BrowserRouter as Router,Route,Switch ,Redirect} from 'react-router-dom'
 import { Container,Grid} from 'semantic-ui-react'
 import ImgExplore from '../../containers/imgExploreContainer'
+import VideoExplore from '../../containers/videoExploreContainer'
 import './sf.css'
+import BottomBar from '../bottomBar'
 const MainPage=()=>(
+	<Router>
       <div>
 
       	<MainBar/>
-    
-
-      	<SuggestCard/>
-      	<ImgExplore/>
- 
         
+      	<SuggestCard/>
+      	<Switch>
+      	<Route exact path='/' render={()=><Redirect to='/video' />} />
+      	<Route  path='/image' component={ImgExplore}/>
+      	<Route path='/video' component={VideoExplore} />
+      
+ 		
+        </Switch>
       </div>
-
+</Router>
 )
 export default MainPage

@@ -5,7 +5,7 @@ import { InputState } from '../constants/models';
 import { SET_INPUT } from '../constants/actionTypes'
 const inputReducer = handleActions({
 	SET_INPUT:(state,{payload})=>{
-		
+		console.log('recevie'+payload.key)
 		return state.set(payload.key,payload.value)
 	}
 },InputState)

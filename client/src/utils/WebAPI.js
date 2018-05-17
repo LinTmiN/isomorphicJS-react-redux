@@ -12,7 +12,7 @@ import {
 	getKey,
 	setPage,
 	setInput,
-	preValue,initResult,addResult
+	preValue,initResult,addResult,isAdding,isInit
 } from '../actions';
 
 function getCookie(keyName){
@@ -93,6 +93,7 @@ export default {
         axios.get('https://bird.ioliu.cn/v1?url=https://api.bing.com/qsonhs.aspx?type=cb&q='+value).then((res)=>{
         	
         	let data=res.data.AS;
+        	console.log(data)
         	    if(res){
         		  	dispatch(getKey(data.Results[0].Suggests))
         		  	dispatch(requestData(false))
@@ -100,40 +101,44 @@ export default {
              } 
 	})},
     onSearch:(dispatch,type,value)=>{
-    	dispatch(requestData(true))
-    	console.log(value)
+    	dispatch(isInit(true))
     	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
     		if(type=='video'){
 			
-			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page=1&per_page=9&query='+value+'&sort=relevant')
+			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page=1&per_page=24&query='+value+'&sort=relevant')
 			.then((data)=>{
-				dispatch(initResult({key:'videoResult',value:data.data}))
+				dispatch(initResult({key:'videoResult',value:data.data.data}))
 				dispatch(preValue(value))
 				dispatch(setPage(1))
+				dispatch(isInit(false))
 			})
 		}
-		else if (type=='image'){
-			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=9&page=1').then((data)=>{
+		else{
+
+			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=24&page=1').then((data)=>{
+				
 				dispatch(initResult({key:'imageResult',value:data.data.hits}))
 				dispatch(preValue(value))
 				dispatch(setPage(1))
+				dispatch(isInit(false))
 			})
 		}
     },
 	addResult:(dispatch,type,value,page)=>{   
-		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
 		
+		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
+		dispatch(isAdding(true))
 		if(type=='video'){
 			
-			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=9&query='+value+'&sort=relevant')
+			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=24&query='+value+'&sort=relevant')
 			.then((data)=>{
-				dispatch(addResult({key:'videoResult',value:data.data}))
+				dispatch(addResult({key:'videoResult',value:data.data.data}))
 				dispatch(setPage((page+1)))
 				
 			})
 		}
 		else if (type=='image'){
-			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=9&page='+(page+1)).then((data)=>{
+			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=24&page='+(page+1)).then((data)=>{
 				
 				dispatch(addResult({'key':'imageResult',value:data.data.hits}))		
 				dispatch(setPage(page+1))			

@@ -45,9 +45,10 @@ class VideoBox extends React.Component{
 
 	render(){	
 	    const info=this.props.info
-	    console.log(info)
+	   
 		return (
  			<div onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
+ 				 <div className='conss'>
  				 <img  alt='somthing' src={info.pictures.sizes[2].link}/>
  				{this.state.showInfo==true?(<div className='videomodal'>
  					<Icon style={{marginTop:'25%'}} name='play' size='huge'/>
@@ -57,8 +58,9 @@ class VideoBox extends React.Component{
  					<span><Icon name='comment'/>55</span>
  					</div>
  				</div>):''}
+ 				</div>
  				 <h1 className='videotitle'>{info.name}</h1>
- 				<h2 className='videosubtitle'><Image  src={info.user.pictures.sizes[0].link} avatar />{info.user.name+'|'+info.stats.plays}</h2>
+ 				<h2 className='videosubtitle'><Image  src={info.user.pictures.sizes[0].link} avatar />{info.user.name+' | '+info.stats.plays}</h2>
  			</div>
 
  

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SearchBar from '../../components/searchBar';
 import faker from 'faker'
+import { withRouter} from 'react-router-dom' 
 import {
 	inputSearch,
 	setInput,
@@ -9,18 +10,19 @@ import {
 	requestData
 } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
-export default connect(
+export default withRouter(connect(
 
 	(state)=>({
 		issearching:state.getIn(['search','isSearching']),
-		searchkey:state.getIn(['search','key']),
-		searchtype:state.getIn(['input','searchype']),
+		searchKey:state.getIn(['search','key']),
+		searchtype:state.getIn(['input','searchType']),
 		searchvalue:state.getIn(['input','searchvalue']),
 		resultsShow:state.getIn(['search','resultsShow'])
 	}),
 	(dispatch)=>({
-		onTypeChange:(type,rdsearch)=>(event,{value})=>{
-			dispatch(setInput({key:'searchtype',value:value}))			
+		onTypeChange:(event,{value})=>{
+			console.log('change'+value)
+			dispatch(setInput({key:'searchType',value:value}))			
 			
 		},
 		onSearchChange:(event,{value})=>{			
@@ -32,7 +34,9 @@ export default connect(
 		},
 		onConfirmSearch:(type)=>(e,{result})=>{
 			//点击提示框把结果传进去
+			console.log('serchTypeis'+type)
 			dispatch(setInput({key:'searchvalue',value:result.title}))
+
 			WebAPI.onSearch(dispatch,type,result.title)
 			dispatch(toggleResults(false))
 		},
@@ -42,7 +46,7 @@ export default connect(
 			
 		},
 		onPressEnter:(type,value)=>(e)=>{
-			console.log(e.keyCode)
+			console.log('serchTypeis'+type)
 			 if(e.keyCode===13){
 			 	WebAPI.onSearch(dispatch,type,value)
 			 	dispatch(toggleResults(false))
@@ -53,12 +57,12 @@ export default connect(
 	  (stateProps,dispatchProps,ownProps)=>{
 	  	   const { searchtype,searchvalue} = stateProps;
 	  	   const { onConfirmSearch ,onPressEnter,onTypeChange} = dispatchProps;
-	  	   
+	  	  
 	  	   return Object.assign({},stateProps,dispatchProps,ownProps,{
 	  	   	    onConfirmSearch:onConfirmSearch(searchtype),
 	  	   	    onPressEnter:onPressEnter(searchtype,searchvalue),
-	  	   	    onTypeChange:onTypeChange(searchtype,faker.lorem.word())
+	  	   	    
 	  	   })
 	  }
 
-)(SearchBar)
+)(SearchBar))

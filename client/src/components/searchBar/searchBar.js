@@ -1,7 +1,7 @@
 import React from 'react';
 import {Search,Dropdown,Label} from 'semantic-ui-react';
 import axios from 'axios'
-
+import { withRouter } from 'react-router-dom'
 
 const SearchBar =({
     issearching,
@@ -13,8 +13,8 @@ const SearchBar =({
     onSearchChange,
     onConfirmSearch,
     onPressEnter,
-    resultsShow
-
+    resultsShow,
+    history,
 })=>{
   
   var result
@@ -24,17 +24,21 @@ const SearchBar =({
           }} >
 
               <Dropdown
-              onChange={(e,{value})=>{console.log(e)}}
+          
                 inline
-                onChange={onTypeChange}
+                onChange={(e,data)=>{
+                  history.push('/'+data.value)
+                  onTypeChange(e,data)}}
                 options={[
                   { key: "image", text: "image", value: "image" },
                   { key: "video", text: "video", value: "video" }
                 ]}
                 defaultValue={
-                  [{ key: "image", text: "image", value: "image" }][0].value
+                  [{ key: "video", text: "video", value: "video" }][0].value
                 }
               />
+
+              
   
  
 
@@ -59,4 +63,4 @@ const SearchBar =({
             </div>
             )
 	}
-export default SearchBar
+export default  SearchBar

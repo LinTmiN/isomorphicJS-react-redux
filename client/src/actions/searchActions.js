@@ -9,4 +9,6 @@ export const toggleResults =createAction ('TOGGLE_RESULTS')
 export const addResult = createAction('ADD_RESULT')
 export const initResult = createAction ('INIT_RESULT')
 export const preValue = createAction('PRE_VALUE')
+export const isAdding =createAction('IS_ADDING')
+export const isInit =createAction('IS_INIT')
 
