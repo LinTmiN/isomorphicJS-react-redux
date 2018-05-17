@@ -1,0 +1,86 @@
+
+
+
+.dBox{
+	
+	background: #FFFFFF;
+	
+	display: grid;
+	grid-template-columns: 1fr 335px ;
+	grid-template-rows: 650px;
+	width:987px;
+	height:650px;
+}
+
+  .mymodal {
+  background-color: rgba(0,0,0,0.7);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalBody{
+	height: 100%;
+	overflow:hidden;
+}
+.imgCG{
+	grid-column: 1/2;
+	grid-row: 1/2;
+	height:100%;
+}
+.imgCG>img{
+	width:100%;
+	height:100%;
+}
+.commentBox{
+	grid-column: 2/3;
+	grid-row: 1/2;
+ 	display: grid;
+ 	grid-template-columns: 1fr;
+ 	grid-template-rows: 80px 1fr 90px 57px;
+}
+._usif{
+	grid-row: 1/2;
+	display: grid;
+	grid-template-columns: 55px 1fr;
+	grid-template-rows: 0.5fr 10px 10px 0.5fr;
+	height:100%;
+	 justify-items: left;
+	 align-items: center;
+	 align-self: center;
+	 border-bottom: 1px solid #EFEDED;
+}
+._usif>h1{
+	position: relative;
+	font-size:14px;
+	font-weight: 600;
+	color:#262626;
+	grid-row: 2/3;
+	grid-column: 2/3;
+	margin-left: 15px;
+}
+._usif>h1>span{
+	font-size:17px;
+}
+._usim{
+	grid-row: 2/4;
+	grid-column: 1/2;
+	margin-left: 15px;
+	margin-top: 15px;
+
+}
+._usif h3{
+	font-size:13px;
+	font-weight: normal;
+	margin-left: 15px;
+	grid-row: 3/4;
+	grid-column: 2/3;
+}
+._usic{
+	grid-row: 3/4;
+
+}

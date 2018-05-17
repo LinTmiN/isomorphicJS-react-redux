@@ -69,8 +69,8 @@ class ImgExplore extends React.Component {
 	}
 	render(){
 		
-		console.log('is adding'+this.props.isAdding)
-		let BoxList=this.props.imageresult.map((i,index)=>(<ImgBox key={index} info={i}/>))
+		
+		let BoxList=this.props.imageresult.map((i,index)=>(<ImgBox history={this.props.history}  mykey={index}  key={index} info={i}/>))
 
 		return (
 		<article ref={this.myref}  className='iep1'>

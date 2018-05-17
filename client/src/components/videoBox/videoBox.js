@@ -5,9 +5,11 @@ class VideoBox extends React.Component{
 	constructor(props){
 		super(props)
 			this.state={
-				showInfo:false
+				showInfo:false,
+				imgOnload:false
 			}
 			this.handleTime=this.handleTime.bind(this)
+			this.myref=React.createRef()
 	}
 	handleShow=()=>this.setState((preS)=>({showInfo:!this.state.showInfo}))
 	handleTime=(time)=>{
@@ -41,7 +43,12 @@ class VideoBox extends React.Component{
 		  	return 'recent'
 
 	}
-	
+	componentDidMount(){
+		
+		this.myref.current.onload=()=>{
+			
+			this.setState({imgOnload:true})}
+	}
 
 	render(){	
 	    const info=this.props.info
@@ -49,7 +56,8 @@ class VideoBox extends React.Component{
 		return (
  			<div onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
  				 <div className='conss'>
- 				 <img  alt='somthing' src={info.pictures.sizes[2].link}/>
+ 				 {!this.state.imgOnload?(<div className='whiteBlock'></div>):''}
+ 				 <img  ref={this.myref} alt='somthing' src={info.pictures.sizes[2].link}/>
  				{this.state.showInfo==true?(<div className='videomodal'>
  					<Icon style={{marginTop:'25%'}} name='play' size='huge'/>
  				    <div className='videoinfo'>

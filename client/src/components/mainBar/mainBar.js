@@ -4,8 +4,7 @@ import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
 const MainBar =()=>{
    const screenW=document.documentElement.clientWidth||document.body.clientWidth;
-   console.log('rec'+this.props)
-   let fid
+      let fid
     if (screenW<660){fid='bottom'} else{fid='top'}
      
     return (
@@ -14,7 +13,7 @@ const MainBar =()=>{
 	   <Container>
         <Menu.Item >
          <Icon size='big'  name='openid' />
-          <span  className='_A1'>REXtube</span>
+          <span  className='_A1'>PoorIns</span>
         </Menu.Item>
         <Menu.Item className='search2' >
        	<SearchBar />

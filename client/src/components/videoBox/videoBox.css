@@ -1,7 +1,7 @@
 .videoItem{
   display:inline-block;
   width:33%;
-  
+  position: relative;
  cursor:pointer;
    margin-bottom: 33px;
   flex-shrink: 1;
