@@ -1,0 +1,1 @@
+export {ImgBoxContainer ,VideoBoxContainer} from './boxContainer'

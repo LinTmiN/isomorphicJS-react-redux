@@ -52,18 +52,22 @@ class VideoBox extends React.Component{
 
 	render(){	
 	    const info=this.props.info
-	   
+	   const {history,mykey}	=this.props
 		return (
- 			<div onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
+ 			<div onClick={()=>{
+ 					this.props.isCardInit()
+ 					history.push('/video/'+info.uri.replace('/videos/',''),{top:document.documentElement.scrollTop})
+ 					}
+ 			} onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
  				 <div className='conss'>
- 				 {!this.state.imgOnload?(<div className='whiteBlock'></div>):''}
+ 				 
  				 <img  ref={this.myref} alt='somthing' src={info.pictures.sizes[2].link}/>
  				{this.state.showInfo==true?(<div className='videomodal'>
  					<Icon style={{marginTop:'25%'}} name='play' size='huge'/>
  				    <div className='videoinfo'>
  					<span >{this.handleTime(info['created_time'])}</span>
- 					<span><Icon name='heart'/>235</span>
- 					<span><Icon name='comment'/>55</span>
+ 					<span><Icon name='heart'/>{info.metadata.connections.likes.total}</span>
+ 					<span><Icon name='comment'/>{info.metadata.connections.comments.total}</span>
  					</div>
  				</div>):''}
  				</div>

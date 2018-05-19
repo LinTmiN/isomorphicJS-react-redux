@@ -5,13 +5,11 @@ import {
 	receiveUser,
 	loginError,
 	registerStart,
-	registerSuccess,
 	setAuth,
 	registerFailed,
 	requestData,
 	getKey,
 	setPage,
-	setInput,
 	preValue,initResult,addResult,isAdding,isInit
 } from '../actions';
 
@@ -20,7 +18,7 @@ function getCookie(keyName){
 	const cookies = document.cookie.split(';');
 	for (let i=0;i<cookies.length;i++){
 		let cookie =cookies[i].trim();
-		if(cookie.indexOf(name)==0){
+		if(cookie.indexOf(name)===0){
 			return cookie.substring(name.length,cookie.length)
 		}
 	}
@@ -103,7 +101,7 @@ export default {
     onSearch:(dispatch,type,value)=>{
     	dispatch(isInit(true))
     	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
-    		if(type=='video'){
+    		if(type==='video'){
 			
 			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page=1&per_page=24&query='+value+'&sort=relevant')
 			.then((data)=>{
@@ -128,7 +126,7 @@ export default {
 		
 		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
 		dispatch(isAdding(true))
-		if(type=='video'){
+		if(type==='video'){
 			
 			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=24&query='+value+'&sort=relevant')
 			.then((data)=>{
@@ -137,7 +135,7 @@ export default {
 				
 			})
 		}
-		else if (type=='image'){
+		else if (type==='image'){
 			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=24&page='+(page+1)).then((data)=>{
 				
 				dispatch(addResult({'key':'imageResult',value:data.data.hits}))		

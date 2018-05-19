@@ -1,7 +1,5 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import SearchBar from '../../components/searchBar';
-import faker from 'faker'
 import { withRouter} from 'react-router-dom' 
 import {
 	inputSearch,
@@ -34,7 +32,7 @@ export default withRouter(connect(
 		},
 		onConfirmSearch:(type)=>(e,{result})=>{
 			//点击提示框把结果传进去
-			console.log('serchTypeis'+type)
+			
 			dispatch(setInput({key:'searchvalue',value:result.title}))
 
 			WebAPI.onSearch(dispatch,type,result.title)
@@ -46,17 +44,18 @@ export default withRouter(connect(
 			
 		},
 		onPressEnter:(type,value)=>(e)=>{
-			console.log('serchTypeis'+type)
+			
 			 if(e.keyCode===13){
 			 	WebAPI.onSearch(dispatch,type,value)
 			 	dispatch(toggleResults(false))
 			 }
-		}
+		},
+		initType:(type)=>dispatch(setInput({key:'searchType',value:type}))
 		
 	}),
 	  (stateProps,dispatchProps,ownProps)=>{
 	  	   const { searchtype,searchvalue} = stateProps;
-	  	   const { onConfirmSearch ,onPressEnter,onTypeChange} = dispatchProps;
+	  	   const { onConfirmSearch ,onPressEnter} = dispatchProps;
 	  	  
 	  	   return Object.assign({},stateProps,dispatchProps,ownProps,{
 	  	   	    onConfirmSearch:onConfirmSearch(searchtype),

@@ -1,19 +1,5 @@
 import { createAction } from 'redux-actions';
 import WebAPI from '../utils/WebAPI'
-import {
-	REQUEST_LOGIN,
-	RECEIVE_USER,
-	LOGIN_ERROR,
-	CHECK_AUTH,
-	REGISTER_START,
-	REGISTER_SUCCESS,
-	SET_AUTH,
-	REGISTER_FAILED,
-	REGISTER,
-	LOGIN,
-	LOGOUT,
-	SWITCH_TYPE,
-} from '../constants/actionTypes';
 export const requestLogin = createAction('REQUEST_LOGIN');
 export const receiveUser = createAction('RECEIVE_USER');
 export const loginError = createAction('LOGIN_ERROR');

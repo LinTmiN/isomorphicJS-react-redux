@@ -1,7 +1,6 @@
 import React from 'react';
-import {Search,Dropdown,Label} from 'semantic-ui-react';
-import axios from 'axios'
-import { withRouter } from 'react-router-dom'
+import {Search,Dropdown} from 'semantic-ui-react';
+
 
 const SearchBar =({
     issearching,
@@ -15,11 +14,13 @@ const SearchBar =({
     onPressEnter,
     resultsShow,
     history,
+    match,
+    initType
 })=>{
   
   var result
     typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));
-   
+    initType(history.location.pathname.slice(1))
 	return ( <div style={{width:'100%'
           }} >
 
@@ -34,7 +35,7 @@ const SearchBar =({
                   { key: "video", text: "video", value: "video" }
                 ]}
                 defaultValue={
-                  [{ key: "video", text: "video", value: "video" }][0].value
+                  [{ key:history.location.pathname.slice(1), text:history.location.pathname.slice(1), value:history.location.pathname.slice(1) }][0].value
                 }
               />
 

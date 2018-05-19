@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image,Dimmer,Icon,Header} from 'semantic-ui-react';
 import './imgBox.css';
-import Modal from '../modal'
 class ImgBox extends React.Component{
 	constructor(props){
 		super(props)
@@ -17,10 +16,10 @@ class ImgBox extends React.Component{
 
 	handleHide=()=>this.setState({showDimmer:false})
 	shouldComponentUpdate(nS,nP){
-		if(this.props!=nP||this.state!=nS){
+		if(this.props!==nP||this.state!==nS){
 			return true
-		}else{
-			return false
+
+		}else {return false
 		}
 
 	}
@@ -32,17 +31,21 @@ class ImgBox extends React.Component{
 	}
 	render(){	
 	    const {history,mykey}	=this.props
-	    
+	  
 		return (
-			<div  onClick={()=>history.push('/image/'+mykey)} className='flexitem'>
+			<div  onClick={()=>{
+						this.props.isCardInit()
+						history.push('/image/'+this.props.info.webformatURL.replace('https://pixabay.com/get/','').split('.')[0],{top:document.documentElement.scrollTop})
+								}
+					} className='flexitem'>
 	 			<Dimmer.Dimmable style={{height:'100%',zIndex:'10'}} onMouseEnter={this.handleShow} onMouseLeave={this.handleHide} as={Image} dimmed={this.state.showDimmer}>
 	  			 	<Dimmer active={this.state.showDimmer}>
-            		<Header as='h2' icon inverted>
-              		<Icon name='heart' />
+            		<Header as='h4' icon inverted>
+              		<Icon size='small' name='heart' />
              			 like:{this.props.info.favorites}
             		</Header>
           			</Dimmer>
-          			<img ref={this.myref} src={this.props.info.webformatURL} />
+          			<img ref={this.myref} alt={this.props.info} src={this.props.info.webformatURL} />
           			{!this.state.imgOnload?(<div className='whiteBlock'></div>):''}
 				</Dimmer.Dimmable>
 			

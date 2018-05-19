@@ -1,7 +1,6 @@
-import React from 'react';
+
 import VideoExplore from '../../components/videoExplore';
 import { connect} from 'react-redux';
-import faker from 'faker';
 import {isAdding } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
 export default connect(
@@ -30,7 +29,7 @@ export default connect(
 		}),
 	(stateProps,dispatchProps,ownProps)=>{
 		const {page,preValue} = stateProps;
-		const {updateResult,firstResult}=dispatchProps;
+		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{
 			updateResult:updateResult(preValue,page),

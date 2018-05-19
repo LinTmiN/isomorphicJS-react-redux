@@ -1,19 +1,5 @@
 import {handleActions} from 'redux-actions';
 import { UserState } from '../constants/models';
-import {
-		REQUEST_LOGIN,
-	RECEIVE_USER,
-	LOGIN_ERROR,
-	CHECK_AUTH,
-	REGISTER_START,
-	REGISTER_SUCCESS,
-	SET_AUTH,
-	REGISTER_FAILED,
-	REGISTER,
-	LOGIN,
-	LOGOUT,
-	SWITCH_TYPE,
-} from '../constants/actionTypes';
 const userReducers = handleActions({
 	SWITCH_TYPE:(state,{payload})=>{
 		return state.merge({switchType:payload})

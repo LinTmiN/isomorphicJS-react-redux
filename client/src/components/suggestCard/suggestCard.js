@@ -1,5 +1,5 @@
 import React from 'react';
-import {Label,Segment, Grid,Button,Card,Image,Container,Icon}from 'semantic-ui-react'
+import {Button,Card,Icon}from 'semantic-ui-react'
 import faker from 'faker';
 import './suggestCard.css'
 const fakeUser=Array.apply(null,{length:3}).map((a)=>({avatar:faker.image.avatar(),username:faker.name.findName(),job:faker.name.jobTitle()}))
@@ -11,7 +11,7 @@ const userList=fakeUser.map((user,index)=>(
         <div className='sc1'>
           <img
             className='sc2'
-            
+            alt={'user avatar'}
             src={user.avatar}
           />
           </div>

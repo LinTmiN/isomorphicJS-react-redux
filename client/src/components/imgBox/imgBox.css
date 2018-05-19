@@ -3,10 +3,10 @@
 .flexitem{
   position: relative;
   display:inline-block;
-  width:31.5%;
-  height:293px;
+  width:24.8%;
+  height:200px;
  cursor:pointer;
-   margin-bottom: 28px;
+  margin-bottom: 3px;
   flex-shrink: 1;
 
   
@@ -19,9 +19,19 @@
   .flexitem{
      width:33%;
      height:auto;
-     margin-bottom:5px;
+     margin-bottom:2px;
+     height:170px;
  }
   
+}
+@media screen and (max-width: 576px){
+  .flexitem{
+     width:33%;
+     height:auto;
+     margin-bottom:2px;
+     height:100px;
+ }
+
 }
 .whiteBlock{
   position:absolute;

@@ -1,7 +1,5 @@
-import React from 'react';
 import ImgExplore from '../../components/imgExplore';
 import { connect} from 'react-redux';
-import faker from 'faker'
 import {isAdding } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
 export default connect(
@@ -20,7 +18,7 @@ export default connect(
 		     WebAPI.onSearch(dispatch,'image',valueList[Math.round(Math.random()*3)])
 		},
 		updateResult:(value,page)=>()=>{
-			console.log(value)
+			
 			WebAPI.addResult(dispatch,'image',value,page)			
 		},
 		finishAdd:()=>dispatch(isAdding(false))
@@ -28,7 +26,7 @@ export default connect(
 		}),
 	(stateProps,dispatchProps,ownProps)=>{
 		const {page,preValue} = stateProps;
-		const {updateResult,firstResult}=dispatchProps;
+		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{
 			updateResult:updateResult(preValue,page),

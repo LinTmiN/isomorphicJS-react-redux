@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form,Segment,Button,Message,Grid,Container,Header} from 'semantic-ui-react';
 import './loginBox.css';
-import Immutable from 'immutable';
 const LoginBox = ({
   email,
   password,
@@ -54,7 +53,7 @@ const registerForm =(
   <Grid.Column mobile={16} tablet={8} computer={8}>
     <Form size="large">
       <Segment stacked>
-        <Header as='h1' style={{margin:'25px',fontFamily:'\'Pacifico\'\,\'cursive\''}}>ReduxTube</Header>
+        <Header as='h1' style={{margin:'25px',fontFamily:"'Pacifico','cursive'"}}>ReduxTube</Header>
 
         <Form.Input
           fluid
@@ -124,7 +123,7 @@ const registerForm =(
            </div>
           </Grid.Column>
           
-          {authType=='register'?registerForm:loginForm}
+          {authType ==='register'?registerForm:loginForm}
           
         </Grid.Row>
 

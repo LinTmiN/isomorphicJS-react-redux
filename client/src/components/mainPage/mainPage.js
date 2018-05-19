@@ -5,6 +5,7 @@ import { BrowserRouter as Router,Route,Switch ,Redirect} from 'react-router-dom'
 import { Container,Grid} from 'semantic-ui-react'
 import ImgExplore from '../../containers/imgExploreContainer'
 import VideoExplore from '../../containers/videoExploreContainer'
+import ModalContainer from '../../containers/modalContainer'
 import './sf.css'
 import BottomBar from '../bottomBar';
 import Modal from '../modal'
@@ -21,7 +22,7 @@ const MainPage=()=>(
       	<Route  path='/image' component={ImgExplore}/>
       	<Route path='/video' component={VideoExplore} />		
         </Switch>
-        <Route path='/:type/:key' component={Modal} />
+        <Route path='/:type/:key' component={ModalContainer} />
       </div>
 </Router>
 )

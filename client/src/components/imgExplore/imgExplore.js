@@ -1,7 +1,7 @@
 import React from "react";
 import "./explore.css";
-import {Dimmer ,Segment,Header,Icon,Image,Loader} from 'semantic-ui-react'
-import ImgBox from '../imgBox'
+import { Loader} from 'semantic-ui-react'
+import {ImgBoxContainer} from '../../containers/boxContainer'
 import VideoBox from '../videoBox'
 
 class ImgExplore extends React.Component {
@@ -30,10 +30,6 @@ class ImgExplore extends React.Component {
 		const { scrollTop}=document.documentElement;
 		const { clientHeight,scrollHeight}=document.documentElement;
 			if(scrollTop+clientHeight+40>=scrollHeight){
-				if(this.props.isInit){return}
-				else if(this.props.isAdding){return }
-				else if(!this.imgComplete()){return}
-					console.log('ll: '+scrollTop+clientHeight+40+'ss: ' +scrollHeight)
 			this.props.firstResult()
 		}
 		this.check = setInterval(this.handleScroll,100)
@@ -45,7 +41,7 @@ class ImgExplore extends React.Component {
 
 	}
 	shouldComponentUpdate(nS,nP){
-		if(this.state!=nS||this.props!=nP){
+		if(this.state!==nS||this.props!==nP){
 			return true
 		}else{
 			return false
@@ -62,15 +58,14 @@ class ImgExplore extends React.Component {
 		return true
 	}
 	componentDidUpdate(){
-		if(this.imgComplete){
+		if(this.imgComplete()){
 			this.props.finishAdd()
 		}
 		
 	}
 	render(){
-		
-		
-		let BoxList=this.props.imageresult.map((i,index)=>(<ImgBox history={this.props.history}  mykey={index}  key={index} info={i}/>))
+	
+		let BoxList=this.props.imageresult.map((i,index)=>(<ImgBoxContainer history={this.props.history}  mykey={index}  key={index} info={i}/>))
 
 		return (
 		<article ref={this.myref}  className='iep1'>
@@ -85,7 +80,7 @@ class ImgExplore extends React.Component {
 					{BoxList}
 
 		  	</div>}	
-		   {this.props.isInit?'':<Loader style={{marginBottom:'80px'}} active inline='centered' size='medium'/>}
+		   {this.props.isInit?'':<Loader style={{margin:'50px auto'}} active inline='centered' size='medium'/>}
 		 	 
 		</article>
 

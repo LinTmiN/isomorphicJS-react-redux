@@ -31,7 +31,12 @@ const searchReducer =handleActions({
 	),
 	IS_INIT:(state,{payload})=>(
 		state.set('isInit',payload)
-	)
+	),
+	IS_CARD_INIT:(state,{payload})=>{
+		console.log('isCardInit'+payload)
+	return	state.set('isCardInit',payload)
+	}
+	
 
 },SearchState)
 export default searchReducer

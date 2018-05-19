@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu ,Icon,Container,Grid,Dropdown} from 'semantic-ui-react';
+import { Menu ,Icon,Container} from 'semantic-ui-react';
 import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
 const MainBar =()=>{

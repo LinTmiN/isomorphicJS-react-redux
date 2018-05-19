@@ -1,7 +1,7 @@
-import {Dimmer ,Segment,Header,Icon,Image,Loader} from 'semantic-ui-react'
+import { Loader} from 'semantic-ui-react'
 import React from "react";
-import VideoBox from '../videoBox'
-
+import {VideoBoxContainer} from '../../containers/boxContainer'
+import faker from 'faker'
 
 class VideoExplore extends React.Component {
 	constructor(props){
@@ -42,7 +42,7 @@ class VideoExplore extends React.Component {
 
 	}
 	shouldComponentUpdate(nS,nP){
-		if(this.state!=nS||this.props!=nP){
+		if(this.state!==nS||this.props!==nP){
 			return true
 		}else{
 			return false
@@ -64,10 +64,9 @@ class VideoExplore extends React.Component {
 		}
 	}
 	render(){
-		console.log(this.props.history)
 		let BoxList
 		if(this.props.videoresult){
-      BoxList=this.props.videoresult.map((i,index)=>(<VideoBox key={index} info={i} />))
+      BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
 			 BoxList=''
 		}
