@@ -92,10 +92,11 @@ export default {
         	
         	let data=res.data.AS;
         	console.log(data)
-        	    if(res){
+        	    if(data.Results){
+        	    	
         		  	dispatch(getKey(data.Results[0].Suggests))
         		  	dispatch(requestData(false))
-        	 
+        		 
              } 
 	})},
     onSearch:(dispatch,type,value)=>{

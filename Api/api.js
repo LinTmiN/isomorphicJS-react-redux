@@ -21,17 +21,24 @@ apiRoutes.post('/login',function(req,res){
 	 			const token=jwt.sign({email:user.email,username:user.username},'abc',{
 	 				expiresIn:60*60*24
 	 			})
-	 			res.json({success:true,message:'login success',token:token,user:{username:user.username,emaiL:user.email,avatar:user.avatar}})
+	 			res.json({success:true,message:'login success',token:token,user:{username:user.username,emaiL:user.email,avatar:user.avatar},collect:user.collect})
 	 		}
 	 	}
 	})
 });
+apiRoutes.get('/test',(req,res)=>{
+	User.findOneAndUpdate({username:'laaa'},{$push:{collect:{id:'123','type':'image'}}},(err,user)=>{
+			if(err) throw err;
+			res.json({success:true,user:user})
+			})
+})
 apiRoutes.get('/setup',(req,res)=>{
    const sampleUser=new User({
    	   username:'laaa',
    	   email:'123456@126.com',
    	   password:'123456',
-   	   avatar:'wwwww'
+   	   avatar:'',
+   	   collect:[{'id':'123456',type:'image'},{'id':'87',type:'image'},{'id':'520',type:'image'}]
    })
    sampleUser.save((err)=>{
    	 if(err) throw err;
@@ -96,10 +103,18 @@ apiRoutes.get('/collect/:username',(req,res)=>{
 	})
 });
 apiRoutes.put('/collect/:username',(req,res)=>{
-	User.update({username:req.params.username},{$push:{collect:req.body.collect}},(err)=>{
-		if(err) throw err;
-		res.json({success:true})
+	User.find({username:req.params.username,'collect.id':req.body.newcollect.id},(err,user)=>{
+		if(err) throw err
+		if(user){
+			res.json({success:false,message:req.body.newcollect.id+ 'already exist' })
+		}else{
+			User.findOneAndUpdate({username:req.params.username},{$push:{collect:req.body.newcollect}},(err,user)=>{
+			if(err) throw err;
+			res.json({success:true,collect:user.collect})
+			})
+		}
 	})
+	
 
 });
 apiRoutes.delete('/collect/:username',(req,res)=>{
@@ -108,6 +123,5 @@ apiRoutes.delete('/collect/:username',(req,res)=>{
 		res.json({success:true})
 	})
 })
-
 
 export default apiRoutes;

@@ -80,14 +80,14 @@ class Card extends React.Component {
 
 
 	}
-	imageLoadmore=(e)=>{
+	imageCommentLoadMore=(e)=>{
 		e.stopPropagation()
 		this.setState((preS)=>({
 			page:preS.page+1,
 			comment:this.comment.slice(0,(preS.page+1)*25)
 	    }))
 	}
-	videoLoadmore=(e)=>{
+	videoCommentLoadMore=(e)=>{
 		e.stopPropagation()
 		const videoId=this.props.videoresult[this.props.mykey].uri.replace('/videos/','')
 		this.props.getComment(videoId,this.state.page+1).then((data)=>{
@@ -97,6 +97,9 @@ class Card extends React.Component {
 				 	page:preS.page+1
 				 }))
 		})
+	}
+	addCollect(collect){
+		
 	}
 	render(){
 			const type=this.props.type
@@ -116,7 +119,7 @@ class Card extends React.Component {
 					<div className='_usic'>
 						<Icon  style={{margin:'0 10px',cursor:'pointer'}} size='big' name='heart outline'/>
 						<Icon  style={{cursor:'pointer'}} size='big' name='comment outline'/>
-						<Icon style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name='remove bookmark'/>
+						<Icon  style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name='remove bookmark'/>
 						<span className='_uslk'>{type==='image'?faker.random.number()+'likes':this.info.stats.plays+'plays'}</span>
 						<span className='_ustm'>{type==='image'?this.handleTime(faker.date.past()):this.handleTime(this.info['created_time'])}</span>
 					</div>	
@@ -126,10 +129,10 @@ class Card extends React.Component {
 						<li><span>{type==='image'?faker.name.findName():this.info.user.name}</span>{type==='image'?faker.lorem.sentence():this.info.description}</li>
 							{type==='image'?
 						(this.state.comment.length<this.comment.length?
-							<li><span onClick={this.imageLoadmore} style={{fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comments</span></li>
+							<li><span onClick={this.imageCommentLoadMore} style={{fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comments</span></li>
 						:'')
 						:(this.state.comment.length<this.len?
-						<li><span onClick={this.videoLoadmore} style={{fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comments</span></li>
+						<li><span onClick={this.videoCommentLoadMore} style={{fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comments</span></li>
 						:'')
 						}
 						{this.state.comment.reverse()}

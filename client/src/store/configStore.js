@@ -2,8 +2,18 @@ import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
 import Immutable from 'immutable';
+import {createLogger} from 'redux-logger'
 import rootReducer from '../reducers'
 import {UserState,InputState,SearchState} from '../constants/models'
+import {Iterable} from 'immutable'
+const stateTransformer = (state) => {
+  if (Iterable.isIterable(state)) return state.toJS();
+  else return state;
+};
+
+const logger = createLogger({
+  stateTransformer,
+});
 const initialState=Immutable.fromJS({
       user:UserState,
       input:InputState,
@@ -12,5 +22,5 @@ const initialState=Immutable.fromJS({
 export default createStore(
 	rootReducer,
 	initialState,
-	applyMiddleware(promise,reduxThunk)
+	applyMiddleware(logger)
 )
