@@ -24,5 +24,8 @@ const userReducers = handleActions({
 	SET_AUTH:(state,{payload})=>(
 		state.merge({isAuthorized:payload.value})
 	)
+	RECEIVE_COLLECT:(state,{payload})=>{
+		return state.merge({collect:payload})
+	}
 },UserState);
 export default userReducers;

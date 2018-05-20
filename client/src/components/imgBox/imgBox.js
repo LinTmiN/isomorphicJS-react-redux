@@ -29,6 +29,7 @@ class ImgBox extends React.Component{
 			
 			this.setState({imgOnload:true})}
 	}
+	
 	render(){	
 	    const {history,mykey}	=this.props
 	  

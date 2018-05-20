@@ -119,7 +119,7 @@ class Card extends React.Component {
 					<div className='_usic'>
 						<Icon  style={{margin:'0 10px',cursor:'pointer'}} size='big' name='heart outline'/>
 						<Icon  style={{cursor:'pointer'}} size='big' name='comment outline'/>
-						<Icon  style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name='remove bookmark'/>
+						<Icon  onClick style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name='remove bookmark'/>
 						<span className='_uslk'>{type==='image'?faker.random.number()+'likes':this.info.stats.plays+'plays'}</span>
 						<span className='_ustm'>{type==='image'?this.handleTime(faker.date.past()):this.handleTime(this.info['created_time'])}</span>
 					</div>	

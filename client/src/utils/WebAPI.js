@@ -10,7 +10,7 @@ import {
 	requestData,
 	getKey,
 	setPage,
-	preValue,initResult,addResult,isAdding,isInit
+	preValue,initResult,addResult,isAdding,isInit,receiveCollect
 } from '../actions';
 
 function getCookie(keyName){
@@ -42,8 +42,9 @@ export default {
 					const expires = 'expires='+d.toUTCString();
 					document.cookie = 'token='+res.data.token+';'+expires;
 					dispatch(receiveUser(res.data.user))
+					dispatch(receiveCollect(res.data.collect))
 					dispatch(setAuth({value:true}))
-					this.getResult(dispatch,'image','yellow')
+					
 				}
 			}
 			
@@ -145,7 +146,14 @@ export default {
 		}
 		
 	},
-
+	addCollect:(dispatch,username,newcollect)=>{
+		axios.put('api/collect/'+username,{newcollect:newcollect}).then((res)=>{
+			if(res.data.success){
+				dispatch(receiveCollect(res.data.collect))
+				
+			}
+		})
+	}
 
 
 };

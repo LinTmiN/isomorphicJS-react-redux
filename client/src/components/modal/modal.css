@@ -1,17 +1,6 @@
 
 
 
-.dBox{
-	
-	background: #FFFFFF;
-	
-	display: grid;
-	grid-template-columns: 1fr 335px ;
-height:1260%;
-	width:100%;
- 	margin-top:10px;
-}
-
   .mymodal {
   background-color: rgba(0,0,0,0.7);
    position: fixed;

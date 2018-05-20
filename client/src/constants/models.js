@@ -18,6 +18,7 @@ export const SearchState = Immutable.fromJS({
     resultsShow:false,
     isAdding:false,
     isInit:false,
+    isCardInit:false,
 })
 export const InputState = Immutable.fromJS({
 	email:'',
