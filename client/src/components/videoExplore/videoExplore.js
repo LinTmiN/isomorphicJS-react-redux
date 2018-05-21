@@ -73,9 +73,9 @@ class VideoExplore extends React.Component {
 		return (
 		<article ref={this.myref}  className='iep1'>
 			<h1>Explore</h1>
-	{this.props.isInit?(<Loader style={{marginTop:'150px'}} active inline='centered' size='large'>Loading</Loader>
+	{this.props.isInit?(<Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader>
     ):<div className='videoExplore'>{BoxList}</div>}
-     {this.props.isInit?'':<Loader style={{marginBottom:'80px'}} active inline='centered' size='medium'/>}
+     {this.props.isInit?'':<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'/>}
 		</article>
 
 		)

@@ -10,7 +10,7 @@ import {
 	requestData,
 	getKey,
 	setPage,
-	preValue,initResult,addResult,isAdding,isInit,receiveCollect
+	preValue,initResult,addResult,isAdding,isInit,receiveCollect,isAdded,isDelete,isCheck
 } from '../actions';
 
 function getCookie(keyName){
@@ -28,7 +28,7 @@ export default {
 	login:(dispatch,email,password)=>{
 		dispatch(requestLogin())
 
-		axios.post('api/login',{
+		axios.post('http://localhost:3000/api/login',{
 			email:email,
 			password:password
 		}).then((res)=>{
@@ -57,15 +57,19 @@ export default {
 		document.cookie ='token=;'+'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 		dispatch(setAuth({value:false}))
 	},
-	checkAuth:(dispatch,token)=>{
-		axios.post('api/authenicate',{
-			token:token
-		})
+	checkAuthor:(dispatch)=>{
+		dispatch(isCheck(true))
+		axios.get('http://localhost:3000/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
 		.then((res)=>{
 			if(res.data.success===false){
-				dispatch(setAuth({value:false}))
+				dispatch(setAuth(false))
+				dispatch(isCheck(false))
 			}else{
-				dispatch(setAuth({value:true}))
+				console.log(res.data)
+				dispatch(setAuth(true))
+				dispatch(receiveUser(res.data.user))
+				dispatch(receiveCollect(res.data.user.collect))
+				dispatch(isCheck(false))
 			}
 		})
 		.catch((err)=>{
@@ -75,14 +79,16 @@ export default {
 	register:(dispatch,user)=>{
 
 		dispatch(registerStart())
-		axios.post('api/register',user).then((res)=>{
+		axios.post('http://localhost:3000/api/register',user).then((res)=>{
 			if(res.data.success===false){
 				dispatch(registerFailed())
 			}else{
-				this.login(dispatch,res.data.user.email,res.data.user.password)
+				
+				this.a.login(dispatch,res.data.user.email,res.data.user.password)
 			}
 		})
 		.catch((err)=>{
+			console.log(err)
 			dispatch(registerFailed())
 		})
 	},
@@ -125,7 +131,7 @@ export default {
 		}
     },
 	addResult:(dispatch,type,value,page)=>{   
-		
+		if(!value){return }
 		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
 		dispatch(isAdding(true))
 		if(type==='video'){
@@ -146,11 +152,30 @@ export default {
 		}
 		
 	},
-	addCollect:(dispatch,username,newcollect)=>{
-		axios.put('api/collect/'+username,{newcollect:newcollect}).then((res)=>{
+	getCollect:(dispatch)=>{
+		return axios.get('http://localhost:3000/api/collect?token='+getCookie('token')).then((res)=>{
+			if(res.data.success){
+				console.log(res.data.collect)
+				dispatch(receiveCollect(res.data.collect))
+				return true
+			}else{
+				console.log(res.data.message)
+				return false
+			}
+		})
+	},
+	addCollect:(dispatch,newcollect)=>{
+		return axios.put('http://localhost:3000/api/collect?token='+getCookie('token'),{newcollect:newcollect}).then((res)=>{
 			if(res.data.success){
 				dispatch(receiveCollect(res.data.collect))
-				
+			}
+		})
+	},
+	deleteCollect:(dispatch,collectId)=>{
+		
+		axios.delete('http://localhost:3000/api/collect/'+collectId+'?token='+getCookie('token')).then((res)=>{
+			if(res.data.success){
+				dispatch(receiveCollect(res.data.collect))
 			}
 		})
 	}

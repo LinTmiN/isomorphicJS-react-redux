@@ -2,22 +2,41 @@ import React from 'react';
 import { Menu ,Icon,Container} from 'semantic-ui-react';
 import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
-const MainBar =()=>{
-   const screenW=document.documentElement.clientWidth||document.body.clientWidth;
-      let fid
-    if (screenW<660){fid='bottom'} else{fid='top'}
-     
+class MainBar extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+       hasScroll:false
+    }
+    this.handleScroll=this.handleScroll.bind(this)
+  }
+    componentDidMount(){
+      window.addEventListener('scroll',this.handleScroll)
+    }
+    handleScroll(){
+      
+      if(window.scrollY>0||document.body.className==='mybody'){
+        this.setState({
+          hasScroll:true
+        })
+      }else{
+        this.setState({
+          hasScroll:false
+        })
+      }
+    }
+
+  　render(){
     return (
-	  <div >
-	    <Menu  fixed={fid} borderless >
-	   <Container>
-        <Menu.Item >
-         <Icon size='big'  name='openid' />
-          <span  className='_A1'>PoorIns</span>
-        </Menu.Item>
-        <Menu.Item className='search2' >
+      <div className='_mbct' style={{width:'100%',background:'white'}}>
+	    <nav className={this.state.hasScroll?'_navbar _navbarc':'_navbar'}>
+        <div className='_navl' >
+         <Icon style={{fontSize:'30px'}} size='big'  name='openid' />
+          <span  className={this.state.hasScroll?'_A1 _A1C':'_A1'}>REXtube</span>
+        </div>
+        <div className='_mbsc' >
        	<SearchBar />
-        </Menu.Item>
+        </div>
       	<div className='right' position='right'>
       	<span className='_A2'>
          <Icon size='large'  name='spinner' />
@@ -29,9 +48,8 @@ const MainBar =()=>{
          <Icon  size='large'  name='user outline' />
          </span>
         </div>
-    </Container>
-
-      </Menu>
-      </div>
-)}
+      </nav>
+      </div>)
+  }
+ }
 export default MainBar 

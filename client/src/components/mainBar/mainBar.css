@@ -1,28 +1,78 @@
-._A1{
-	padding-left:10px;
-	border-left:1px solid black;
-	font-size:1.5em;
-	font-family:'Pacifico','cursive';
+._mbct{
+	width:100%;
+	background: white;
+	
+	border-bottom: 1px solid rgba(0,0,0,.0975);
+	position: fixed;
+	top:-2px;
+	z-index: 999;
+	display:flex;
 }
-._A2{
-	padding:10px;
-}
-.right{
-	line-height: 85px;
 
+
+._navbar{
+	width:987px;
+	height:100%;
+	display: flex;
+	margin:25px auto;
+	justify-content: space-between;
+	flex-direction: row;
+ 	align-items: center;
+ 	align-self: center;
+ 	transition: all 0.2s ease-in-out;
 }
-.search2{
-	margin:0 auto;
+._navbarc{
+	margin:7px auto;
+}
+._search{
+	display: inline-flex;
+}
+._navl{
+	font-family:'Pacifico','cursive';
 	
 }
-@media screen and (max-width: 986px){
-	._A1{
-	display: none;
+._A1{
+	font-size: 25px;
+	line-height: 20px;
+    vertical-align:middle;
+	opacity: 1;
+	
+	padding-left: 10px;
+	transition: opacity 0.2s ease-in-out;
 }
-   .search2{
-   	width:100%;
-   	top:0;
-   	position: fixed!important;
-   	
-   }
+._A1C{
+	opacity: 0;
+}
+.right{
+	font-size: 15px;
+	font-weight: normal;
+
+}
+._A2{
+	padding-left: 25px;
+}
+@media screen and (max-width:545px){
+	._navl{
+		display: none;
+	}
+	._navbar{
+		justify-content: center;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		align-content:flex-end;
+	}
+	.right{
+		box-sizing: border-box;
+		width: 100%;
+		background: white;
+		height:35px;
+		position: fixed;
+		bottom: 0px;
+		display: flex;
+		justify-content: space-around;
+	}
+	.right>._A2{
+		padding-top: 7px;
+		height: 100%
+	}
 }

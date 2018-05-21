@@ -72,7 +72,7 @@ class ImgExplore extends React.Component {
 			<h1>Explore</h1>
 		{this.props.isInit?( 
       
-        <Loader style={{marginTop:'150px'}} active inline='centered' size='large'>Loading</Loader>
+        <Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader>
      
 
       
@@ -80,7 +80,7 @@ class ImgExplore extends React.Component {
 					{BoxList}
 
 		  	</div>}	
-		   {this.props.isInit?'':<Loader style={{margin:'50px auto'}} active inline='centered' size='medium'/>}
+		   {this.props.isInit?'':<Loader className='myloader' active inline='centered' size='medium'/>}
 		 	 
 		</article>
 

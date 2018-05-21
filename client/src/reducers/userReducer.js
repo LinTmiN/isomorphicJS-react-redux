@@ -9,6 +9,7 @@ const userReducers = handleActions({
 		state.merge({isLoging:true})
 	),
 	RECEIVE_USER:(state,{ payload })=>{
+
 	return	state.merge({userInfo:payload}).merge({isLoging:false})
 
 	},
@@ -22,10 +23,19 @@ const userReducers = handleActions({
 		state.merge({isRegister:false})
 	),
 	SET_AUTH:(state,{payload})=>(
-		state.merge({isAuthorized:payload.value})
-	)
+		state.merge({isAuthorized:payload})
+	),
 	RECEIVE_COLLECT:(state,{payload})=>{
 		return state.merge({collect:payload})
-	}
+	},
+	IS_ADDED:(state,{payload})=>{
+		return state.merge({'isadded':payload})
+	},
+	IS_DELETE:(state,{payload})=>{
+		return state.merge({'isdelete':payload})
+	},
+	IS_CHECK:(state,{payload})=>(
+		state.merge({'isCheck':payload})
+	)
 },UserState);
 export default userReducers;

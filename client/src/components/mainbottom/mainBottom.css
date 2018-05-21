@@ -1,0 +1,21 @@
+._mbt{
+	width:987px;
+	margin:0 auto;
+	height: 45px;
+	display: flex;
+	
+}
+._mbt>ul{
+	list-style: none;
+	display: flex;
+	font-size: 12px;
+	color:#003569;
+	font-family: 'sans-serif';
+	font-weight: 600;
+}
+._mbt>ul>li{
+	margin-right: 15px;
+}
+@media screen and (max-width: 987px){
+	._mbt{display: none}
+}

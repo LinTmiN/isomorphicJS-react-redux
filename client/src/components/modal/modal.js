@@ -32,7 +32,10 @@ class Modal extends React.Component{
 		
 		return ReactDOM.createPortal(
 			<div>
-			<div  className='_progress'></div>
+			{!this.props.isCardInit?<Progress  color='blue' style={{position:'fixed',top:'0',width:'100%'}} size='tiny' percent={100} active>
+   				 Active
+ 			 </Progress>:''}
+			
 			<div onClick={()=>{
 				
 				if(this.props.isCardInit)

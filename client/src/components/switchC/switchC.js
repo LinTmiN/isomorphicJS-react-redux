@@ -2,10 +2,18 @@ import React from 'react';
 import LoginPage from '../loginPage';
 import MainPage from '../mainPage'
 
-const SwitchC = ({ isAuthorized })=>{
-	var isAuthorized=true
-   return  <div>{isAuthorized ?(<MainPage/>):(<LoginPage/>)}</div>
+class SwitchC extends React.Component {
+	constructor(props){
+		super(props)
+	}
+	componentWillMount(){
+		let {checkAuthor} =this.props
+		checkAuthor()
+	}
+	render(){
+		return (<div>{this.props.isCheck?'':(<div>{this.props.isAuthorized ?(<MainPage/>):(<LoginPage/>)}</div>)}</div>)
+	}
 }
-
+	
 
 export default SwitchC

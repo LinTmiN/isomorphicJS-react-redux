@@ -14,6 +14,7 @@
 	display: flex;
 	width:987px;
 	height:500px;
+	background: white;
 }
 .video{
 	width:650px;
@@ -25,7 +26,7 @@
 	}
 	.video{
 	width:400px;
-}
+	}
 }
 .imgCG{
 	height:100%;

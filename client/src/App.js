@@ -8,8 +8,10 @@ import store from './store/configStore'
 const styles={
   fontFamily: 'sans-serif',
   textAlign: 'center',
+  background:'#fafafa'
 }
 class App extends Component {
+  
   render() {
     return (
       <div style={styles}>

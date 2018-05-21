@@ -11,5 +11,6 @@ export const registerFailed = createAction('REGISTER_FAILED');
 export const register = createAction('REGISTER',WebAPI.register);
 export const login =createAction('LOGIN',WebAPI.login);
 export const logout =createAction('LOGOUT',WebAPI.logout);
-export const switchType = createAction('SWITCH_TYPE')
+export const switchType = createAction('SWITCH_TYPE');
+export const isCheck = createAction('IS_CHECK')
 

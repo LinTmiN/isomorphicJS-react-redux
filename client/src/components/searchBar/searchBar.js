@@ -21,11 +21,9 @@ const SearchBar =({
   var result
     typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));
     initType(history.location.pathname.slice(1))
-	return ( <div style={{width:'100%'
-          }} >
-
+	return (    <React.Fragment>
               <Dropdown
-          
+                style={{fontFamily:''}}
                 inline
                 onChange={(e,data)=>{
                   history.push('/'+data.value)
@@ -37,13 +35,7 @@ const SearchBar =({
                 defaultValue={
                   [{ key:history.location.pathname.slice(1), text:history.location.pathname.slice(1), value:history.location.pathname.slice(1) }][0].value
                 }
-              />
-
-              
-  
- 
-
-       
+              />     
               <Search
               loading={issearching}
               onBlur={onBlur}
@@ -56,12 +48,12 @@ const SearchBar =({
               // resultRenderer={({title})=><Label content={title}/>}
               onClick={onBlur}
               placeholder='search'
-                style={{ margin: "0 auto", marginTop: "5px" }}
+              className='_search'
                 size="mini"
                 fluid
               >
               </Search>
-            </div>
+            </React.Fragment>
             )
 	}
 export default  SearchBar

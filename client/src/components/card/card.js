@@ -9,9 +9,10 @@ class Card extends React.Component {
 		this.handleTime=this.handleTime.bind(this)
 		this.state={
 			comment:[],
-			page:1
+			page:1,
+			isCollect:false
 		}
-
+		this.addCollect=this.addCollect.bind(this)
 	}
 	handleTime=(time)=>{
 		let minute = 1000*60,
@@ -28,43 +29,53 @@ class Card extends React.Component {
 		  	dayC=diffV/day,
 		  	hourC=diffV/hour,
 		  	minC=diffV/minute;
-		  	if(yearC>=1){
-		  		  return  Math.floor(yearC)+' years ago'
-		  	}else if(monthC>=1){
-		  		return Math.floor(monthC)+' months ago'
-		  	}else if(weekC>=1){
-		  		return Math.floor(weekC)+' weeks ago'
-		  	}else if(dayC>=1){
-		  		return Math.floor(dayC)+' days ago'
-		  	}else if (hourC>=1){
-		  		return Math.floor(hourC)+ ' hours ago'
-		  	}else if (minC>=1){
-		  		return Math.floor(minC)+' minutes ago'
-		  	}
-		  	return 'recent'
+	  	if(yearC>=1){
+	  		  return  Math.floor(yearC)+' years ago'
+	  	}else if(monthC>=1){
+	  		return Math.floor(monthC)+' months ago'
+	  	}else if(weekC>=1){
+	  		return Math.floor(weekC)+' weeks ago'
+	  	}else if(dayC>=1){
+	  		return Math.floor(dayC)+' days ago'
+	  	}else if (hourC>=1){
+	  		return Math.floor(hourC)+ ' hours ago'
+	  	}else if (minC>=1){
+	  		return Math.floor(minC)+' minutes ago'
+	  	}
+	  	return 'recent'
 
 	}
 	componentWillMount(){
-		
-		if(this.props.type==='image'){
-			
+		const {getCollect,type,onCardInit,getComment,mykey}=this.props
+
+		getCollect().then((data)=>{
+			if(data){
+				console.log(this.props.collect)
+				this.props.collect.toJS().forEach((item)=>{
+					if(item.id===mykey){
+						this.setState({
+							isCollect:true
+						})
+					}
+				})
+			}
+		})
+
+		if(type==='image'){			
 			this.comment=Array.apply(null,{length:Math.round(Math.random()*90+10)}).map((l,index)=><li key={index}><span>{faker.name.findName()}</span>{faker.lorem.sentence()}</li>)
 			this.setState({
 			comment:this.comment.slice(0,25),
 			page:1
 		})
-			this.props.onCardInit()
+			onCardInit()
 		}
-		else if (this.props.type==='video'){
-			const videoId=this.props.mykey
-		    
+		else if (type==='video'){
+			const videoId=mykey	    
 			axios.get('https://api.vimeo.com/videos/'+videoId+'?access_token=bff4a0260496cc72b64158bc0670c01a').then(({data})=>{
 				 this.info=data
-				 this.props.onCardInit()			
+				 onCardInit()			
 			})
-			
-			this.props.getComment(videoId,1).then((data)=>{
-				
+			getComment(videoId,1).then((data)=>{
 				this.len=data.data.total
 				this.comment=data.data.data.map((c,index)=>{
 					return (<li key={index}><span>{c.user.name}</span>{c.text}</li>)
@@ -74,8 +85,8 @@ class Card extends React.Component {
 					page:1
 				})
 			})
-			
-			
+
+					
 		}
 
 
@@ -98,8 +109,21 @@ class Card extends React.Component {
 				 }))
 		})
 	}
-	addCollect(collect){
-		
+	addCollect(newCollect){
+		if(!this.state.isCollect){
+  			//没收藏，发出收藏请求
+			this.props.addCollect(newCollect)()
+			this.setState({
+				isCollect:true
+			})
+			
+		}else {
+			let id=newCollect.id
+			this.props.deleteCollect(id)()
+			this.setState({
+				isCollect:false
+			})	
+		}
 	}
 	render(){
 			const type=this.props.type
@@ -119,9 +143,9 @@ class Card extends React.Component {
 					<div className='_usic'>
 						<Icon  style={{margin:'0 10px',cursor:'pointer'}} size='big' name='heart outline'/>
 						<Icon  style={{cursor:'pointer'}} size='big' name='comment outline'/>
-						<Icon  onClick style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name='remove bookmark'/>
-						<span className='_uslk'>{type==='image'?faker.random.number()+'likes':this.info.stats.plays+'plays'}</span>
-						<span className='_ustm'>{type==='image'?this.handleTime(faker.date.past()):this.handleTime(this.info['created_time'])}</span>
+						<Icon  onClick={()=>this.addCollect({id:this.props.mykey,type:type})} style={{float:'right',marginRight:'10px',cursor:'pointer'}} size='big' name={this.state.isCollect?'bookmark':'remove bookmark'}/>
+						<span  className='_uslk'>{type==='image'?faker.random.number()+'likes':this.info.stats.plays+'plays'}</span>
+						<span  className='_ustm'>{type==='image'?this.handleTime(faker.date.past()):this.handleTime(this.info['created_time'])}</span>
 					</div>	
 					<div className='_uscm'>
 

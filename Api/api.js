@@ -79,6 +79,7 @@ apiRoutes.use((req,res,next)=>{
 				return res.json({success:false,message:'Failed to authenticate token'})
 			}else{
 				req.decoded=decoded;
+				
 				next()
 			}
 		})
@@ -90,10 +91,19 @@ apiRoutes.use((req,res,next)=>{
 	}
 })
 apiRoutes.get('/authenticate',(req,res)=>{
-	res.json({success:true,message:'verify token success'})
+	User.findOne({email:req.decoded.email},(err,user)=>{
+		if(err) throw err
+		if(user){
+			console.log(user)
+			res.json({success:true,user:{email:user.email,username:user.username,avatar:user.avatar,collect:user.collect}})
+		}else{
+			res.json({success:false,message:'un recogenisze user'})
+		}
+	})
+	
 });
-apiRoutes.get('/collect/:username',(req,res)=>{
-	User.findOne({username:req.params.username},(err,user)=>{
+apiRoutes.get('/collect',(req,res)=>{
+	User.findOne({email:req.decoded.email},(err,user)=>{
 		if(err) throw err;
 		if(user){
 			res.json({success:true,message:'get collect',collect:user.collect})
@@ -102,25 +112,20 @@ apiRoutes.get('/collect/:username',(req,res)=>{
 		}
 	})
 });
-apiRoutes.put('/collect/:username',(req,res)=>{
-	User.find({username:req.params.username,'collect.id':req.body.newcollect.id},(err,user)=>{
-		if(err) throw err
-		if(user){
-			res.json({success:false,message:req.body.newcollect.id+ 'already exist' })
-		}else{
-			User.findOneAndUpdate({username:req.params.username},{$push:{collect:req.body.newcollect}},(err,user)=>{
-			if(err) throw err;
-			res.json({success:true,collect:user.collect})
-			})
-		}
-	})
-	
+apiRoutes.put('/collect',(req,res)=>{
 
-});
-apiRoutes.delete('/collect/:username',(req,res)=>{
-	User.update({username:req.params.username},{$pull:{collect:{id:req.body.id}}},(err)=>{
+	User.findOneAndUpdate({email:req.decoded.email},{$push:{collect:req.body.newcollect}},(err,user)=>{
+			if(err) throw err;
+			res.json({success:true})
+			
+		})
+	})
+apiRoutes.delete('/collect/:id',(req,res)=>{
+	User.update({email:req.decoded.email},{$pull:{collect:{id:req.params.id}}},(err,user)=>{
 		if(err) throw err;
+		console.log(user)
 		res.json({success:true})
+
 	})
 })
 
