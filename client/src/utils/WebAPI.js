@@ -61,19 +61,21 @@ export default {
 		dispatch(isCheck(true))
 		axios.get('http://localhost:3000/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
 		.then((res)=>{
-			if(res.data.success===false){
-				dispatch(setAuth(false))
-				dispatch(isCheck(false))
-			}else{
-				console.log(res.data)
+			console.log(res)
+			if(res.data.success===true){
 				dispatch(setAuth(true))
 				dispatch(receiveUser(res.data.user))
 				dispatch(receiveCollect(res.data.user.collect))
 				dispatch(isCheck(false))
+				
+			}else{
+				dispatch(setAuth(false))
+				dispatch(isCheck(false))
+				
 			}
-		})
-		.catch((err)=>{
-			dispatch(loginError())
+		}).catch((err)=>{
+			dispatch(setAuth(false))
+			dispatch(isCheck(false))
 		})
 	},
 	register:(dispatch,user)=>{

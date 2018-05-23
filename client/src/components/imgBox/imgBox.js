@@ -36,10 +36,10 @@ class ImgBox extends React.Component{
 		return (
 			<div  onClick={()=>{
 						this.props.isCardInit()
-						history.push('/image/'+this.props.info.webformatURL.replace('https://pixabay.com/get/','').split('.')[0],{top:document.documentElement.scrollTop})
+						history.push('/search/image/'+this.props.info.webformatURL.replace('https://pixabay.com/get/','').split('.')[0],{top:document.documentElement.scrollTop})
 								}
 					} className='flexitem'>
-	 			<Dimmer.Dimmable style={{height:'100%',zIndex:'10'}} onMouseEnter={this.handleShow} onMouseLeave={this.handleHide} as={Image} dimmed={this.state.showDimmer}>
+	 			<Dimmer.Dimmable style={{height:'100%',zIndex:'10',width:"100%"}} onMouseEnter={this.handleShow} onMouseLeave={this.handleHide} as={Image} dimmed={this.state.showDimmer}>
 	  			 	<Dimmer active={this.state.showDimmer}>
             		<Header as='h4' icon inverted>
               		<Icon size='small' name='heart' />

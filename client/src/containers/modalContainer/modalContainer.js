@@ -1,7 +1,8 @@
 import {connect } from 'react-redux'
 import Modal from '../../components/modal'
-export default connect(
+import {withRouter } from 'react-router-dom'
+export default withRouter(connect(
 	(state)=>({
 		isCardInit:state.getIn(['search','isCardInit'])
 	})
-)(Modal)
+)(Modal))

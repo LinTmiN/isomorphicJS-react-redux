@@ -26,7 +26,7 @@ const SearchBar =({
                 style={{fontFamily:''}}
                 inline
                 onChange={(e,data)=>{
-                  history.push('/'+data.value)
+                  history.push('/search/'+data.value)
                   onTypeChange(e,data)}}
                 options={[
                   { key: "image", text: "image", value: "image" },

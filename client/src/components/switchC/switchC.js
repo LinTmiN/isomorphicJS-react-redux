@@ -10,8 +10,14 @@ class SwitchC extends React.Component {
 		let {checkAuthor} =this.props
 		checkAuthor()
 	}
+	componentDidMount(){
+		window.addEventListener('resize',this.props.getScreen)
+	}
+	componentWillUnmount(){
+		window.removeEventListener('resize',this.props.getScreen)
+	}
 	render(){
-		return (<div>{this.props.isCheck?'':(<div>{this.props.isAuthorized ?(<MainPage/>):(<LoginPage/>)}</div>)}</div>)
+		return (<React.Fragment>{this.props.isCheck?'':(<React.Fragment>{this.props.isAuthorized ?(<MainPage/>):(<LoginPage/>)}</React.Fragment>)}</React.Fragment>)
 	}
 }
 	

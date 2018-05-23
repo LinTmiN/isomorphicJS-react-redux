@@ -28,8 +28,8 @@ class MainBar extends React.Component{
 
   　render(){
     return (
-      <div className='_mbct' style={{width:'100%',background:'white'}}>
-	    <nav className={this.state.hasScroll?'_navbar _navbarc':'_navbar'}>
+      <nav className='_mbct' style={{width:'100%',background:'white'}}>
+	    <div className={this.state.hasScroll?'_navbar _navbarc':'_navbar'}>
         <div className='_navl' >
          <Icon style={{fontSize:'30px'}} size='big'  name='openid' />
           <span  className={this.state.hasScroll?'_A1 _A1C':'_A1'}>REXtube</span>
@@ -48,8 +48,8 @@ class MainBar extends React.Component{
          <Icon  size='large'  name='user outline' />
          </span>
         </div>
-      </nav>
-      </div>)
+      </div>
+      </nav>)
   }
  }
 export default MainBar 

@@ -6,7 +6,7 @@ export const UserState=Immutable.fromJS({
 	isAuthorized:false,
 	isLoging:false,
 	isRegister:false,
-	isCheck:false,
+	isCheck:true,
 	switchType:'login'
 });
 export const SearchState = Immutable.fromJS({
@@ -28,5 +28,5 @@ export const InputState = Immutable.fromJS({
 	username:'',
 	searchtype:'video',
 	searchvalue:'',
-
+	screen:{width:document.body.clientWidth,height:document.body.clientHeight}
 })

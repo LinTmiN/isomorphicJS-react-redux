@@ -14,11 +14,11 @@ class App extends Component {
   
   render() {
     return (
-      <div style={styles}>
+      <section style={styles}>
        <Provider store={store}>
        <SwitchC />
        </Provider>
-      </div>
+      </section>
     );
   }
 }

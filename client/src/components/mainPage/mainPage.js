@@ -2,27 +2,23 @@ import React from 'react';
 import MainBar from '../mainBar';
 import SuggestCard from '../suggestCard'
 import { BrowserRouter as Router,Route,Switch ,Redirect} from 'react-router-dom'
-import ImgExplore from '../../containers/imgExploreContainer'
-import VideoExplore from '../../containers/videoExploreContainer'
 import ModalContainer from '../../containers/modalContainer'
 import MainBottom from '../mainbottom'
+import CollectPage from '../collectPage'
+import SearchPage from '../searchPage'
 import './sf.css'
 const MainPage=()=>(
 	<Router>
-      <div>
+      <section>
 
       	<MainBar/>
-        
-      	<SuggestCard/>
-
-      	<Switch>
-      	<Route exact path='/' render={()=><Redirect to='/video' />} />
-      	<Route  path='/image' component={ImgExplore}/>
-      	<Route path='/video' component={VideoExplore} />		
+        <Switch>	
+      	<Route  path='/search' component={SearchPage} />
+        <Route path='/collect' component={CollectPage} />
         </Switch>
-        <Route path='/:type/:key' component={ModalContainer} />
+        <Route  path='/search/:type/:key' component={ModalContainer} />
         <MainBottom/>
-      </div>
+      </section>
 </Router>
 )
 export default MainPage

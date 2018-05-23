@@ -2,8 +2,9 @@ import React from 'react'
 import './mainBottom.css'
 const MainBottom =()=>{
 	return (
-		<div>
-		<nav className='_mbt'>
+		<React.Fragment>
+		<nav className='_mbbg'>
+		<div className='_mbt'>
 			<ul>
 			   <li>关于我们</li>
 			   <li>支持</li>
@@ -13,8 +14,9 @@ const MainBottom =()=>{
 			   <li>目录</li>
 			   <li>个人主页</li>
 			</ul>
-		</nav>
 		</div>
+		</nav>
+		</React.Fragment>
 	)
 }
 export default MainBottom

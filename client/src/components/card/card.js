@@ -3,6 +3,7 @@ import './card.css'
 import faker from 'faker'
 import React from 'react';
 import axios from 'axios'
+
 class Card extends React.Component {
 	constructor(props){
 		super(props)
@@ -50,7 +51,7 @@ class Card extends React.Component {
 
 		getCollect().then((data)=>{
 			if(data){
-				console.log(this.props.collect)
+				
 				this.props.collect.toJS().forEach((item)=>{
 					if(item.id===mykey){
 						this.setState({
@@ -100,7 +101,7 @@ class Card extends React.Component {
 	}
 	videoCommentLoadMore=(e)=>{
 		e.stopPropagation()
-		const videoId=this.props.videoresult[this.props.mykey].uri.replace('/videos/','')
+		const videoId=this.props.mykey
 		this.props.getComment(videoId,this.state.page+1).then((data)=>{
 				let newResult=data.data.data.map((c,index)=><li key={Math.round(Math.random()*100+25)+index+'1'}><span>{c.user.name}</span>{c.text}</li>)
 				 this.setState((preS)=>({

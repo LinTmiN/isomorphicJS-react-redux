@@ -3,7 +3,8 @@ import VideoExplore from '../../components/videoExplore';
 import { connect} from 'react-redux';
 import {isAdding } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
-export default connect(
+import {withRouter} from 'react-router-dom'
+export default withRouter(connect(
 
 	(state)=>({
 		videoresult:state.getIn(['search','videoResult']),
@@ -35,4 +36,4 @@ export default connect(
 			updateResult:updateResult(preValue,page),
 		})
 	}
-)(VideoExplore)
+)(VideoExplore))

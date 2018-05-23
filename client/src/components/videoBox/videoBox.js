@@ -56,7 +56,7 @@ class VideoBox extends React.Component{
 		return (
  			<div onClick={()=>{
  					this.props.isCardInit()
- 					history.push('/video/'+info.uri.replace('/videos/',''),{top:document.documentElement.scrollTop})
+ 					history.push('/search/video/'+info.uri.replace('/videos/',''),{top:document.documentElement.scrollTop})
  					}
  			} onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
  				 <div className='conss'>
