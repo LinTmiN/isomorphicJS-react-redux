@@ -2,6 +2,8 @@ import ImgExplore from '../../components/imgExplore';
 import { connect} from 'react-redux';
 import {isAdding } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
+import axios from 'axios'
+import {isInit,initResult,preValue,setPage,setInput}  from '../../actions';
 export default connect(
 
 	(state)=>({
@@ -9,13 +11,20 @@ export default connect(
 		page:state.getIn(['search','page']),
 		preValue:state.getIn(['search','preValue']),
 		searchtype:state.getIn(['input','searchType']),
-		isAdding:state.getIn(['search','isAdding']),
-		isInit:state.getIn(['search','isInit'])
+		isInit:state.getIn(['search','isInit']),
+		total:state.getIn(['input','total'])
 	}),
 	(dispatch)=>({
 		firstResult:()=>{
-			const valueList=['dog','cat','animals','black']
-		     WebAPI.onSearch(dispatch,'image',valueList[Math.round(Math.random()*3)])
+			dispatch(isInit(true))
+			axios.get('https://api.unsplash.com/photos/curated?page=1&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+			.then(({data})=>{
+				dispatch(initResult({key:'imageResult',value:data}))
+				dispatch(preValue('rementupian热'))
+				dispatch(setPage(1))
+				dispatch(isInit(false))
+				dispatch(setInput({key:'total',value:Number.POSITIVE_INFINITY}))
+			})
 		},
 		updateResult:(value,page)=>()=>{
 			

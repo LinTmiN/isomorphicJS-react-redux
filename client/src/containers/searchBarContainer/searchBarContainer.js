@@ -37,17 +37,19 @@ export default withRouter(connect(
 
 			WebAPI.onSearch(dispatch,type,result.title)
 			dispatch(toggleResults(false))
+
 		},
 		onBlur:()=>{
 			dispatch(requestData(false))
 			setTimeout(()=>{dispatch(toggleResults(false))},200)
 			
 		},
-		onPressEnter:(type,value)=>(e)=>{
+		onPressEnter:(type,value)=>(e,history)=>{
 			
 			 if(e.keyCode===13){
 			 	WebAPI.onSearch(dispatch,type,value)
 			 	dispatch(toggleResults(false))
+			 	history.push('/search/'+type)
 			 }
 		},
 		initType:(type)=>dispatch(setInput({key:'searchType',value:type}))

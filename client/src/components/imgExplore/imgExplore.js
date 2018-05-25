@@ -65,7 +65,14 @@ class ImgExplore extends React.Component {
 	}
 	render(){
 	
-		let BoxList=this.props.imageresult.map((i,index)=>(<ImgBoxContainer history={this.props.history}  mykey={index}  key={index} info={i}/>))
+		let BoxList,Load
+		if(this.props.imageresult.length>0){
+			Load=this.props.imageresult.length<this.props.total?<Loader className='myloader' active inline='centered' size='medium'/>:'end'
+		     BoxList=this.props.imageresult.map((i,index)=>(<ImgBoxContainer history={this.props.history}   key={index} info={i}/>))
+		 }else{
+		 	Load=''
+			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>Sorry,we can't find this!</div>
+		 }
 
 		return (
 		<article ref={this.myref}  className='iep1'>
@@ -80,7 +87,7 @@ class ImgExplore extends React.Component {
 					{BoxList}
 
 		  	</div>}	
-		   {this.props.isInit?'':<Loader className='myloader' active inline='centered' size='medium'/>}
+		   {this.props.isInit?'':Load}
 		 	 
 		</article>
 

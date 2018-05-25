@@ -13,6 +13,7 @@ export default withRouter(connect(
 		searchtype:state.getIn(['input','searchType']),
 		isInit:state.getIn(['search','isInit']),
 		isAdding:state.getIn(['search','isAdding']),
+		total:state.getIn(['input','total'])
 	}),
 	(dispatch)=>({
 		firstResult:()=>{

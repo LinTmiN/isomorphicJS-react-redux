@@ -1,6 +1,8 @@
 ._cdbg{
 	background: white;
 	width:600px;
+	margin-bottom: 60px;
+	color:#262626
 }
 ._cdhd{
 	display: flex;
@@ -62,8 +64,9 @@
 	color: #262626;
 }
 ._cdcm{
-	margin-top:-10px;
-	font-family:Arial
+	margin-top:-5px;
+	font-family:Arial;
+	margin-bottom:0;
 }
 ._cdcm>ul{
 	list-style: none;
@@ -72,12 +75,20 @@
 	
 }
 ._cdcm>ul>li{
-	font-size:14px;
+	font-size:13px;
+	line-height: 25px;
 }
 ._cdusname{
 	font-weight:bold;
 	padding-right: 5px;
 
+}
+._cdtime{
+	font-size:11px;
+	margin-top:-15px;
+	text-align:left;
+	color:#999;
+	padding:0;
 }
 ._cdta{
 	min-height: 56px;

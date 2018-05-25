@@ -1,22 +1,26 @@
 
 
 
-  .mymodal {
-  background-color: rgba(0,0,0,0.7);
-   position: fixed;
-  	width: 100%;
-  	top: 0;
-  	left: 0;
-    	display: flex;
-  	align-items: center;
-  	justify-content: center;
-      height: 100%;
+.mymodal {
+	background-color: rgba(0,0,0,0.7);
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	overflow: hidden;
+	    overflow-y: auto;
+}
+.mymodal::-webkit-scrollbar{
+	width:0;
 }
 .mybody{
 	position: fixed;
 	overflow-y:scroll;
 	width:100%;
-	
 }
 ._myprogress{
 	background: linear-gradient(to right,#F6076C, #8E11FF,#F90895,#FFC900,#F6076C);

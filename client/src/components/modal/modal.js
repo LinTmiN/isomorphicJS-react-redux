@@ -41,7 +41,7 @@ class Modal extends React.Component{
 				}
 			} className={this.props.isCardInit?'mymodal':''}>
 				
-				<Card type={type} mykey={match.params.key}/>
+				<Card type={type} id={match.params.key}/>
 			</div>
 			</div>,
 			this.el

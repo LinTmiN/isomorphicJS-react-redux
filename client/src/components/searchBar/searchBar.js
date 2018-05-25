@@ -20,7 +20,9 @@ const SearchBar =({
   
   var result
     typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));
-    initType(history.location.pathname.slice(1))
+    console.log(history)
+    let type=history.location.pathname.indexOf('/search')===-1?'video':history.location.pathname.slice(8)
+    initType(type)
 	return (    <React.Fragment>
               <Dropdown
                 style={{fontFamily:''}}
@@ -33,14 +35,14 @@ const SearchBar =({
                   { key: "video", text: "video", value: "video" }
                 ]}
                 defaultValue={
-                  [{ key:history.location.pathname.slice(1), text:history.location.pathname.slice(1), value:history.location.pathname.slice(1) }][0].value
+                  [{ key:type, text:type, value:type }][0].value
                 }
               />     
               <Search
               loading={issearching}
               onBlur={onBlur}
               value={searchvalue}
-              onKeyDown={onPressEnter}
+              onKeyDown={(e)=>{onPressEnter(e,history)}}
               onSearchChange={onSearchChange}
               onResultSelect={onConfirmSearch}
               open={resultsShow}

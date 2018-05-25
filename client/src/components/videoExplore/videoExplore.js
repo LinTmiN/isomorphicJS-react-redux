@@ -64,18 +64,20 @@ class VideoExplore extends React.Component {
 		}
 	}
 	render(){
-		let BoxList
-		if(this.props.videoresult){
-      BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
+		let BoxList,Load
+		if(this.props.videoresult.length>0){
+      		Load=this.props.videoresult.length<this.props.total?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'>bbbb</Loader>:'end'
+      		BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
-			 BoxList=''
+			Load=''
+			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>Sorry,we can't find this!</div>
 		}
 		return (
 		<article ref={this.myref}  className='iep1'>
 			<h1>Explore</h1>
 	{this.props.isInit?(<Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader>
     ):<div className='videoExplore'>{BoxList}</div>}
-     {this.props.isInit?'':<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'/>}
+     {this.props.isInit?'':Load}
 		</article>
 
 		)

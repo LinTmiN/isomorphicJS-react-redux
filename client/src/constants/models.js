@@ -28,5 +28,6 @@ export const InputState = Immutable.fromJS({
 	username:'',
 	searchtype:'video',
 	searchvalue:'',
-	screen:{width:document.body.clientWidth,height:document.body.clientHeight}
+	screen:{width:document.body.clientWidth,height:document.body.clientHeight},
+	total:'',
 })

@@ -10,7 +10,8 @@ export default connect(
 		page:state.getIn(['search','page']),
 		preValue:state.getIn(['search','preValue']),
 		isCardInit:state.getIn(['search','isCardInit']),
-		collect:state.getIn(['user','collect'])
+		collect:state.getIn(['user','collect']),
+		screen:state.getIn(['input','screen'])
 	}),
 	(dispatch)=>({
 		updateResult:(value,page)=>(type)=>{

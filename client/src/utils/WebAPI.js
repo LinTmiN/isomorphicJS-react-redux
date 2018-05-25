@@ -10,6 +10,7 @@ import {
 	requestData,
 	getKey,
 	setPage,
+	setInput,
 	preValue,initResult,addResult,isAdding,isInit,receiveCollect,isAdded,isDelete,isCheck
 } from '../actions';
 
@@ -119,23 +120,25 @@ export default {
 				dispatch(preValue(value))
 				dispatch(setPage(1))
 				dispatch(isInit(false))
+				dispatch(setInput({key:'total',value:data.data.total}))
 			})
 		}
 		else{
 
-			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=24&page=1').then((data)=>{
+			axios.get('https://api.unsplash.com/search/photos?page=1&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
-				dispatch(initResult({key:'imageResult',value:data.data.hits}))
+				dispatch(initResult({key:'imageResult',value:data.data.results}))
 				dispatch(preValue(value))
 				dispatch(setPage(1))
 				dispatch(isInit(false))
+				dispatch(setInput({key:'total',value:data.data.total}))
 			})
 		}
     },
 	addResult:(dispatch,type,value,page)=>{   
 		if(!value){return }
 		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
-		dispatch(isAdding(true))
+		
 		if(type==='video'){
 			
 			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=24&query='+value+'&sort=relevant')
@@ -146,9 +149,16 @@ export default {
 			})
 		}
 		else if (type==='image'){
-			axios.get('https://pixabay.com/api/?key=8956304-4d698e1be91b3c3961d70bffc&q='+value+'&image_type=all&per_page=24&page='+(page+1)).then((data)=>{
+			if(value==='rementupian热'){
+				return axios.get('https://api.unsplash.com/photos/curated?page='+(page+1)+'&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+				.then(({data})=>{
+						dispatch(addResult({'key':'imageResult',value:data}))		
+					dispatch(setPage(page+1))
+				})
+			}
+			axios.get('https://api.unsplash.com/search/photos?page='+(page+1)+'&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
-				dispatch(addResult({'key':'imageResult',value:data.data.hits}))		
+				dispatch(addResult({'key':'imageResult',value:data.data.results}))		
 				dispatch(setPage(page+1))			
 			})
 		}
@@ -168,17 +178,13 @@ export default {
 	},
 	addCollect:(dispatch,newcollect)=>{
 		return axios.put('http://localhost:3000/api/collect?token='+getCookie('token'),{newcollect:newcollect}).then((res)=>{
-			if(res.data.success){
-				dispatch(receiveCollect(res.data.collect))
-			}
+		
 		})
 	},
 	deleteCollect:(dispatch,collectId)=>{
 		
 		axios.delete('http://localhost:3000/api/collect/'+collectId+'?token='+getCookie('token')).then((res)=>{
-			if(res.data.success){
-				dispatch(receiveCollect(res.data.collect))
-			}
+			
 		})
 	}
 
