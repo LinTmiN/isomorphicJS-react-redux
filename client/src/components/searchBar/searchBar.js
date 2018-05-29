@@ -13,20 +13,20 @@ const SearchBar =({
     onConfirmSearch,
     onPressEnter,
     resultsShow,
-    history,
-    match,
-    initType
+    initType,
+    history
 })=>{
   
   var result
-    typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));
-    console.log(history)
-    let type=history.location.pathname.indexOf('/search')===-1?'video':history.location.pathname.slice(8)
-    initType(type)
+    typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));  
+      let type=history.location.pathname.slice(8,13)||'video'
+       console.log(type)
+       initType(type)
 	return (    <React.Fragment>
               <Dropdown
                 style={{fontFamily:''}}
                 inline
+                closeOnBlur={true}
                 onChange={(e,data)=>{
                   history.push('/search/'+data.value)
                   onTypeChange(e,data)}}
@@ -34,9 +34,7 @@ const SearchBar =({
                   { key: "image", text: "image", value: "image" },
                   { key: "video", text: "video", value: "video" }
                 ]}
-                defaultValue={
-                  [{ key:type, text:type, value:type }][0].value
-                }
+                value={type}
               />     
               <Search
               loading={issearching}
@@ -47,7 +45,6 @@ const SearchBar =({
               onResultSelect={onConfirmSearch}
               open={resultsShow}
               results={result}
-              // resultRenderer={({title})=><Label content={title}/>}
               onClick={onBlur}
               placeholder='search'
               className='_search'

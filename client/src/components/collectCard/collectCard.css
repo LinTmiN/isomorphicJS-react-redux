@@ -77,6 +77,7 @@
 ._cdcm>ul>li{
 	font-size:13px;
 	line-height: 25px;
+	word-wrap: break-word; word-break: break-all;
 }
 ._cdusname{
 	font-weight:bold;
@@ -96,25 +97,31 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-top: 1px solid #efefef
+	border-top: 1px solid #efefef;
+	
+ 
 }
 ._cdta>form{
-	width: 100%;
+	  
+    display: flex;
+    
+    flex-grow: 1;
 	
 }
 ._cdtai{
-	resize: none;
-	border:0;
-	width:100%;
-	 -webkit-rtl-ordering: logical;
-	 height:17px;
-	max-height: 80px;
-	
-	outline: none;
-	-webkit-box-align: stretch;
-	font-size: 14px;
-	padding:0 1px;
-	vertical-align: middle;
+	    background: 0 0;
+    border: 0;
+    color: #262626;
+    font-size: inherit;
+    min-height: 20px;
+    max-height: 80px;
+    outline: 0;
+    padding: 0;
+    resize: none;
+    display: -webkit-flex;
+    display: flex;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 @media screen and (max-width: 600px){
 	._cdbg{

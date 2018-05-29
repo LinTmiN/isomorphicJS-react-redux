@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu ,Icon,Container} from 'semantic-ui-react';
+import {Icon} from 'semantic-ui-react';
+import {NavLink } from 'react-router-dom'
 import SearchBar from '../../containers/searchBarContainer'
 import './mainBar.css'
 class MainBar extends React.Component{
@@ -31,22 +32,25 @@ class MainBar extends React.Component{
       <nav className='_mbct' style={{width:'100%',background:'white'}}>
 	    <div className={this.state.hasScroll?'_navbar _navbarc':'_navbar'}>
         <div className='_navl' >
+        <NavLink className='_LogoLink' to='/collect'>
          <Icon style={{fontSize:'30px'}} size='big'  name='openid' />
           <span  className={this.state.hasScroll?'_A1 _A1C':'_A1'}>REXtube</span>
+          </NavLink>
         </div>
         <div className='_mbsc' >
-       	<SearchBar />
+       	<SearchBar/>
         </div>
       	<div className='right' position='right'>
-      	<span className='_A2'>
-         <Icon size='large'  name='spinner' />
-         </span>
-         <span className='_A2' >
-         <Icon  size='large'  name='heart outline' />
-         </span>
-         <span className='_A2'>
-         <Icon  size='large'  name='user outline' />
-         </span>
+      	<NavLink to='/search/image'>
+         <Icon className="_A2" size='large'  name='spinner' />
+         
+         </NavLink>
+          <NavLink to=''>
+         <Icon className="_A2" size='large'  name='heart outline' />
+         </NavLink>
+         <NavLink to=''>
+         <Icon className="_A2" size='large'  name='user outline' />
+         </NavLink>
         </div>
       </div>
       </nav>)

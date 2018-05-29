@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import './modal.css';
-import {Progress } from 'semantic-ui-react'
-import faker from 'faker/locale/en';
 import Card from '../../containers/cardContainer'
 const modalroot = document.getElementById('modal-root');
 class Modal extends React.Component{
@@ -37,7 +35,7 @@ class Modal extends React.Component{
 			<div onClick={()=>{
 				
 				if(this.props.isCardInit)
-				history.push('/search/'+type)
+				history.push('/search/'+type,{keepTop:true})
 				}
 			} className={this.props.isCardInit?'mymodal':''}>
 				

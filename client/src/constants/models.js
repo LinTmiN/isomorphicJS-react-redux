@@ -7,7 +7,8 @@ export const UserState=Immutable.fromJS({
 	isLoging:false,
 	isRegister:false,
 	isCheck:true,
-	switchType:'login'
+	switchType:'login',
+	loginError:''
 });
 export const SearchState = Immutable.fromJS({
 	imageResult:[],
@@ -24,10 +25,11 @@ export const SearchState = Immutable.fromJS({
 export const InputState = Immutable.fromJS({
 	email:'',
 	password:'',
-	avatar:'',
+	avatar:undefined,
 	username:'',
 	searchtype:'video',
 	searchvalue:'',
 	screen:{width:document.body.clientWidth,height:document.body.clientHeight},
 	total:'',
+	scrollTop:window.scrollY
 })

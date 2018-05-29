@@ -1,10 +1,10 @@
-import { Image ,Icon,Loader} from 'semantic-ui-react';
+import { Icon,Loader} from 'semantic-ui-react';
 import './card.css'
 import faker from 'faker'
 import React from 'react';
 import axios from 'axios'
-
-class Card extends React.Component {
+import WebAPI from '../../utils/WebAPI'
+class Card extends React.PureComponent {
 	constructor(props){
 		super(props)
 		this.handleTime=this.handleTime.bind(this)
@@ -12,13 +12,14 @@ class Card extends React.Component {
 			comment:[],
 			page:1,
 			isCollect:false,
-			info:{}
+			info:{},
+			like:0,
 		}
 		this.addCollect=this.addCollect.bind(this)
 		this.loadMoreComment=this.loadMoreComment.bind(this)
 		this.toThos=this.toThos.bind(this)
 		this.handleTime=this.handleTime.bind(this)
-		
+		this.myref=React.createRef()
 	}
 	handleTime=(time)=>{
 		let minute = 1000*60,
@@ -52,7 +53,7 @@ class Card extends React.Component {
 
 	}
 	toThos=(num)=>{
-		typeof num ==='number'?num=num:num=0;
+		num=typeof num ==='number'?num:Number(num);
 		  return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
 	}
 	componentDidMount(){
@@ -69,6 +70,12 @@ class Card extends React.Component {
 				})
 			}
 		})
+		WebAPI.getLike(id).then(({data})=>{
+			
+			if(data.islike){
+				this.setState({like:1})
+			}
+		})
 		if(type==='image'){
 			let fakeComment=Array.apply(null,{length:Math.round(Math.random()*100)})
 			                .map((a)=>({username:faker.name.findName(),text:faker.lorem.sentence()}));
@@ -80,12 +87,11 @@ class Card extends React.Component {
 					avatar:data.user.profile_image.small,
 					likes:data.likes,
 					description:data.description,
-					time:data.created_time
+					time:data.created_at
 				}
 				this.setState({
 					info:info,
 			    	comment:this.comment.slice(0,25),
-			    	total:this.comment.length,
 			    	page:1,
 			    	url:data.urls.regular,
 
@@ -94,27 +100,31 @@ class Card extends React.Component {
 			})
 			 
 		}else if (type==='video'){
-			const promises =[axios.get('https://api.vimeo.com/videos/'+id+'?access_token=bff4a0260496cc72b64158bc0670c01a'),axios.get('https://api.vimeo.com/videos/'+this.props.id+'/comments?page=1&access_token=bff4a0260496cc72b64158bc0670c01a&per_page=25')]
+			const promises =[axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+id+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A'),axios.get('https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=24&videoId='+id+'&fields=items(snippet(topLevelComment(snippet(authorDisplayName%2CtextDisplay%2CtextOriginal))))%2CnextPageToken&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')]
 			Promise.all(promises).then((res)=>{
-				
-				let { data:{data}}=res[1],
+
+				axios.get('https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id='+res[0].data.items[0].snippet.channelId+'&fields=items%2Fsnippet%2Fthumbnails%2Fmedium&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A').then(({data:mydata})=>{
+					
+					let { data}=res[1],
 				    info={
-						username:res[0].data.user.name,
-						avatar:res[0].data.user.pictures.sizes[1].link,
-						likes:res[0].data.metadata.connections.likes.total,
-						description:res[0].data.description,
-						time:res[0].data['created_time'],
+						username:res[0].data.items[0].snippet.channelTitle,
+						avatar:mydata.items[0].snippet.thumbnails.medium.url,
+						likes:res[0].data.items[0].statistics.likeCount,
+						description:res[0].data.items[0].snippet.description,
+						time:res[0].data.items[0].snippet.publishedAt,
 
 					},
-					comment=data.map((item)=>({username:item.user.name,text:item.text}));
+					comment=data.items.map((item)=>({username:item.snippet.topLevelComment.snippet.authorDisplayName,text:item.snippet.topLevelComment.snippet.textOriginal}));
+					
 				this.setState({
 					info:info,
 					comment:comment,
-					total:res[1].data.total,
-					page:1
+					page:data.nextPageToken
 					
 				})
 				 onCardInit()
+				})
+				
 			})
 
 		}
@@ -123,19 +133,22 @@ class Card extends React.Component {
       const {type}=this.props
       this.setState({load:true})
       if( type==='image'){
-      	  this.setState((preS)=>({
+      	  this.setState((preS)=>{
+      	  	 let page=(preS.page+1)*25>this.comment.length?'':preS.page+1;
+      	  	return {
       	  	comment:this.comment.slice(0,25*(preS.page+1)),
-      	  	page:preS.page+1,
+      	  	page:page,
       	  	load:false
-      	  }))
+      	  }})
       }else if(type==='video'){
-      	axios.get('https://api.vimeo.com/videos/'+this.props.id+'/comments?page='+(this.state.page+1)+'&access_token=bff4a0260496cc72b64158bc0670c01a&per_page=24')
-      	.then(({data:{data}})=>{
-      		 	let comment=data.map((item)=>({username:item.user.name,text:item.text}));
-      		 	
+      
+      	axios.get('https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&pageToken='+this.state.page+'&maxResults=24&videoId='+this.props.id+'&fields=items(snippet(topLevelComment(snippet(authorDisplayName%2CtextDisplay%2CtextOriginal))))%2CnextPageToken&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+      	.then(({data})=>{
+      		 	let comment=data.items.map((item)=>({username:item.snippet.topLevelComment.snippet.authorDisplayName,text:item.snippet.topLevelComment.snippet.textOriginal}));
+      		 	   
       		 		this.setState((preS)=>({
       		 			comment:preS.comment.concat(comment),
-      		 			page:preS.page+1,
+      		 			page:data.nextPageToken,
       		 			load:false
       		 		}))
       		 	
@@ -158,13 +171,20 @@ class Card extends React.Component {
 			})	
 		}
 	}
+	togglelike(obj){
+		if(this.state.like===1){
+			WebAPI.unlike(obj.id)
+			this.setState({like:0})
+		}else if(this.state.like===0){
+			WebAPI.like(obj)
+			this.setState({like:1})
+		}
+	}
 	render(){
-			let { type}=this.props,
-			     {info,comment}=this.state,
-			     width=this.props.screen.toJS().width;
-			     
-			let height= this.props.screen.toJS().width>=600?337.5:this.props.screen.toJS().width*9/16;
-			let comments=comment.map((c,index)=><li key={index}><span className='_cdusname'>{c.username}</span>{c.text}</li>)
+			let { id,type}=this.props,
+			     {info,comment}=this.state,		    
+			     height= this.props.screen.toJS().width>=600?500:this.props.screen.toJS().width*9/16,
+			     comments=comment.map((c,index)=><li key={index}><span className='_cdusname'>{c.username}</span>{c.text}</li>);
 			return (
 			<React.Fragment>
 				{this.props.isCardInit?(
@@ -174,15 +194,15 @@ class Card extends React.Component {
 							<article className='_cdati _cdatirs'>
 							    <div className='_cdimmd _cdim2rs'>
 							       <div className='_cdim2 ' style={type==='image'?{minHeight:'425px'}:{}}>
-							       	{type==='image'?<img src={this.state.url} />:
-							       	<iframe style={{width:'100%',height:height+'px'}} src={"https://player.vimeo.com/video/"+this.props.id+'?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=126886'} 
-										 frameBorder="0" title="flow" webkitallowfullscreen='true' mozallowFullscreen='true' allowFullscreen='true'>
+							       	{type==='image'?<img alt={`${info.username}'s img`} src={this.state.url} />:
+							       	<iframe title={`${info.username}'s video`} style={{width:'100%',height:height+'px',}} src={"https://www.youtube.com/embed/"+this.props.id+"?rel=0&showinfo=0&iv_load_policy=3"}
+										frameBorder="0" allowFullScreen >
 								     </iframe>}
 							      	</div>
 							    </div>
 								<header className='_cdhd1'>
 								    <div className='_cdhd2'>
-									<div className='_cdhdim'><img src={info.avatar} /></div>
+									<div className='_cdhdim'><img alt={`${info.username}'s avatar`} src={info.avatar} /></div>
 									<div className='_cdusname1'><h1 >{info.username}<span> ·关注</span></h1></div>
 									</div>
 								</header>
@@ -190,26 +210,39 @@ class Card extends React.Component {
 									<div className='_ncdcm'>
 										<ul>
 										   <li><span className='_cdusname'>{info.username}</span>{info.description}</li>
-										   {comment.length<this.state.total?(<li onClick={this.loadMoreComment} style={{fontSize:'14px',fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comment {this.state.load?<Loader size='mini' active inline />:''}</li>):''}
+										   {this.state.page?(<li onClick={this.loadMoreComment} style={{fontSize:'14px',fontWeight:'400',color:'#999',cursor:'pointer'}}>Load more comment {this.state.load?<Loader size='mini' active inline />:''}</li>):''}
 										   	  {comments.reverse()}
 										</ul>
 									</div>
 									
 									 <div className='_ncdicon'>
-										<Icon size='big' name='heart outline' style={{cursor:'pointer'}}/>
-										<Icon style={{paddingLeft:'10px'}} size='big' name='comment outline' style={{cursor:'pointer'}}/>
+										<Icon onClick={()=>this.togglelike({id:id,type:type})} size='big' name={this.state.like?'heart':'heart outline'} style={{cursor:'pointer',color:this.state.like?'#FB4E4E':'black'}}/>
+										<Icon onClick={()=>this.myref.current.focus()} style={{paddingLeft:'10px'}} size='big' name='comment outline' style={{cursor:'pointer'}}/>
 										<Icon onClick={()=>this.addCollect({id:this.props.id,type:this.props.type})} size='big' name={this.state.isCollect?'bookmark':'remove bookmark'} className='_ncdicr' style={{cursor:'pointer'}}/>
 									</div>
 									<div className='_ncdlk'>
-										{this.toThos(info.likes)+' likes'}
+										{this.toThos(info.likes+this.state.like)+' likes'}
 									</div>
 									<div className='_ncdtime'><time>{this.handleTime(info.time)}</time> </div>
-									<div className='_ncdta'>
-									
-										<form>
-										<textarea placeholder='添加评论...' className='_cdtai' ></textarea>
-										</form>
-									</div>
+									<section className='_cdta'>
+				
+					<form >
+					<textarea onChange={(e)=>{
+						e.target.scrollTop=0
+						let H=e.target.value===''?18:e.target.scrollHeight
+						this.setState({value:e.target.value,textH:H})
+					}} onKeyDown={(e)=>{
+						if(e.keyCode===13){
+							e.preventDefault()
+							this.setState((s,p)=>{
+								let comment=s.comment
+								  comment.unshift({username:p.userInfo.username,text:s.value})
+								 return {comment:comment,value:'',textH:18}
+							})
+						}
+					}} ref={this.myref}  wrap="virtual" placeholder='添加评论...' style={{height:this.state.textH+'px'}} value={this.state.value}  className='_cdtai' ></textarea>
+					</form>
+				</section>
 									
 								</div>
 							</article>

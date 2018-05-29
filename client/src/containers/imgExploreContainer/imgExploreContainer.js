@@ -10,7 +10,7 @@ export default connect(
 		imageresult:state.getIn(['search','imageResult']),
 		page:state.getIn(['search','page']),
 		preValue:state.getIn(['search','preValue']),
-		searchtype:state.getIn(['input','searchType']),
+		searchtype:state.getIn(['input','searchtype']),
 		isInit:state.getIn(['search','isInit']),
 		total:state.getIn(['input','total'])
 	}),
@@ -21,7 +21,7 @@ export default connect(
 			.then(({data})=>{
 				dispatch(initResult({key:'imageResult',value:data}))
 				dispatch(preValue('rementupian热'))
-				dispatch(setPage(1))
+				dispatch(setPage(2))
 				dispatch(isInit(false))
 				dispatch(setInput({key:'total',value:Number.POSITIVE_INFINITY}))
 			})

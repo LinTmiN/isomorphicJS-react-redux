@@ -42,7 +42,7 @@ apiRoutes.get('/setup',(req,res)=>{
    })
    sampleUser.save((err)=>{
    	 if(err) throw err;
-   	 console.log('setup success')
+   	 
    	 res.json({success:true,message:'init'})
    })
 });
@@ -58,7 +58,7 @@ apiRoutes.post('/register',function(req,res){
           	  	    username:req.body.username,
           	  	    email:req.body.email,
           	  	    password:req.body.password,
-          	  	    avatar:req.body.avatar
+          	  	    avatar:req.body.avatar||'http://img3.imgtn.bdimg.com/it/u=3150822554,1701663780&fm=27&gp=0.jpg'
           	  });
           	  newUser.save((err)=>{
           	  	if(err) throw err;
@@ -94,7 +94,7 @@ apiRoutes.get('/authenticate',(req,res)=>{
 	User.findOne({email:req.decoded.email},(err,user)=>{
 		if(err) throw err
 		if(user){
-			console.log(user)
+			
 			res.json({success:true,user:{email:user.email,username:user.username,avatar:user.avatar,collect:user.collect}})
 		}else{
 			res.json({success:false,message:'un recogenisze user'})
@@ -114,19 +114,45 @@ apiRoutes.get('/collect',(req,res)=>{
 });
 apiRoutes.put('/collect',(req,res)=>{
 
-	User.findOneAndUpdate({email:req.decoded.email},{$push:{collect:req.body.newcollect}},(err,user)=>{
+	User.findOneAndUpdate({email:req.decoded.email},{$push:{collect:req.body.newcollect,trends:{date:new Date(),action:'收藏',id:req.body.newcollect.id,type:req.body.newcollect.type}}},(err,user)=>{
 			if(err) throw err;
 			res.json({success:true})
 			
 		})
 	})
 apiRoutes.delete('/collect/:id',(req,res)=>{
-	User.update({email:req.decoded.email},{$pull:{collect:{id:req.params.id}}},(err,user)=>{
+	User.update({email:req.decoded.email},{$pull:{collect:{id:req.params.id},trends:{id:req.params.id}}},(err,user)=>{
 		if(err) throw err;
-		console.log(user)
+		
 		res.json({success:true})
 
 	})
 })
+apiRoutes.put('/like',(req,res)=>{
 
+	User.findOneAndUpdate({email:req.decoded.email},{$push:{likes:req.body.like,trends:{date:new Date(),action:'赞',id:req.body.like.id,type:req.body.like.type}}},(err,user)=>{
+			if(err) throw err;
+			res.json({success:true})
+			
+		})
+	})
+apiRoutes.delete('/unlike/:id',(req,res)=>{
+	User.update({email:req.decoded.email},{$pull:{likes:{id:req.params.id},trends:{id:req.params.id}}},(err)=>{
+		if(err) throw err;
+		
+		res.json({success:true})
+
+	})
+})
+apiRoutes.get('/likes/:id',(req,res)=>{
+	User.findOne({"email":req.decoded.email,"likes.id":req.params.id},(err,user)=>{
+		if(err) throw err;
+		console.log(user)
+		if(user){
+			res.json({success:true,islike:true})
+		}else{
+			res.json({success:false,islike:false})
+		}
+	})
+});
 export default apiRoutes;

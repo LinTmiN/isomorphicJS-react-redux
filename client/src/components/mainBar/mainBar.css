@@ -42,15 +42,22 @@
 	transition: opacity 0.2s ease-in-out;
 }
 ._A1C{
-	opacity: 0;
+	
+	opacity:0;
 }
 .right{
 	font-size: 15px;
 	font-weight: normal;
 
 }
-._A2{
-	padding-left: 25px;
+.right>._A2{
+	padding:5px;
+	width:55px;
+	height:55px;
+}
+._LogoLink{
+display: flex;
+align-items: center;
 }
 ._mbsc{
 	transition:all 0.5s ease-in-out;

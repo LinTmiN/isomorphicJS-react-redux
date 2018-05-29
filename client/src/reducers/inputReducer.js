@@ -9,6 +9,10 @@ const inputReducer = handleActions({
 	},
 	GET_SCREEN:(state,{payload})=>{
 		return state.merge({screen:payload})
+		
+	},
+	GET_SCROLL:(state,{payload})=>{
+		return state.merge({scrollTop:payload})
 	}
 },InputState)
 export default inputReducer;

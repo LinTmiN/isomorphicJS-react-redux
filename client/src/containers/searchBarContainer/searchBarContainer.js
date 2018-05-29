@@ -13,14 +13,14 @@ export default withRouter(connect(
 	(state)=>({
 		issearching:state.getIn(['search','isSearching']),
 		searchKey:state.getIn(['search','key']),
-		searchtype:state.getIn(['input','searchType']),
+		searchtype:state.getIn(['input','searchtype']),
 		searchvalue:state.getIn(['input','searchvalue']),
 		resultsShow:state.getIn(['search','resultsShow'])
 	}),
 	(dispatch)=>({
 		onTypeChange:(event,{value})=>{
 			console.log('change'+value)
-			dispatch(setInput({key:'searchType',value:value}))			
+			dispatch(setInput({key:'searchtype',value:value}))			
 			
 		},
 		onSearchChange:(event,{value})=>{			
@@ -52,7 +52,7 @@ export default withRouter(connect(
 			 	history.push('/search/'+type)
 			 }
 		},
-		initType:(type)=>dispatch(setInput({key:'searchType',value:type}))
+		initType:(type)=>dispatch(setInput({key:'searchtype',value:type}))
 		
 	}),
 	  (stateProps,dispatchProps,ownProps)=>{

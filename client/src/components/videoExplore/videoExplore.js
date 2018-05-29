@@ -3,7 +3,7 @@ import React from "react";
 import {VideoBoxContainer} from '../../containers/boxContainer'
 import faker from 'faker'
 
-class VideoExplore extends React.Component {
+class VideoExplore extends React.PureComponent {
 	constructor(props){
 		super(props)
 		this.myref=React.createRef()
@@ -26,14 +26,9 @@ class VideoExplore extends React.Component {
  		}
  	}
 	componentDidMount(){		
-		const { scrollTop}=document.documentElement;
-		const { clientHeight,scrollHeight}=document.documentElement;
-		if(scrollTop+clientHeight+40>=scrollHeight){
-				if(this.props.isInit){return}
-				else if(this.props.isAdding){ return }
-			
+		
 			this.props.firstResult()
-		}
+	
 		 this.check = setInterval(this.handleScroll,100)
 		
 	}
@@ -41,13 +36,7 @@ class VideoExplore extends React.Component {
 		clearInterval(this.check)
 
 	}
-	shouldComponentUpdate(nS,nP){
-		if(this.state!==nS||this.props!==nP){
-			return true
-		}else{
-			return false
-		}
-	}
+
 	imgComplete(){
 		const imgs=this.myref.current.querySelectorAll('img')
 		for (let i=0;i<imgs.length;i++){
@@ -59,14 +48,15 @@ class VideoExplore extends React.Component {
 		return true
 	}
 	componentDidUpdate(){
-		if(this.imgComplete){
+		if(this.imgComplete()){
 			this.props.finishAdd()
 		}
 	}
 	render(){
 		let BoxList,Load
+		console.log(this.props.videoresul)
 		if(this.props.videoresult.length>0){
-      		Load=this.props.videoresult.length<this.props.total?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'>bbbb</Loader>:'end'
+      		Load=this.props.videoresult.length<this.props.total?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'></Loader>:'end'
       		BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
 			Load=''

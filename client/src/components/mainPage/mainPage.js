@@ -1,23 +1,33 @@
 import React from 'react';
 import MainBar from '../mainBar';
-import SuggestCard from '../suggestCard'
-import { BrowserRouter as Router,Route,Switch ,Redirect} from 'react-router-dom'
+import { BrowserRouter as Router,Route,Switch } from 'react-router-dom'
 import ModalContainer from '../../containers/modalContainer'
-import MainBottom from '../mainbottom'
+import ExploreModal from '../exploreModal'
 import CollectPage from '../collectPage'
 import SearchPage from '../searchPage'
+import ScrollToTop from '../scrollToTop'
 import './sf.css'
+class NoMatch extends React.Component{
+  render(){
+      return <div style={{paddingTop:'135px'}}>很抱歉，页面不存在</div>
+  }
+}
 const MainPage=()=>(
 	<Router>
       <section>
 
-      	<MainBar/>
+      	
+        <ScrollToTop>
         <Switch>	
-      	<Route  path='/search' component={SearchPage} />
-        <Route path='/collect' component={CollectPage} />
+
+      	<Route  path='/search/:type' component={SearchPage} />
+        <Route exact path='/collect' component={CollectPage} />
+        <Route exact path='/explore/:id' component={ExploreModal} />
+        <Route component={NoMatch} />
         </Switch>
+        </ScrollToTop>
         <Route  path='/search/:type/:key' component={ModalContainer} />
-        <MainBottom/>
+  		      
       </section>
 </Router>
 )

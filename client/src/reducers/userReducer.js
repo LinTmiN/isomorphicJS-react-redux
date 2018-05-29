@@ -5,8 +5,8 @@ const userReducers = handleActions({
 		return state.merge({switchType:payload})
 	}
 	,
-	REQUEST_LOGIN:(state)=>(
-		state.merge({isLoging:true})
+	REQUEST_LOGIN:(state,{payload})=>(
+		state.merge({isLoging:payload})
 	),
 	RECEIVE_USER:(state,{ payload })=>{
 
@@ -23,7 +23,7 @@ const userReducers = handleActions({
 		state.merge({isRegister:false})
 	),
 	SET_AUTH:(state,{payload})=>(
-		state.merge({isAuthorized:payload})
+		state.merge({isAuthorized:payload,loginError:''})
 	),
 	RECEIVE_COLLECT:(state,{payload})=>{
 		return state.merge({collect:payload})
@@ -36,6 +36,9 @@ const userReducers = handleActions({
 	},
 	IS_CHECK:(state,{payload})=>(
 		state.merge({'isCheck':payload})
-	)
+	),
+	LOGIN_ERROR:(state,{payload})=>{
+		return state.merge({loginError:payload})
+	}
 },UserState);
 export default userReducers;

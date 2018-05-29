@@ -11,7 +11,7 @@ import {
 	getKey,
 	setPage,
 	setInput,
-	preValue,initResult,addResult,isAdding,isInit,receiveCollect,isAdded,isDelete,isCheck
+	preValue,initResult,addResult,isInit,receiveCollect,isCheck
 } from '../actions';
 
 function getCookie(keyName){
@@ -27,15 +27,16 @@ function getCookie(keyName){
 }
 export default {
 	login:(dispatch,email,password)=>{
-		dispatch(requestLogin())
+		dispatch(requestLogin(true))
 
 		axios.post('http://localhost:3000/api/login',{
 			email:email,
 			password:password
 		}).then((res)=>{
 			if(res.data.success === false){
-				dispatch(loginError())
-				window.location.reload();
+				dispatch(loginError(res.data.message))
+				
+				dispatch(requestLogin(false))
 			}else{
 				if(!document.cookie.token){
 					let d = new Date();
@@ -45,13 +46,16 @@ export default {
 					dispatch(receiveUser(res.data.user))
 					dispatch(receiveCollect(res.data.collect))
 					dispatch(setAuth({value:true}))
+					dispatch(requestLogin(false))
 					
 				}
 			}
 			
 		})
 		.catch(function(error){
-			dispatch(loginError())
+			dispatch(loginError('遇到一个错误，请检测网络状况'))
+			
+			dispatch(requestLogin(false))
 		})
 	},
 	logout:(dispatch)=>{
@@ -62,7 +66,7 @@ export default {
 		dispatch(isCheck(true))
 		axios.get('http://localhost:3000/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
 		.then((res)=>{
-			console.log(res)
+			
 			if(res.data.success===true){
 				dispatch(setAuth(true))
 				dispatch(receiveUser(res.data.user))
@@ -91,7 +95,7 @@ export default {
 			}
 		})
 		.catch((err)=>{
-			console.log(err)
+			
 			dispatch(registerFailed())
 		})
 	},
@@ -114,13 +118,13 @@ export default {
     	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
     		if(type==='video'){
 			
-			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page=1&per_page=24&query='+value+'&sort=relevant')
-			.then((data)=>{
-				dispatch(initResult({key:'videoResult',value:data.data.data}))
+			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=24&q='+value+'&regionCode=US&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(channelId%2CchannelTitle%2Cdescription%2CpublishedAt%2Cthumbnails%2Fmedium%2Ctitle))%2CnextPageToken%2CpageInfo%2FtotalResults&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+			.then(({data})=>{
+				dispatch(initResult({key:'videoResult',value:data.items}))
 				dispatch(preValue(value))
-				dispatch(setPage(1))
+				dispatch(setPage(data.nextPageToken))
 				dispatch(isInit(false))
-				dispatch(setInput({key:'total',value:data.data.total}))
+				dispatch(setInput({key:'total',value:data.pageInfo.totalResults}))
 			})
 		}
 		else{
@@ -129,7 +133,7 @@ export default {
 				
 				dispatch(initResult({key:'imageResult',value:data.data.results}))
 				dispatch(preValue(value))
-				dispatch(setPage(1))
+				dispatch(setPage(2))
 				dispatch(isInit(false))
 				dispatch(setInput({key:'total',value:data.data.total}))
 			})
@@ -141,22 +145,22 @@ export default {
 		
 		if(type==='video'){
 			
-			axios.get('https://api.vimeo.com/videos?access_token=bff4a0260496cc72b64158bc0670c01a&direction=asc&filter=CC-BY-NC&page='+(page+1)+'&per_page=24&query='+value+'&sort=relevant')
-			.then((data)=>{
-				dispatch(addResult({key:'videoResult',value:data.data.data}))
-				dispatch(setPage((page+1)))
+			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=24&pageToken='+page+'&q='+value+'&regionCode=US&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(channelId%2CchannelTitle%2Cdescription%2CpublishedAt%2Cthumbnails%2Fmedium%2Ctitle))%2CnextPageToken%2CpageInfo%2FtotalResults&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+			.then(({data})=>{
+				dispatch(addResult({key:'videoResult',value:data.items}))
+				dispatch(setPage(data.nextPageToken))
 				
 			})
 		}
 		else if (type==='image'){
 			if(value==='rementupian热'){
-				return axios.get('https://api.unsplash.com/photos/curated?page='+(page+1)+'&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+				return axios.get('https://api.unsplash.com/photos/curated?page='+(page)+'&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
 				.then(({data})=>{
 						dispatch(addResult({'key':'imageResult',value:data}))		
 					dispatch(setPage(page+1))
 				})
 			}
-			axios.get('https://api.unsplash.com/search/photos?page='+(page+1)+'&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
+			axios.get('https://api.unsplash.com/search/photos?page='+(page)+'&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
 				dispatch(addResult({'key':'imageResult',value:data.data.results}))		
 				dispatch(setPage(page+1))			
@@ -167,26 +171,30 @@ export default {
 	getCollect:(dispatch)=>{
 		return axios.get('http://localhost:3000/api/collect?token='+getCookie('token')).then((res)=>{
 			if(res.data.success){
-				console.log(res.data.collect)
+				
 				dispatch(receiveCollect(res.data.collect))
 				return true
 			}else{
-				console.log(res.data.message)
+				
 				return false
 			}
 		})
 	},
 	addCollect:(dispatch,newcollect)=>{
-		return axios.put('http://localhost:3000/api/collect?token='+getCookie('token'),{newcollect:newcollect}).then((res)=>{
-		
-		})
+		return axios.put('http://localhost:3000/api/collect?token='+getCookie('token'),{newcollect:newcollect})
 	},
 	deleteCollect:(dispatch,collectId)=>{
 		
-		axios.delete('http://localhost:3000/api/collect/'+collectId+'?token='+getCookie('token')).then((res)=>{
-			
-		})
+		axios.delete('http://localhost:3000/api/collect/'+collectId+'?token='+getCookie('token'))
+	},
+	getLike:(id)=>{
+		return axios.get('http://localhost:3000/api/likes/'+id+'?token='+getCookie('token'))
+	},
+	like:(obj)=>{
+		return axios.put('http://localhost:3000/api/like?token='+getCookie('token'),{like:obj})
+	},
+	unlike:(id)=>{
+		return axios.delete('http://localhost:3000/api/unlike/'+id+'?token='+getCookie('token'))
 	}
-
 
 };

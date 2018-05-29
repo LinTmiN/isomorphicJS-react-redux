@@ -14,7 +14,8 @@ export default connect(
    	  avatar:state.getIn(['input','avatar']),
    	  isRegister:state.getIn(['user','isRegister']),
    	  isLoging:state.getIn(['user',"isLoging"]),
-   	  authType:state.getIn(['user','switchType'])
+   	  authType:state.getIn(['user','switchType']),
+        loginError:state.getIn(['user','loginError'])
    }),
    (dispatch)=>({
    	  onChangeInput:(event)=>{

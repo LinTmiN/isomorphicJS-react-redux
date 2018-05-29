@@ -11,7 +11,6 @@ class ImgExplore extends React.Component {
 		this.imgComplete=this.imgComplete.bind(this)
 		this.handleScroll=this.handleScroll.bind(this)
 	}
-	
  	isScrolling(){
  		const { scrollTop}=document.documentElement;
 		const { clientHeight,scrollHeight}=document.documentElement;
@@ -27,13 +26,13 @@ class ImgExplore extends React.Component {
  		}
  	}
 	componentDidMount(){		
-		const { scrollTop}=document.documentElement;
-		const { clientHeight,scrollHeight}=document.documentElement;
-			if(scrollTop+clientHeight+40>=scrollHeight){
+		// const { scrollTop}=document.documentElement;
+		// const { clientHeight,scrollHeight}=document.documentElement;
+		// 	if(scrollTop+clientHeight+40>=scrollHeight){
 			this.props.firstResult()
-		}
+		// }
 		this.check = setInterval(this.handleScroll,100)
-		
+	
 		
 	}
 	componentWillUnmount(){
@@ -64,7 +63,6 @@ class ImgExplore extends React.Component {
 		
 	}
 	render(){
-	
 		let BoxList,Load
 		if(this.props.imageresult.length>0){
 			Load=this.props.imageresult.length<this.props.total?<Loader className='myloader' active inline='centered' size='medium'/>:'end'
@@ -73,7 +71,6 @@ class ImgExplore extends React.Component {
 		 	Load=''
 			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>Sorry,we can't find this!</div>
 		 }
-
 		return (
 		<article ref={this.myref}  className='iep1'>
 			<h1>Explore</h1>

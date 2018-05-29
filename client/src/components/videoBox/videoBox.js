@@ -1,12 +1,14 @@
 import React from 'react';
-import {Image,Icon} from 'semantic-ui-react';
+import {Icon} from 'semantic-ui-react';
 import './videoBox.css'
+import axios from 'axios'
 class VideoBox extends React.Component{
 	constructor(props){
 		super(props)
 			this.state={
 				showInfo:false,
-				imgOnload:false
+				imgOnload:false,
+				statistics:{},
 			}
 			this.handleTime=this.handleTime.bind(this)
 			this.myref=React.createRef()
@@ -43,36 +45,45 @@ class VideoBox extends React.Component{
 		  	return 'recent'
 
 	}
+	toThos=(num)=>{
+		num=typeof num ==='number'?num:Number(num);
+		  return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+	}
 	componentDidMount(){
-		
+		const {id:{videoId}}=this.props.info
+		axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+videoId+'&fields=items%2Fstatistics&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A').then(({data})=>{
+				
+				this.setState({
+					statistics:data.items[0].statistics
+				})
+		})
 		this.myref.current.onload=()=>{
 			
 			this.setState({imgOnload:true})}
 	}
 
 	render(){	
-	    const info=this.props.info
-	   const {history,mykey}	=this.props
+	   const {history,info}	=this.props
 		return (
  			<div onClick={()=>{
  					this.props.isCardInit()
- 					history.push('/search/video/'+info.uri.replace('/videos/',''),{top:document.documentElement.scrollTop})
+ 					history.push('/search/video/'+info.id.videoId,{top:document.documentElement.scrollTop})
  					}
  			} onMouseEnter={this.handleShow} onMouseLeave={this.handleShow} className='videoItem'>
  				 <div className='conss'>
  				 
- 				 <img  ref={this.myref} alt='somthing' src={info.pictures.sizes[2].link}/>
- 				{this.state.showInfo==true?(<div className='videomodal'>
+ 				 <img  ref={this.myref} alt='somthing' src={info.snippet.thumbnails.medium.url}/>
+ 				{this.state.showInfo===true?(<div className='videomodal'>
  					<Icon style={{marginTop:'25%'}} name='play' size='huge'/>
  				    <div className='videoinfo'>
- 					<span >{this.handleTime(info['created_time'])}</span>
- 					<span><Icon name='heart'/>{info.metadata.connections.likes.total}</span>
- 					<span><Icon name='comment'/>{info.metadata.connections.comments.total}</span>
+ 					<span >{this.handleTime(info.snippet.publishedAt)}</span>
+ 					<span><Icon name='heart'/>{this.toThos(this.state.statistics.likeCount)}</span>
+ 					<span><Icon name='comment'/>{this.toThos(this.state.statistics.commentCount)}</span>
  					</div>
  				</div>):''}
  				</div>
- 				 <h1 className='videotitle'>{info.name}</h1>
- 				<h2 className='videosubtitle'><Image  src={info.user.pictures.sizes[0].link} avatar />{info.user.name+' | '+info.stats.plays}</h2>
+ 				 <h1 className='videotitle' title={info.snippet.title}>{info.snippet.title}</h1>
+ 				<h2  className='videosubtitle'>{info.snippet.channelTitle+' | '+this.toThos(this.state.statistics.viewCount)}</h2>
  			</div>
 
  

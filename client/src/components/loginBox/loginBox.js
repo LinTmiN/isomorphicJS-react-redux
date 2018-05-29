@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form,Segment,Button,Message,Grid,Container,Header} from 'semantic-ui-react';
 import './loginBox.css';
+ 
 const LoginBox = ({
   email,
   password,
@@ -12,13 +13,19 @@ const LoginBox = ({
   onLoginSubmit,
   onRegisterSubmit,
   onSwitchType,
+  loginError
 })=>{
  
 const loginForm=(  
- <Grid.Column mobile={16} tablet={8} computer={8}>
-  <Form size="large">
+ <React.Fragment>
+  <Form  error size="large">
     <Segment stacked>
       <Header as='h1' style={{margin:'25px',fontFamily:`'Pacifico','cursive'`}}>ReduxTube</Header>
+   {loginError===''?'':<Message
+       error
+       header='Action Forbidden'
+       content={loginError}
+     />}
       <Form.Input
         onChange={onChangeInput}
         fluid
@@ -44,13 +51,13 @@ const loginForm=(
     </Segment>
   </Form>
   <Message>
-    New to us? <a href='#' onClick={onSwitchType('register')}>Sign Up</a >
+    New to us? <span style={{color:'#5070FF',cursor:'pointer'}} onClick={onSwitchType('register')}>Sign Up</span >
   </Message>
-</Grid.Column>
 
+</React.Fragment>
 )
 const registerForm =(
-  <Grid.Column mobile={16} tablet={8} computer={8}>
+    <React.Fragment>
     <Form size="large">
       <Segment stacked>
         <Header as='h1' style={{margin:'25px',fontFamily:"'Pacifico','cursive'"}}>ReduxTube</Header>
@@ -95,9 +102,9 @@ const registerForm =(
       </Segment>
     </Form>
       <Message>
-        Has account? <a href='#' onClick={onSwitchType('login')}>Login In</a>
+        Has account? <span style={{color:'#5070FF',cursor:'pointer'}} href='#' onClick={onSwitchType('login')}>Login In</span >
       </Message>
-  </Grid.Column>
+  </React.Fragment>
   )
 
   return (
@@ -122,9 +129,9 @@ const registerForm =(
              </div>
            </div>
           </Grid.Column>
-          
-          {authType ==='register'?registerForm:loginForm}
-          
+          <Grid.Column mobile={16} tablet={8} computer={8}>
+            {authType ==='register'?registerForm:loginForm}
+          </Grid.Column>
         </Grid.Row>
 
       </Grid>
