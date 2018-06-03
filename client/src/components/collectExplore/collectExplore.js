@@ -24,7 +24,7 @@ class CollectExplore extends React.PureComponent{
 		return (
 				
 				<section className='_cect'>
-				    {boxList.reverse()}
+				    {boxList.length===0?<span style={{fontSize:'25px',color:'#999',marginTop:'80px'}}>你还没有任何收藏</span>:boxList.reverse()}
 				</section>
 			
 		)

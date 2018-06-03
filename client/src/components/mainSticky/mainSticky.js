@@ -25,7 +25,7 @@ class MainSticky extends React.PureComponent{
 	                  <div className='_msfvc'>
 	                  	  <div className='_msfvti'><h2>快拍<span>全部播放</span></h2></div>
 		                  <div className='_msfv'>
-	                  		  	{collect.map((item,index)=><O key={index} id={item.id}/>)}
+	                  		  	{collect.length===0?<span style={{fontSize:'12px',color:"#999"}}>快速浏览你的收藏视频</span>:collect.map((item,index)=><O key={index} id={item.id}/>)}
 						  </div>
 					  </div>
 					  <nav className='_msnav'>

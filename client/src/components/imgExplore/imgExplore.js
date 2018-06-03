@@ -14,15 +14,18 @@ class ImgExplore extends React.Component {
  	isScrolling(){
  		const { scrollTop}=document.documentElement;
 		const { clientHeight,scrollHeight}=document.documentElement;
-		return scrollTop+clientHeight+40>=scrollHeight
+		return scrollTop+clientHeight+1200>=scrollHeight
  	}
  	handleScroll(){
  		if(this.lastScroll===window.scrollY){return}else{
- 			this.lastScroll=window.scrollY
+ 			this.lastScroll=window.scrollY	
  		}
- 		if(this.isScrolling()&&!this.props.isInit){
- 			
- 			this.props.updateResult()
+ 		
+ 		if(this.imgComplete()){this.props.finishAdd()}
+ 		if(this.isScrolling()&&this.lastPage!==this.props.page&&!this.props.isAdding){
+ 			this.lastPage=this.props.page
+ 			this.length=this.props.imageresult.length
+ 			this.props.updateResult(this.props.page)
  		}
  	}
 	componentDidMount(){		
@@ -56,16 +59,12 @@ class ImgExplore extends React.Component {
 		}
 		return true
 	}
-	componentDidUpdate(){
-		if(this.imgComplete()){
-			this.props.finishAdd()
-		}
-		
-	}
+	
 	render(){
 		let BoxList,Load
 		if(this.props.imageresult.length>0){
-			Load=this.props.imageresult.length<this.props.total?<Loader className='myloader' active inline='centered' size='medium'/>:'end'
+			console.log(this.length+'sfsf'+this.props.imageresult.length)
+			Load=this.length!==this.props.imageresult.length?<Loader className='myloader' active inline='centered' size='medium'/>:'end'
 		     BoxList=this.props.imageresult.map((i,index)=>(<ImgBoxContainer history={this.props.history}   key={index} info={i}/>))
 		 }else{
 		 	Load=''

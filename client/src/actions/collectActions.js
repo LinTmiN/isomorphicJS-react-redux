@@ -6,3 +6,4 @@ export const addCollect  =createAction('ADD_COLLECT');
 export const deleteCollect  =createAction('DELETE_COLLECT');
 export const isAdded = createAction('IS_ADDED');
 export const isDelete = createAction('IS_DELETE')
+export const fetchCollect = createAction('FETCH_COLLECT')

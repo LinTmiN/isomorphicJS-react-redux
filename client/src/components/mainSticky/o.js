@@ -15,6 +15,7 @@ class O extends React.PureComponent{
 		axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+this.props.id+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
 		.then(({data})=>{
 			if(!this.Mounted){return}
+				console.log(data)
 			this.setState({
 				name:data.items[0].snippet.channelTitle,
 				time:data.items[0].snippet.publishedAt,

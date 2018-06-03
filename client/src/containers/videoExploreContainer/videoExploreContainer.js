@@ -20,7 +20,7 @@ export default connect(
 			const valueList=['dog','cat','animals','black','music']
 		     WebAPI.onSearch(dispatch,'video',valueList[Math.round(Math.random()*3)])
 		},
-		updateResult:(value,page)=>()=>{
+		updateResult:(value)=>(page)=>{
 			
 			WebAPI.addResult(dispatch,'video',value,page)			
 		},
@@ -34,7 +34,7 @@ export default connect(
 		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{
-			updateResult:updateResult(preValue,page),
+			updateResult:updateResult(preValue),
 		})
 	}
 )(VideoExplore)

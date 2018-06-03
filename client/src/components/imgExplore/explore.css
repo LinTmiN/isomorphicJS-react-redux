@@ -1,14 +1,14 @@
 .imgExplore{
   display: flex;
   flex-wrap: wrap;
-justify-content: space-between;
+justify-content: space-around;
 
 
 }
 .videoExplore{
   display: flex;
   flex-wrap: wrap;
-justify-content: space-between;
+justify-content: space-around;
 }
 
 .iep1{

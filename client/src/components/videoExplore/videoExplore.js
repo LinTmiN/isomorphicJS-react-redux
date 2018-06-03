@@ -6,23 +6,27 @@ import faker from 'faker'
 class VideoExplore extends React.PureComponent {
 	constructor(props){
 		super(props)
+		this.length=0
 		this.myref=React.createRef()
 		this.handleScroll=this.handleScroll.bind(this)
+		this.imgComplete=this.imgComplete.bind(this)
 	}
 
 	isScrolling(){
  		const { scrollTop}=document.documentElement;
 		const { clientHeight,scrollHeight}=document.documentElement;
-		return scrollTop+clientHeight+40>=scrollHeight
+		return scrollTop+clientHeight+800>=scrollHeight
  	}
  	handleScroll(){
  		if(this.lastScroll===window.scrollY){return}else{
  			this.lastScroll=window.scrollY
  		}
  		
- 		if(this.isScrolling()&&!this.props.isInit&&!this.props.isAdding){
- 			
- 			this.props.updateResult()
+ 		if(this.imgComplete()){this.props.finishAdd()}
+ 		if(this.isScrolling()&&this.lastPage!==this.props.page&&!this.props.isAdding){
+ 			this.lastPage=this.props.page
+ 			this.length=this.props.videoresult.length
+ 			this.props.updateResult(this.props.page)
  		}
  	}
 	componentDidMount(){		
@@ -47,16 +51,13 @@ class VideoExplore extends React.PureComponent {
 		}
 		return true
 	}
-	componentDidUpdate(){
-		if(this.imgComplete()){
-			this.props.finishAdd()
-		}
-	}
+
 	render(){
 		let BoxList,Load
-		console.log(this.props.videoresul)
+		
 		if(this.props.videoresult.length>0){
-      		Load=this.props.videoresult.length<this.props.total?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'></Loader>:'end'
+			console.log(this.length+'sfsf'+this.props.videoresult.length)
+      		Load=this.length!==this.props.videoresult.length?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'></Loader>:'end'
       		BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
 			Load=''

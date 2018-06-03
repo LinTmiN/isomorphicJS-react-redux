@@ -39,6 +39,9 @@ const userReducers = handleActions({
 	),
 	LOGIN_ERROR:(state,{payload})=>{
 		return state.merge({loginError:payload})
+	},
+	FETCH_COLLECT:(state,{payload})=>{
+		return state.merge({fetchCollect:payload})
 	}
 },UserState);
 export default userReducers;

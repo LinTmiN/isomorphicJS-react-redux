@@ -12,7 +12,8 @@ export default connect(
 		preValue:state.getIn(['search','preValue']),
 		searchtype:state.getIn(['input','searchtype']),
 		isInit:state.getIn(['search','isInit']),
-		total:state.getIn(['input','total'])
+		total:state.getIn(['input','total']),
+		isAdding:state.getIn(['search','isAdding']),
 	}),
 	(dispatch)=>({
 		firstResult:()=>{
@@ -26,7 +27,7 @@ export default connect(
 				dispatch(setInput({key:'total',value:Number.POSITIVE_INFINITY}))
 			})
 		},
-		updateResult:(value,page)=>()=>{
+		updateResult:(value)=>(page)=>{
 			
 			WebAPI.addResult(dispatch,'image',value,page)			
 		},
@@ -38,7 +39,7 @@ export default connect(
 		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{
-			updateResult:updateResult(preValue,page),
+			updateResult:updateResult(preValue),
 		})
 	}
 )(ImgExplore)

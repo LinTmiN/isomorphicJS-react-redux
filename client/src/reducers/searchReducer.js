@@ -11,6 +11,7 @@ const searchReducer =handleActions({
 	}
 	,
 	ADD_RESULT:(state,{payload})=>{
+	
        return state.update(payload.key,result=>result.concat(payload.value)).merge({isSearching:false})
 	},
 	GET_KEY:(state,{payload})=>{

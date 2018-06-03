@@ -1,7 +1,8 @@
 ._msct{
 	width:300px;
-	padding-top: 60px;
+	padding-top: 80px;
 	margin-left: 30px;
+
 }
 ._msct2{
 	display: flex;
@@ -34,7 +35,7 @@
 }
 ._msifname{
 	font-weight: 600;
-	font-size: 14px;
+	font-size: 13px;
 	vertical-align: middle;
 	line-height: 20px;
 	font-family: Arial;
@@ -120,7 +121,7 @@
 	padding-left: 10px;
 }
 ._Oinfo>span{
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 600;
 	line-height: 18px;
 	align-self: flex-start;

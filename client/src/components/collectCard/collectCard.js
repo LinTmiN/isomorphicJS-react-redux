@@ -128,7 +128,7 @@ class CollectCard extends React.PureComponent{
 						likes:res[0].data.items[0].statistics.likeCount,
 						description:res[0].data.items[0].snippet.description,
 						time:res[0].data.items[0].snippet.publishedAt,
-						thumbnails:res[0].data.items[0].snippet.thumbnails.maxres||res[0].data.items[0].snippet.thumbnails.standard
+						thumbnails:res[0].data.items[0].snippet.thumbnails.maxres||res[0].data.items[0].snippet.thumbnails.standard||res[0].data.items[0].snippet.thumbnails.medium
 					},
 					comment=data.items.map((item)=>({username:item.snippet.topLevelComment.snippet.authorDisplayName,text:item.snippet.topLevelComment.snippet.textOriginal}));
 					
@@ -220,7 +220,7 @@ class CollectCard extends React.PureComponent{
 					        <div onClick={()=>this.setState({embed:true}) } style={{ color:'#FFF8F8',position:'absolute',top:'50%',left:"50%",display:"block",transform:"translate(-50%,-50%)"}}>
 	  			            	<Icon  size='massive' name='video play' />
 	  			      		</div>
-	  			      		<img src={info.thumbnails.url} />
+	  			      		<img src={info.thumbnails.url||''} />
 			      	   </div>
 				}
 			</div>

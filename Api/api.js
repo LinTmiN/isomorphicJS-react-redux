@@ -58,7 +58,7 @@ apiRoutes.post('/register',function(req,res){
           	  	    username:req.body.username,
           	  	    email:req.body.email,
           	  	    password:req.body.password,
-          	  	    avatar:req.body.avatar||'http://img3.imgtn.bdimg.com/it/u=3150822554,1701663780&fm=27&gp=0.jpg'
+          	  	    avatar:req.body.avatar||'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=164802939,3427154249&fm=27&gp=0.jpg'
           	  });
           	  newUser.save((err)=>{
           	  	if(err) throw err;

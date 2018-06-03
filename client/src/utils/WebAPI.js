@@ -11,7 +11,7 @@ import {
 	getKey,
 	setPage,
 	setInput,
-	preValue,initResult,addResult,isInit,receiveCollect,isCheck
+	preValue,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect
 } from '../actions';
 
 function getCookie(keyName){
@@ -149,7 +149,7 @@ export default {
 			.then(({data})=>{
 				dispatch(addResult({key:'videoResult',value:data.items}))
 				dispatch(setPage(data.nextPageToken))
-				
+				dispatch(isAdding(true))
 			})
 		}
 		else if (type==='image'){
@@ -158,12 +158,14 @@ export default {
 				.then(({data})=>{
 						dispatch(addResult({'key':'imageResult',value:data}))		
 					dispatch(setPage(page+1))
+					dispatch(isAdding(true))
 				})
 			}
 			axios.get('https://api.unsplash.com/search/photos?page='+(page)+'&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
 				dispatch(addResult({'key':'imageResult',value:data.data.results}))		
-				dispatch(setPage(page+1))			
+				dispatch(setPage(page+1))	
+				dispatch(isAdding(true))		
 			})
 		}
 		
@@ -195,6 +197,31 @@ export default {
 	},
 	unlike:(id)=>{
 		return axios.delete('http://localhost:3000/api/unlike/'+id+'?token='+getCookie('token'))
+	},
+	fetchCollect:(dispatch,collect)=>{
+	   dispatch(setInput({key:'fetching',value:true}))
+		let Promises=collect.map((item)=>{
+			return axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+item+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')  
+		})
+		 Promise.all(Promises).then((res)=>{
+	
+		 	 let channalPromises=res.map((item)=>{
+		 	 	return axios.get('https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id='+item.data.items[0].snippet.channelId+'&fields=items%2Fsnippet%2Fthumbnails%2Fmedium&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+		 	 })
+		 	 Promise.all(channalPromises).then((channalres)=>{
+		 	 	console.log(channalres)
+		 	 	  let infos=res.map((item,index)=>{
+		 	 	  	 return {
+		 	 	  	 	 name:item.data.items[0].snippet.channelTitle,
+						time:item.data.items[0].snippet.publishedAt,
+						avatar:channalres[index].data.items[0].snippet.thumbnails.medium.url,
+						thumbnails:item.data.items[0].snippet.thumbnails.maxres||item.data.items[0].snippet.thumbnails.standard||item.data.items[0].snippet.thumbnails.medium
+		 	 	  	 }
+		 	 	  })
+		 	 	  dispatch(fetchCollect(infos))
+		 	 	   dispatch(setInput({key:'fetching',value:false}))
+		 	 })
+		 })
 	}
 
 };

@@ -45,7 +45,7 @@ class MainBar extends React.Component{
          <Icon className="_A2" size='large'  name='spinner' />
          
          </NavLink>
-          <NavLink to=''>
+          <NavLink to='/'>
          <Icon className="_A2" size='large'  name='heart outline' />
          </NavLink>
          <NavLink to=''>
