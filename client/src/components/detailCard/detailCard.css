@@ -1,0 +1,7 @@
+._detailCard{
+	display: flex;
+	padding-top: 90px;
+	flex-direction:row;
+	justify-content: flex-start;
+	padding-bottom:60px;
+}

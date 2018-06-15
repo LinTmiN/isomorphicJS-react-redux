@@ -13,4 +13,9 @@ export const login =createAction('LOGIN',WebAPI.login);
 export const logout =createAction('LOGOUT',WebAPI.logout);
 export const switchType = createAction('SWITCH_TYPE');
 export const isCheck = createAction('IS_CHECK')
+export const getTrends =createAction('GET_TRENDS')
+export const isGetTrends =createAction('IS_GET_TRENDS')
+export const isEditAvatar = createAction('IS_EDIT_AVATAR')
+export const editedAvatar = createAction('EDITED_AVATAR')
+export const editAvatarStatus =createAction('EDIT_AVATAR_STATUS')
 

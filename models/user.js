@@ -1,9 +1,7 @@
 import mongoose,{ Schema } from 'mongoose';
-let emailValidate=(email)=>{
 
-}
 export default mongoose.model('User',new Schema({
-	avatar:{type:String,default:'../client/src/media/user.jpg'},
+	avatar:{path:{type:String,required:true,trim:true,default:"/uploads/user.jpg"},size:Number},
 	username:{type:String,required:true},
 	email:{type:String,required:true},
 	password:{type:String,required:true},

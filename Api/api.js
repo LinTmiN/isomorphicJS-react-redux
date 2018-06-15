@@ -2,7 +2,10 @@ import Express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import config from '../config';
-import uuid from 'uuid/v1'
+import uuid from 'uuid/v1';
+import multer from 'multer';
+import path from 'path'
+import fs from 'fs'
 const app = new Express();
 const apiRoutes = Express.Router();
 app.set('superSecrect',config.secrect);
@@ -58,7 +61,7 @@ apiRoutes.post('/register',function(req,res){
           	  	    username:req.body.username,
           	  	    email:req.body.email,
           	  	    password:req.body.password,
-          	  	    avatar:req.body.avatar||'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=164802939,3427154249&fm=27&gp=0.jpg'
+          	  	   
           	  });
           	  newUser.save((err)=>{
           	  	if(err) throw err;
@@ -121,7 +124,7 @@ apiRoutes.put('/collect',(req,res)=>{
 		})
 	})
 apiRoutes.delete('/collect/:id',(req,res)=>{
-	User.update({email:req.decoded.email},{$pull:{collect:{id:req.params.id},trends:{id:req.params.id}}},(err,user)=>{
+	User.update({email:req.decoded.email},{$pull:{collect:{id:req.params.id},trends:{id:req.params.id,action:'收藏'}}},(err,user)=>{
 		if(err) throw err;
 		
 		res.json({success:true})
@@ -137,7 +140,7 @@ apiRoutes.put('/like',(req,res)=>{
 		})
 	})
 apiRoutes.delete('/unlike/:id',(req,res)=>{
-	User.update({email:req.decoded.email},{$pull:{likes:{id:req.params.id},trends:{id:req.params.id}}},(err)=>{
+	User.update({email:req.decoded.email},{$pull:{likes:{id:req.params.id},trends:{id:req.params.id,action:'赞'}}},(err)=>{
 		if(err) throw err;
 		
 		res.json({success:true})
@@ -147,7 +150,7 @@ apiRoutes.delete('/unlike/:id',(req,res)=>{
 apiRoutes.get('/likes/:id',(req,res)=>{
 	User.findOne({"email":req.decoded.email,"likes.id":req.params.id},(err,user)=>{
 		if(err) throw err;
-		console.log(user)
+		
 		if(user){
 			res.json({success:true,islike:true})
 		}else{
@@ -155,4 +158,66 @@ apiRoutes.get('/likes/:id',(req,res)=>{
 		}
 	})
 });
+apiRoutes.get('/trends',(req,res)=>{
+	console.log(__dirname)
+	User.findOne({"email":req.decoded.email},(err,user)=>{
+		if(err) throw err;
+		if(user){
+			res.json({success:true,trends:user.trends})
+		}else{
+			res.json({success:false,message:'wrong user'})
+		}
+	})
+})
+let storage=multer.diskStorage({
+	destination:function(req,file,cb){
+		cb(null,'./uploads')
+	},
+	filename:function(req,file,cb){
+		cb(null,req.decoded.username+"avatar"+Date.now()+path.extname(file.originalname))
+	}
+});
+let upload=multer({storage:storage,mimetype:'image/jpeg'}).single('avatar')
+apiRoutes.put('/upload',(req,res)=>{
+	upload(req,res,(err)=>{
+		const fileTpyes=/jpg|jpeg|png|gif/
+		if(!fileTpyes.test(req.file.mimetype)){
+			return  res.json({success:false,message:'修改头像失败,原因:只能接受图片'})
+
+		}
+		if(err){res.json({success:false,message:'修改头像失败,原因:上传失败'})}
+		else{
+
+			let avatar={
+				path:'/uploads/'+req.file.filename,
+				size:req.file.size
+			}
+			User.findOneAndUpdate({"email":req.decoded.email},{avatar:avatar},(err,user)=>{
+				if(err){res.json({success:false,message:'修改头像失败,原因:获取用户失败'})}else{
+					if(user.avatar.path!=='/uploads/user.jpg'){
+						fs.unlink(path.dirname(__dirname)+user.avatar.path,(err)=>{console.log(err)})
+					}
+					
+					res.json({success:true,avatar:avatar,message:'修改头像成功'})
+				}
+			})
+		}
+	})
+	
+})
+apiRoutes.delete('/upload',(req,res)=>{
+	let avatar={
+		path:'/uploads/user.jpg'
+	}
+	User.findOneAndUpdate({"email":req.decoded.email},{avatar:avatar},(err,user)=>{
+		if(err){
+			res.json({success:false,message:'移除失败'})}
+			else{
+				if(user.avatar.path!=='/uploads/user.jpg'){
+						fs.unlink(path.dirname(__dirname)+user.avatar.path,(err)=>{console.log(err)})
+					}
+			   res.json({success:true,avatar:avatar,message:'头像已移除'})
+		}
+	})
+})
 export default apiRoutes;

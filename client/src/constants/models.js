@@ -10,6 +10,10 @@ export const UserState=Immutable.fromJS({
 	switchType:'login',
 	loginError:'',
 	fetchCollect:[],
+	trends:[],
+	isGetTrends:false,
+	isEditAvatar:false,
+	editAvatarStatus:{},
 
 });
 export const SearchState = Immutable.fromJS({
@@ -34,5 +38,6 @@ export const InputState = Immutable.fromJS({
 	screen:{width:document.body.clientWidth,height:document.body.clientHeight},
 	total:'',
 	scrollTop:window.scrollY,
-	fetching:false
+	fetching:false,
+	showTrends:false,
 })

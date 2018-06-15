@@ -30,13 +30,14 @@ export default withRouter(connect(
 				return}
 			dispatch(inputSearch(dispatch,value))
 		},
-		onConfirmSearch:(type)=>(e,{result})=>{
+		onConfirmSearch:(type)=>(result,history)=>{
 			//点击提示框把结果传进去
 			
 			dispatch(setInput({key:'searchvalue',value:result.title}))
 
 			WebAPI.onSearch(dispatch,type,result.title)
 			dispatch(toggleResults(false))
+			history.push('/search/'+type)
 
 		},
 		onBlur:()=>{

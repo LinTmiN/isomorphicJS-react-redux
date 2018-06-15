@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import styles from  './exploreModal.css'
+import './exploreModal.css'
 import ExploreBox from './exploreBox'
 import {connect} from 'react-redux'
-import {Route,withRouter,Switch,Link} from 'react-router-dom'
+import {Route,withRouter,Switch} from 'react-router-dom'
 import {CSSTransition,TransitionGroup} from 'react-transition-group';
 import WebAPI from '../../utils/WebAPI'
 class ExploreModal extends React.PureComponent{
@@ -22,8 +21,8 @@ class ExploreModal extends React.PureComponent{
 			this.setState({direction:d},()=>{this.props.history.push('/explore/'+index)})
 		}
 		render(){
-			const {screen,location,collect} =this.props
-			const params=location.pathname.replace('/explore/','')
+			const {screen,location} =this.props
+			
 		
 		   
 		return (

@@ -17,10 +17,10 @@ const SearchBar =({
     history
 })=>{
   
-  var result
-    typeof searchKey==='undefined'?result=[]:result=searchKey.toJS().map((key)=>({title:key.Txt}));  
+  
+   let result=typeof searchKey==='undefined'?[]:searchKey.toJS().map((key)=>({title:key}));  
       let type=history.location.pathname.slice(8,13)||'video'
-       console.log(type)
+       
        initType(type)
 	return (    <React.Fragment>
               <Dropdown
@@ -42,7 +42,7 @@ const SearchBar =({
               value={searchvalue}
               onKeyDown={(e)=>{onPressEnter(e,history)}}
               onSearchChange={onSearchChange}
-              onResultSelect={onConfirmSearch}
+              onResultSelect={(e,{result})=>{onConfirmSearch(result,history)}}
               open={resultsShow}
               results={result}
               onClick={onBlur}

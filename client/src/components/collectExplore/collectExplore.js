@@ -11,9 +11,9 @@ class CollectExplore extends React.PureComponent{
 	}
 
 	componentDidMount(){
-		if(this.props.collect.toJS().length<=0){
+		
 		this.props.getCollect()
-	}
+	
  	
 	}
 

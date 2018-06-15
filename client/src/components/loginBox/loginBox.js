@@ -88,14 +88,6 @@ const registerForm =(
           type="password"
         />
 
-        <Form.Input
-          fluid
-          onChange={onChangeInput}
-          icon="image"
-          iconPosition="left"
-          placeholder="Enter avatar"
-          type="text"
-        />
         <Button loading={isRegister} onClick={onRegisterSubmit} fluid primary size="tiny">
           Register
         </Button>              

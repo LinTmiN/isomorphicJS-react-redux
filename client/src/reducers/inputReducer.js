@@ -13,6 +13,9 @@ const inputReducer = handleActions({
 	},
 	GET_SCROLL:(state,{payload})=>{
 		return state.merge({scrollTop:payload})
+	},
+	SHOW_TRENDS:(state,{payload})=>{
+		return state.merge({showTrends:payload})
 	}
 },InputState)
 export default inputReducer;

@@ -11,7 +11,7 @@ import {
 	getKey,
 	setPage,
 	setInput,
-	preValue,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect
+	preValue,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect,getTrends,isGetTrends,isEditAvatar,editedAvatar,editAvatarStatus
 } from '../actions';
 
 function getCookie(keyName){
@@ -25,11 +25,11 @@ function getCookie(keyName){
 	}
 	return '';
 }
-export default {
+let WebAPI={
 	login:(dispatch,email,password)=>{
 		dispatch(requestLogin(true))
 
-		axios.post('http://localhost:3000/api/login',{
+		axios.post('/api/login',{
 			email:email,
 			password:password
 		}).then((res)=>{
@@ -64,7 +64,7 @@ export default {
 	},
 	checkAuthor:(dispatch)=>{
 		dispatch(isCheck(true))
-		axios.get('http://localhost:3000/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
+		axios.get('/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
 		.then((res)=>{
 			
 			if(res.data.success===true){
@@ -86,7 +86,7 @@ export default {
 	register:(dispatch,user)=>{
 
 		dispatch(registerStart())
-		axios.post('http://localhost:3000/api/register',user).then((res)=>{
+		axios.post('/api/register',user).then((res)=>{
 			if(res.data.success===false){
 				dispatch(registerFailed())
 			}else{
@@ -102,19 +102,20 @@ export default {
 	getSearchKey:(dispatch,value)=>{
 		
         dispatch(requestData(true))
-        axios.get('https://bird.ioliu.cn/v1?url=https://api.bing.com/qsonhs.aspx?type=cb&q='+value).then((res)=>{
-        	
-        	let data=res.data.AS;
-        	console.log(data)
-        	    if(data.Results){
-        	    	
-        		  	dispatch(getKey(data.Results[0].Suggests))
+        axios.get('https://api.cognitive.microsoft.com/bing/v7.0/suggestions/?q='+value,{headers:{"Ocp-Apim-Subscription-Key":"65271e84408f4e49812b1a349b81170f"}}).then(({data})=>{
+        	  
+        	    if(data.suggestionGroups){
+        	    	let List=data.suggestionGroups[0].searchSuggestions.map((item)=>{return item.displayText})
+        	    	console.log(List)
+        		  	dispatch(getKey(List))
         		  	dispatch(requestData(false))
         		 
              } 
-	})},
+	})
+	},
     onSearch:(dispatch,type,value)=>{
     	dispatch(isInit(true))
+    	
     	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
     		if(type==='video'){
 			
@@ -171,7 +172,7 @@ export default {
 		
 	},
 	getCollect:(dispatch)=>{
-		return axios.get('http://localhost:3000/api/collect?token='+getCookie('token')).then((res)=>{
+		return axios.get('/api/collect?token='+getCookie('token')).then((res)=>{
 			if(res.data.success){
 				
 				dispatch(receiveCollect(res.data.collect))
@@ -183,20 +184,20 @@ export default {
 		})
 	},
 	addCollect:(dispatch,newcollect)=>{
-		return axios.put('http://localhost:3000/api/collect?token='+getCookie('token'),{newcollect:newcollect})
+		return axios.put('/api/collect?token='+getCookie('token'),{newcollect:newcollect})
 	},
 	deleteCollect:(dispatch,collectId)=>{
 		
-		axios.delete('http://localhost:3000/api/collect/'+collectId+'?token='+getCookie('token'))
+		axios.delete('/api/collect/'+collectId+'?token='+getCookie('token'))
 	},
 	getLike:(id)=>{
-		return axios.get('http://localhost:3000/api/likes/'+id+'?token='+getCookie('token'))
+		return axios.get('/api/likes/'+id+'?token='+getCookie('token'))
 	},
 	like:(obj)=>{
-		return axios.put('http://localhost:3000/api/like?token='+getCookie('token'),{like:obj})
+		return axios.put('/api/like?token='+getCookie('token'),{like:obj})
 	},
 	unlike:(id)=>{
-		return axios.delete('http://localhost:3000/api/unlike/'+id+'?token='+getCookie('token'))
+		return axios.delete('/api/unlike/'+id+'?token='+getCookie('token'))
 	},
 	fetchCollect:(dispatch,collect)=>{
 	   dispatch(setInput({key:'fetching',value:true}))
@@ -209,7 +210,7 @@ export default {
 		 	 	return axios.get('https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id='+item.data.items[0].snippet.channelId+'&fields=items%2Fsnippet%2Fthumbnails%2Fmedium&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
 		 	 })
 		 	 Promise.all(channalPromises).then((channalres)=>{
-		 	 	console.log(channalres)
+		 	 	
 		 	 	  let infos=res.map((item,index)=>{
 		 	 	  	 return {
 		 	 	  	 	 name:item.data.items[0].snippet.channelTitle,
@@ -222,6 +223,76 @@ export default {
 		 	 	   dispatch(setInput({key:'fetching',value:false}))
 		 	 })
 		 })
-	}
+	},
+	getTrends:(dispatch)=>{
+		dispatch(isGetTrends(true))
+		axios.get('/api/trends?token='+getCookie('token')).then(({data})=>{
+			 if(data.success){
+			 	let Promises=data.trends.map((trend)=>{
+			 		if(trend.type==='image'){
+			 			return axios.get('https://api.unsplash.com/photos/'+trend.id+'?client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')		
+			 		}else{
+			 			return axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+trend.id+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+			 		}
+			 	});
+			 	Promise.all(Promises).then((responses)=>{
+			 		
+			 		let videoChannelPromises=responses.filter((res)=>{
+			 			return !!res.data.kind
+			 		}).map((res)=>{return axios.get('https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id='+res.data.items[0].snippet.channelId+'&fields=items%2Fsnippet%2Fthumbnails%2Fmedium&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')})
+			 		Promise.all(videoChannelPromises).then((videoChannelRes)=>{
+			 			 let trends= responses.map((res,index)=>{
+			 			 	   data.trends[index].info=res.data.kind?
+			 			 	  {
+			 			 	  	name:res.data.items[0].snippet.channelTitle,
+			 			 	  	avatar:videoChannelRes.shift().data.items[0].snippet.thumbnails.medium.url,
+			 			 	  	thumbnails:(res.data.items[0].snippet.thumbnails.maxres&&res.data.items[0].snippet.thumbnails.maxres.url)||(res.data.items[0].snippet.thumbnails.standard&&res.data.items[0].snippet.thumbnails.standard.url)||(res.data.items[0].snippet.thumbnails.medium&&res.data.items[0].snippet.thumbnails.medium.url)
+			 			 	  }:{
+			 			 	  	name:res.data.user.name,
+			 			 	  	avatar:res.data.user.profile_image.medium,
+			 			 	  	thumbnails:res.data.urls.thumb
+			 			 	  }
+			 			 	   return data.trends[index]
+			 			 })
+			 			  dispatch(getTrends(trends))
+			 			 dispatch(isGetTrends(false))
+			 		})
+			 	})
+			 }else{
+			 	return false
+			 }
+		})
+	},
+	editAvatar:(dispatch,file)=>{
+		dispatch(isEditAvatar(true))
+		if(file==='delete'){
+			return axios.delete('api/upload?token='+getCookie('token')).then(({data})=>{
+				console.log(data)
+				if(data.success){
+					dispatch(editedAvatar(data.avatar))
+					dispatch(isEditAvatar(false))
+					dispatch(editAvatarStatus({message:data.message,date:Date.now()}))
+				}else{
+					dispatch(editAvatarStatus({...data,date:Date.now()}))
+					dispatch(isEditAvatar(false))
+				}
+			})
+		}
+		const data = new FormData()
+		 data.append('avatar',file)
+		 console.log(data)
+		axios.put('api/upload?token='+getCookie('token'),data).then(({data})=>{
+			if(data.success){
+				dispatch(editedAvatar(data.avatar))
+				dispatch(isEditAvatar(false))
+				dispatch(editAvatarStatus({message:data.message,date:Date.now()}))
+			}else{
+				dispatch(editAvatarStatus({...data,date:Date.now()}))
+				dispatch(isEditAvatar(false))
+			}
+		})
+	},
+
 
 };
+export default WebAPI

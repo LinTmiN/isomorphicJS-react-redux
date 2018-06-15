@@ -1,0 +1,131 @@
+._trendsBox{
+	
+	z-index: 99;
+	font-size: 15px;
+	width:500px;
+	max-height:366px;
+	background-color: white;
+	border:solid 1px #e6e6e6;
+	box-shadow: 0 0 5px rgba(0,0,0,.0975);
+	border-radius: 3px;
+	overflow-y:auto;
+	display: flex;
+	
+}
+._jiao{
+	content:'';
+	
+	z-index:999;
+	width:0;
+	height:0;
+	
+	border-left: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-right: 12px solid transparent;
+
+    border-bottom: 13px solid white;
+	
+}
+._kuang{
+	content:'';
+	width:24px;
+	height:24px;
+
+	border:solid 1px #e6e6e6;
+	box-shadow: 0 0 5px rgba(0,0,0,.0975);
+	transform:rotateZ(45deg);
+}
+._trendBoxContain{
+	width:100%;
+	
+
+}
+._trendBox{
+	width:100%;
+	padding-top:10px;
+	min-height:40px;
+	align-items: center;
+	flex-direction:row;
+}
+._trendBoxinfo{
+	padding-right: 15px;
+}
+._msif>._trendAvatar{
+	width:35px;
+	height:35px;
+}
+._trendUser{
+	padding-right: 10px;
+
+}
+._trendInfo{
+	font-size: 13px;
+	font-weight: normal;
+}
+._trendTarget{
+	width:40px;
+	height:40px;
+    margin-right: 20px;
+}
+._msif>._saf{
+	flex-grow: 1;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+._trendsnone{
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: 14px;
+	background-color: #fafafa;
+	padding: 25px;
+}
+._trendsnone span{
+	padding-top:10px;
+	padding-bottom: 15px;
+}
+@media screen and (min-width: 545px){
+	._responsiveTrendBox{
+		position:absolute;
+		top:42px;
+		right:-65px;
+	}
+	._responsivejiao{
+		position: absolute;
+		top:18px;
+		right:15px;
+	}
+	.__responsivekuang{
+		position: absolute;
+		top:34px;
+		right:15px;
+	}
+}
+@media screen and (max-width: 545px){
+	._trendsBox{
+		position: fixed;
+		bottom:55px;
+		left:0;
+	}
+	._jiao{
+		border-top: 16px solid white;
+		border-bottom: 16px solid transparent;
+		border-right: 16px solid transparent;
+		border-left: 16px solid transparent;
+		position: fixed;
+		bottom:25px;
+		left:50%;
+		transform: translateX(-50%);
+
+	}
+	._kuang{
+		position: fixed;
+		bottom:47px;
+		left:50%;
+		width:32px;
+		height:32px;
+		transform: translateX(-50%) rotate(45deg);
+		border:2px solid #e6e6e6;
+	}
+
+}

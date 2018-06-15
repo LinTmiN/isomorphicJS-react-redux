@@ -20,6 +20,7 @@ class Card extends React.PureComponent {
 		this.toThos=this.toThos.bind(this)
 		this.handleTime=this.handleTime.bind(this)
 		this.myref=React.createRef()
+		this.getData=this.getData.bind(this)
 	}
 	handleTime=(time)=>{
 		let minute = 1000*60,
@@ -57,6 +58,15 @@ class Card extends React.PureComponent {
 		  return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
 	}
 	componentDidMount(){
+		this.getData()
+		
+	}
+	componentDidUpdate(prevProps){
+		if (this.props.id !== prevProps.id) {
+		    this.getData()
+		  }
+	}
+	getData(){
 		const {getCollect,type,onCardInit,id}=this.props;
 		getCollect().then((data)=>{
 			if(data){
@@ -83,7 +93,7 @@ class Card extends React.PureComponent {
 			.then(({data})=>{
 			   this.comment=fakeComment
 				let info={
-					username:data.user.username,
+					username:data.user.name,
 					avatar:data.user.profile_image.small,
 					likes:data.likes,
 					description:data.description,
@@ -217,7 +227,7 @@ class Card extends React.PureComponent {
 									
 									 <div className='_ncdicon'>
 										<Icon onClick={()=>this.togglelike({id:id,type:type})} size='big' name={this.state.like?'heart':'heart outline'} style={{cursor:'pointer',color:this.state.like?'#FB4E4E':'black'}}/>
-										<Icon onClick={()=>this.myref.current.focus()} style={{paddingLeft:'10px'}} size='big' name='comment outline' style={{cursor:'pointer'}}/>
+										<Icon onClick={()=>this.myref.current.focus()} style={{paddingLeft:'10px',cursor:'pointer'}} size='big' name='comment outline'/>
 										<Icon onClick={()=>this.addCollect({id:this.props.id,type:this.props.type})} size='big' name={this.state.isCollect?'bookmark':'remove bookmark'} className='_ncdicr' style={{cursor:'pointer'}}/>
 									</div>
 									<div className='_ncdlk'>

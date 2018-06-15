@@ -2,12 +2,14 @@
   "name": "reduxtube-byreact",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:5000",
-      "bypass": "function(req,res,proxyOptions){if(req.headers.accept.indexOf('html')!==-1){console.log('ss')return '/index.html'}}"
-    }
-  },
+  "proxy":{
+      "/api":{
+        "target": "http://localhost:5000"
+      },
+      "/uploads":{
+        "target":"http://localhost:5000"
+      }
+    },
   "dependencies": {
     "axios": "^0.18.0",
     "immutable": "^3.8.2",

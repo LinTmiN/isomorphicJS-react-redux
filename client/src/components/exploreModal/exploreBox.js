@@ -1,7 +1,5 @@
 import React from 'react'
-import {Icon,Embed } from 'semantic-ui-react'
-import axios from 'axios'
-
+import {Icon } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 class ExploreBox extends React.PureComponent{
 	constructor(props){
@@ -57,17 +55,18 @@ class ExploreBox extends React.PureComponent{
     		const {fetchCollect,collect,match,handle,history}=this.props
     	  let index=collect.indexOf(match.params.id)
 		let info=fetchCollect.toJS()[index]
+		console.log(info)
 		return (
 			<section  className='_3dex'>
 	 	 		<header className='_3dexuser'>
 	 	 			<div className='_cdhd2 _3dhd'>
-	 	 				<div className='_cdhdim _3davatar'><img  src={info?info.avatar:""} /></div>
+	 	 				<div className='_cdhdim _3davatar'><img alt={`${info?info.name:''}'s avatar`}  src={info?info.avatar:""} /></div>
 						<div className='_cdusname1 _3dname'><h1 >{info?info.name:""}<span>{this.handleTime(info?info.time:"")}</span><Icon style={{float:'right'}}  name='ellipsis horizontal'/></h1></div>
 	 	 			</div>
 	 	 		</header>
 	 	 		<div  className='_3dembed' >
 	 	 		     <button onClick={()=>history.push('/collect',{keepTop:true})} className='_3dbutton1'><span name='remove'>X</span></button>
-		 	 		   <div style={{width:'100%',height:'100%',display:'flex'}}><iframe style={{width:'100%',height:'100%',}} src={"https://www.youtube.com/embed/"+match.params.id+"?rel=0&showinfo=0&iv_load_policy=3"}
+		 	 		   <div style={{width:'100%',height:'100%',display:'flex'}}><iframe title={`${info?info.name:""}'s video`} style={{width:'100%',height:'100%',}} src={"https://www.youtube.com/embed/"+match.params.id+"?rel=0&showinfo=0&iv_load_policy=3"}
 				   		frameBorder="0" allowFullScreen ></iframe></div>
 					  <button  onClick={()=>{
 					  

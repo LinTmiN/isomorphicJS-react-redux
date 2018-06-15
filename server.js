@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use('/api',apiRoutes);
+app.use('/uploads',Express.static(__dirname+'/uploads'))
 app.listen(port,(error)=>{
 	if(error){
 		console.log(error)

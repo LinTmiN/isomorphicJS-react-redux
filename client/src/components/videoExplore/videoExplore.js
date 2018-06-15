@@ -18,8 +18,9 @@ class VideoExplore extends React.PureComponent {
 		return scrollTop+clientHeight+800>=scrollHeight
  	}
  	handleScroll(){
- 		if(this.lastScroll===window.scrollY){return}else{
- 			this.lastScroll=window.scrollY
+ 		let scrollY=window.scrollY||document.documentElement.scrollTop
+ 		if(this.lastScroll===scrollY){return}else{
+ 			this.lastScroll=scrollY
  		}
  		
  		if(this.imgComplete()){this.props.finishAdd()}
@@ -30,9 +31,9 @@ class VideoExplore extends React.PureComponent {
  		}
  	}
 	componentDidMount(){		
-		
+		   if(!this.props.isInit){
 			this.props.firstResult()
-	
+		}
 		 this.check = setInterval(this.handleScroll,100)
 		
 	}

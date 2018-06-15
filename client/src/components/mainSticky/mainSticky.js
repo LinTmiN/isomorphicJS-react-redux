@@ -13,10 +13,10 @@ class MainSticky extends React.PureComponent{
 		return (
 			<div className='_msct' >
 			 
-                <Sticky bottomOffset={50} context={this.props.context} offset={50} pushing>
+                <Sticky bottomOffset={50} context={this.props.context} offset={80} pushing>
                 <div className='_msct2'>
 	                  <div className='_msif'>
-	                  	 <div className='_msifim'> <img alt={`${userinfo.username}'s avatar`} src={userinfo.avatar} /></div>
+	                  	 <div className='_msifim'> <img alt={`${userinfo.username}'s avatar`} src={userinfo.avatar.path} /></div>
 	                  	 <div className='_msifus'>
 	                  	    <div className='_msifname'><span>{userinfo.username}</span></div>
 	                  	    <div className='_msifemail'><span>{userinfo.email}</span></div>

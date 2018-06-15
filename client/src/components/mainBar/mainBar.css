@@ -54,6 +54,11 @@
 	padding:5px;
 	width:55px;
 	height:55px;
+	cursor: pointer;
+}
+.right>._noLink{
+	max-height: 32.5px;
+	position: relative;
 }
 ._LogoLink{
 display: flex;

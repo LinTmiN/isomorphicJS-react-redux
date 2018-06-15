@@ -10,7 +10,7 @@ const userReducers = handleActions({
 	),
 	RECEIVE_USER:(state,{ payload })=>{
 
-	return	state.merge({userInfo:payload}).merge({isLoging:false})
+		return	state.merge({userInfo:payload}).merge({isLoging:false})
 
 	},
 	REGISTER_START:(state)=>(
@@ -42,6 +42,15 @@ const userReducers = handleActions({
 	},
 	FETCH_COLLECT:(state,{payload})=>{
 		return state.merge({fetchCollect:payload})
-	}
+	},
+	GET_TRENDS:(state,{payload})=>{
+		return state.merge({trends:payload})
+	},
+	IS_GET_TRENDS:(state,{payload})=>{
+		return state.merge({isGetTrends:payload})
+	},
+	IS_EDIT_AVATAR:(state,{payload})=>state.merge({isEditAvatar:payload}),
+	EDITED_AVATAR:(state,{payload})=>state.setIn(['userInfo','avatar'],payload),
+	EDIT_AVATAR_STATUS:(state,{payload})=>state.merge({editAvatarStatus:payload})
 },UserState);
 export default userReducers;

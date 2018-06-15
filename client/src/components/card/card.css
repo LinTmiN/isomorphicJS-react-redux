@@ -102,16 +102,18 @@
     top: 78px;
     width: 335px;
     display: grid;
+    display: -ms-grid;
     grid-template-rows: 1fr 43px 18px 19px 56px;
-
+    -ms-grid-template-rows: 1fr 43px 18px 19px 56px;
+	text-align: left;
 }
 ._ncdcm{
-	grid-row: 1/2;
+	-ms-grid-row: 1/2;
 	overflow: auto;
 	overflow-x: hidden;
 }
 ._ncdicon{
-	grid-row: 2/3;
+	-ms-grid-row: 2/3;
 	display:flex;
 	align-items: center;
 	position: relative;

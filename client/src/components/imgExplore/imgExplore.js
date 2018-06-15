@@ -17,13 +17,16 @@ class ImgExplore extends React.Component {
 		return scrollTop+clientHeight+1200>=scrollHeight
  	}
  	handleScroll(){
- 		if(this.lastScroll===window.scrollY){return}else{
- 			this.lastScroll=window.scrollY	
+ 		let scrollY=window.scrollY||document.documentElement.scrollTop
+ 		if(this.lastScroll===scrollY){return}else{
+ 			this.lastScroll=scrollY	
  		}
- 		
+ 		console.log('ssaffc')
+ 		console.log(this.imgComplete())
  		if(this.imgComplete()){this.props.finishAdd()}
  		if(this.isScrolling()&&this.lastPage!==this.props.page&&!this.props.isAdding){
  			this.lastPage=this.props.page
+ 			console.log('sc')
  			this.length=this.props.imageresult.length
  			this.props.updateResult(this.props.page)
  		}
