@@ -13,12 +13,7 @@ border-radius:55px
 	padding-top: 40px;
 	
 }
-@media screen and (max-width:736px){
-	.sc3{
-		display:none!important;
-	}
-	
-}
+
 
 .sc5{
 	display:block;
@@ -30,14 +25,16 @@ border-radius:55px
 	
 	display: flex;
 	flex-wrap:nowrap;
-	justify-content: space-between;
+	justify-content: space-around;
 	 	
 }
 .mygrid{
    display:inline-flex;
-  width:31%;
+  width:calc((100% - 56px)/3);
   height:auto;
   flex-shrink: 1;
+  text-align: center;
+  line-height: 36px;
 
 }
 .mcard{
@@ -45,16 +42,14 @@ border-radius:55px
 	height:220px;
 }
 
-@media screen and (max-width: 876px){
-	._sgc1{
-		display: none;
-	}
-}
+
 ._sgc1{
+	padding:0 ;
 	padding-top: 150px;
 	padding-bottom: 60px;
-	width:987px;
+	width:100%;
 	margin:0 auto;
+
 }
 ._sgc1>h1{
     text-align:left;

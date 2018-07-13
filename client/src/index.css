@@ -3,7 +3,35 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   background: #fafafa;
+  overflow-y: scroll;
+  text-align: center;
  
+}
+._cpmain{
+	width:100%;
+}
+._imgBoxmodal{
+  transition:all 0.2s ease;
+ opacity:0;
+  background-color: rgb(0,0,0,0)
+}
+._transM{
+   background-color: rgb(0,0,0,0.5)!important;
+   opacity:1;
+}
+ul{
+	margin:0;
+	list-style: none;
+	padding: 0;
+}
+._clpg{
+	
+	max-width: 987px;	
+	display: flex;
+	flex-direction:row;
+	margin:0 auto;
+	margin-top:75px;
+	width: 100%;
 }
 #modal-root{
 	z-index:9999;
@@ -16,13 +44,18 @@ img{
 }
 a{
 	color:black;
-	width:33%;
-padding-top: 5px;
-display: inline-block;
-   padding:5px 20px;
+
+	display: inline-block;
+   
 }
+#root{height:100%;}
 a:hover{
 	color:black;
-	padding-top: 5px;
+	
 }
-
+._mybody{
+	position:fixed;
+	
+	
+	width: 100%;
+}

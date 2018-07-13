@@ -1,5 +1,5 @@
 import React from 'react'
-import {Icon } from 'semantic-ui-react'
+import {Icon,Embed } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 class ExploreBox extends React.PureComponent{
 	constructor(props){
@@ -55,7 +55,7 @@ class ExploreBox extends React.PureComponent{
     		const {fetchCollect,collect,match,handle,history}=this.props
     	  let index=collect.indexOf(match.params.id)
 		let info=fetchCollect.toJS()[index]
-		console.log(info)
+		
 		return (
 			<section  className='_3dex'>
 	 	 		<header className='_3dexuser'>
@@ -65,9 +65,9 @@ class ExploreBox extends React.PureComponent{
 	 	 			</div>
 	 	 		</header>
 	 	 		<div  className='_3dembed' >
-	 	 		     <button onClick={()=>history.push('/collect',{keepTop:true})} className='_3dbutton1'><span name='remove'>X</span></button>
-		 	 		   <div style={{width:'100%',height:'100%',display:'flex'}}><iframe title={`${info?info.name:""}'s video`} style={{width:'100%',height:'100%',}} src={"https://www.youtube.com/embed/"+match.params.id+"?rel=0&showinfo=0&iv_load_policy=3"}
-				   		frameBorder="0" allowFullScreen ></iframe></div>
+	 	 		     <button onClick={()=>history.push('/collect',{keepTop:true})} className='_3dbutton1 _3dbuttonR'><span name='remove'>X</span></button>
+		 	 		   <div style={{width:'100%',height:'100%',display:'flex'}}>
+				   		<Embed style={{width:'100%',height:'100%',}} source='youtube' placeholder={info?info.thumbnails.url:''} id={'O6Xo21L0ybE'}/></div>
 					  <button  onClick={()=>{
 					  
 					  	let index=collect.indexOf(match.params.id),next=collect[(index+1)%collect.length]

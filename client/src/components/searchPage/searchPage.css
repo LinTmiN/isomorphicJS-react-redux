@@ -1,0 +1,8 @@
+._serPage{
+	max-width:987px;
+	display: flex;
+	flex-direction:column;
+	margin:0 auto;
+	width: 100%;
+	flex-grow: 1;
+}

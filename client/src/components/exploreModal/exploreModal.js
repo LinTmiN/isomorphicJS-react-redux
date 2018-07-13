@@ -1,10 +1,11 @@
 import React from 'react';
-import './exploreModal.css'
+
 import ExploreBox from './exploreBox'
 import {connect} from 'react-redux'
 import {Route,withRouter,Switch} from 'react-router-dom'
-import {CSSTransition,TransitionGroup} from 'react-transition-group';
+import {CSSTransition,TransitionGroup} from 'react-transition-group'
 import WebAPI from '../../utils/WebAPI'
+import './exploreModal.css'
 class ExploreModal extends React.PureComponent{
 		constructor(props){
 			super(props)
@@ -27,18 +28,19 @@ class ExploreModal extends React.PureComponent{
 		   
 		return (
 			    
-				 <section  className='_exml' style={{height:screen.toJS().height}}>
+				 <section  className='_exml _lsfw' style={{height:screen.toJS().height}}>
+				 
 				 		<TransitionGroup className='_exmlmain'>
 					      <CSSTransition
 					        key={location.key}
 					        classNames={this.state.direction}
-					        timeout={500}
+					        timeout={300}
 					        onEnter={()=>this.setState({entered:false})}
 					        onEntered={()=>this.setState({entered:true})}
 
 					      >
 					       	<Switch location={location}>
-					         <Route  exact path='/explore/:id' render={({...rest})=><ExploreBox entered={this.state.entered} handle={this.handle} {...rest}/>}/>)
+					         <Route  exact path='/explore/:id' render={({...rest})=><ExploreBox  entered={this.state.entered} handle={this.handle} {...rest}/>}/>)
 					          
 					        </Switch>
 					      </CSSTransition>
@@ -67,17 +69,3 @@ export default withRouter(connect(
 
  )(ExploreModal))
 
-
-
-// <TransitionGroup className='_exmlmain'>
-// 				 			<CSSTransition key={location.key} className='fsaf' timeout={1000}>
-// 				 	          <Switch location={location}>
-// 				 	               		<Route path='/explore/:id'   render={({match,...rest})=><ExploreBox match={match} {...rest} />}   />
-// 				 	 			</Switch>	
-				 	   				
-// 				 	            </CSSTransition>
-				 	          
-// 					</TransitionGroup>
-// onClick={(e)=>{
-// 				 	if(e.target.innerHTML==='＞'){this.setState({direction:'rtl'})}
-// 				 else if(e.target.innerHTML==='＜'){this.setState({direction:'ltr'})}}}

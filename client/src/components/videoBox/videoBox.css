@@ -1,15 +1,18 @@
 .videoItem{
   display:inline-block;
-  width:33%;
+  width:calc((100% - 6px)/3);
+  padding-top:calc((100% - 6px)*3/16);
   position: relative;
- cursor:pointer;
-   margin-bottom: 33px;
+  cursor:pointer;
+	padding-bottom:45px;
   flex-shrink: 1;
-  position: relative;
+ height: 0;
+
 }
 .videoItem img{
 	width:100%;
 	height:100%;
+	display: block;
 }
 .videotitle{
 	text-align: left;
@@ -32,26 +35,51 @@
 
 }
 .conss{
-	position: relative;;
+	position: absolute;;
+	top:0;
+	left:0;
 	width:100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
+
 .videomodal{
 	background:rgba(0,0,0,0.4);
 	color:white;
 	font-size: 11px;
 	position:absolute;
 	width:100%;
-	height:calc(100% - 5px);
+	height:100%;
 	font-weight: bold;
 	top:0;
+	display: flex;
+	align-items: center;
 
 }
+._vdimct{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 0;
+	padding-top:calc(100%*9/16);
+	background-color: #f6f6f6;
+	overflow:hidden;
 
-@media screen and (max-width: 675px){
-	.videoItem{
-		width:100%;
-	}
+
 }
+._vdimBox{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+._videgroupH{
+	line-height: 150px;
+}
+
 .videoinfo{
 	position: absolute;
 	bottom: 0;
@@ -59,4 +87,10 @@
 }
 .videoinfo>span{
 	padding-left: 10px;
+}
+@media screen and (max-width: 675px){
+	.videoItem{
+		width:100%;
+		padding-top:56.25%;
+	}
 }

@@ -7,18 +7,17 @@ class ModalWrap extends React.Component{
 		this.el=document.createElement('div')
 	}
 	componentDidMount(){
-		document.body.className='mybody'
+		document.body.className='_mybody'
 		modalroot.appendChild(this.el)
-		if(this.props.top){
-		document.body.style.bottom=this.props.top+'px'
-		}
+		document.body.style.top=-this.props.top+'px'
+		
 	}
 	componentWillUnmount(){
 		document.body.className=''
 		modalroot.removeChild(this.el)
-		if(this.props.top){
-		window.scrollTo(0,this.props.top)
-	}
+		document.body.style.top=''
+		if(this.props.top){window.scrollTo(0,this.props.top)}
+		
 	}
 	render(){
 		return ReactDOM.createPortal(this.props.children,this.el)

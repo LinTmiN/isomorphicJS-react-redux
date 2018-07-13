@@ -14,6 +14,8 @@ export const UserState=Immutable.fromJS({
 	isGetTrends:false,
 	isEditAvatar:false,
 	editAvatarStatus:{},
+	myCollectInfo:[],
+	myLikesInfo:[],
 
 });
 export const SearchState = Immutable.fromJS({
@@ -31,7 +33,6 @@ export const SearchState = Immutable.fromJS({
 export const InputState = Immutable.fromJS({
 	email:'',
 	password:'',
-	avatar:undefined,
 	username:'',
 	searchtype:'video',
 	searchvalue:'',
@@ -40,4 +41,6 @@ export const InputState = Immutable.fromJS({
 	scrollTop:window.scrollY,
 	fetching:false,
 	showTrends:false,
+	validate:{},
+	Width:''
 })

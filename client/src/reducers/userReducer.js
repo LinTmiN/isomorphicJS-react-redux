@@ -2,7 +2,7 @@ import {handleActions} from 'redux-actions';
 import { UserState } from '../constants/models';
 const userReducers = handleActions({
 	SWITCH_TYPE:(state,{payload})=>{
-		return state.merge({switchType:payload})
+		return state.merge({switchType:payload,loginError:''})
 	}
 	,
 	REQUEST_LOGIN:(state,{payload})=>(
@@ -16,8 +16,8 @@ const userReducers = handleActions({
 	REGISTER_START:(state)=>(
 		state.merge({isRegister:true})
 	),
-	REGISTER_FAILED:(state)=>(
-		state.merge({isRegister:false})
+	REGISTER_FAILED:(state,{payload})=>(
+		state.merge({isRegister:false,loginError:payload})
 	),
 	REGISTER_SUCCESS:(state)=>(
 		state.merge({isRegister:false})
@@ -51,6 +51,12 @@ const userReducers = handleActions({
 	},
 	IS_EDIT_AVATAR:(state,{payload})=>state.merge({isEditAvatar:payload}),
 	EDITED_AVATAR:(state,{payload})=>state.setIn(['userInfo','avatar'],payload),
-	EDIT_AVATAR_STATUS:(state,{payload})=>state.merge({editAvatarStatus:payload})
+	EDIT_AVATAR_STATUS:(state,{payload})=>state.merge({editAvatarStatus:payload}),
+	GET_MY_LIKES:(state,{payload})=>{
+		return state.merge({myLikesInfo:payload})
+	},
+	GET_MY_COLLECT:(state,{payload})=>state.merge({myCollectInfo:payload}),
+	UPDATE_USER:(state,{payload})=>state.mergeIn(['userInfo'],{...payload})
+
 },UserState);
 export default userReducers;

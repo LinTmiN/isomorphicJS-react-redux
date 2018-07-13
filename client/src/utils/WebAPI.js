@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import fetchJsonp from 'fetch-jsonp'
 import {
 	requestLogin,
 	receiveUser,
@@ -11,7 +11,10 @@ import {
 	getKey,
 	setPage,
 	setInput,
-	preValue,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect,getTrends,isGetTrends,isEditAvatar,editedAvatar,editAvatarStatus
+	validate,
+	getMyCollect,
+	getMylikes,
+	preValue,updateUser,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect,getTrends,isGetTrends,isEditAvatar,editedAvatar,editAvatarStatus
 } from '../actions';
 
 function getCookie(keyName){
@@ -47,7 +50,8 @@ let WebAPI={
 					dispatch(receiveCollect(res.data.collect))
 					dispatch(setAuth({value:true}))
 					dispatch(requestLogin(false))
-					
+					dispatch(setInput({key:'password',value:''}))
+					dispatch(setInput({key:'email',value:''}))
 				}
 			}
 			
@@ -59,12 +63,12 @@ let WebAPI={
 		})
 	},
 	logout:(dispatch)=>{
-		document.cookie ='token=;'+'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-		dispatch(setAuth({value:false}))
+		document.cookie ='token="";expires=-1'
+		dispatch(setAuth(false))
 	},
 	checkAuthor:(dispatch)=>{
 		dispatch(isCheck(true))
-		axios.get('/api/authenticate?token='+getCookie('token')+'&t='+(new Date()).getTime().toString())
+		axios.get('/api/authenticate?token='+getCookie('token'))
 		.then((res)=>{
 			
 			if(res.data.success===true){
@@ -83,45 +87,53 @@ let WebAPI={
 			dispatch(isCheck(false))
 		})
 	},
+	 validate:(dispatch,user)=>{
+	 	return axios.post('api/attempt',user).then(({data})=>{
+	 		dispatch(validate(data))
+	 		return data
+	 	})
+	 }
+	,
 	register:(dispatch,user)=>{
 
 		dispatch(registerStart())
-		axios.post('/api/register',user).then((res)=>{
-			if(res.data.success===false){
-				dispatch(registerFailed())
-			}else{
+		return axios.post('/api/register',user).then(({data})=>{
+			if(data.success===false){
+				dispatch(registerFailed(data.errObj.err[Object.keys(data.errObj.err)[0]].message))
+				dispatch(validate(data.errObj))
+				return false
+			}else if(data.success===true){
 				
-				this.a.login(dispatch,res.data.user.email,res.data.user.password)
+				this.a.login(dispatch,user.email,user.password);
+				return true
 			}
 		})
-		.catch((err)=>{
-			
-			dispatch(registerFailed())
-		})
+
 	},
 	getSearchKey:(dispatch,value)=>{
 		
         dispatch(requestData(true))
-        axios.get('https://api.cognitive.microsoft.com/bing/v7.0/suggestions/?q='+value,{headers:{"Ocp-Apim-Subscription-Key":"65271e84408f4e49812b1a349b81170f"}}).then(({data})=>{
-        	  
-        	    if(data.suggestionGroups){
-        	    	let List=data.suggestionGroups[0].searchSuggestions.map((item)=>{return item.displayText})
-        	    	console.log(List)
-        		  	dispatch(getKey(List))
-        		  	dispatch(requestData(false))
-        		 
-             } 
-	})
+       	fetchJsonp('http://suggestion.baidu.com/su?wd='+value+'&p=3',{
+    		jsonpCallback: 'cb',
+ 		 }).then(function(response) {
+			    return response.json()
+			  }).then(function(json) {
+			      dispatch(getKey(json.s))
+			      dispatch(requestData(false))
+			  }).catch(function(ex) {
+			    
+			    dispatch(requestData(false))
+			  })
 	},
     onSearch:(dispatch,type,value)=>{
     	dispatch(isInit(true))
     	
-    	var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
+    	 value=encodeURI(value.trim().replace(/\s+/ig,'+'))
     		if(type==='video'){
 			
-			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=24&q='+value+'&regionCode=US&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(channelId%2CchannelTitle%2Cdescription%2CpublishedAt%2Cthumbnails%2Fmedium%2Ctitle))%2CnextPageToken%2CpageInfo%2FtotalResults&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
+			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=24&q='+value+'&regionCode=US&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(channelId%2CchannelTitle%2Cdescription%2CpublishedAt%2Cthumbnails%2Ctitle))%2CnextPageToken%2CpageInfo%2FtotalResults&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
 			.then(({data})=>{
-				dispatch(initResult({key:'videoResult',value:data.items}))
+				dispatch(initResult({key:'videoResult',value:data.items,watch:value}))
 				dispatch(preValue(value))
 				dispatch(setPage(data.nextPageToken))
 				dispatch(isInit(false))
@@ -132,7 +144,7 @@ let WebAPI={
 
 			axios.get('https://api.unsplash.com/search/photos?page=1&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
-				dispatch(initResult({key:'imageResult',value:data.data.results}))
+				dispatch(initResult({key:'imageResult',value:data.data.results,watch:value}))
 				dispatch(preValue(value))
 				dispatch(setPage(2))
 				dispatch(isInit(false))
@@ -142,29 +154,29 @@ let WebAPI={
     },
 	addResult:(dispatch,type,value,page)=>{   
 		if(!value){return }
-		var value=encodeURI(value.trim().replace(/\s+/ig,'+'))
+		value=encodeURI(value.trim().replace(/\s+/ig,'+'))
 		
 		if(type==='video'){
 			
 			axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=24&pageToken='+page+'&q='+value+'&regionCode=US&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(channelId%2CchannelTitle%2Cdescription%2CpublishedAt%2Cthumbnails%2Fmedium%2Ctitle))%2CnextPageToken%2CpageInfo%2FtotalResults&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
 			.then(({data})=>{
-				dispatch(addResult({key:'videoResult',value:data.items}))
+				dispatch(addResult({key:'videoResult',value:data.items,watch:value}))
 				dispatch(setPage(data.nextPageToken))
 				dispatch(isAdding(true))
 			})
 		}
 		else if (type==='image'){
-			if(value==='rementupian热'){
-				return axios.get('https://api.unsplash.com/photos/curated?page='+(page)+'&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+			if(value==='rementupian'){
+				return axios.get('https://api.unsplash.com/photos?page='+(page)+'&per_page=24&order_by=popular&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
 				.then(({data})=>{
-						dispatch(addResult({'key':'imageResult',value:data}))		
+						dispatch(addResult({'key':'imageResult',value:data,watch:value}))		
 					dispatch(setPage(page+1))
 					dispatch(isAdding(true))
 				})
 			}
 			axios.get('https://api.unsplash.com/search/photos?page='+(page)+'&per_page=24&query='+value+'&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992').then((data)=>{
 				
-				dispatch(addResult({'key':'imageResult',value:data.data.results}))		
+				dispatch(addResult({'key':'imageResult',value:data.data.results,watch:value}))		
 				dispatch(setPage(page+1))	
 				dispatch(isAdding(true))		
 			})
@@ -204,12 +216,12 @@ let WebAPI={
 		let Promises=collect.map((item)=>{
 			return axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+item+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')  
 		})
-		 Promise.all(Promises).then((res)=>{
+		return Promise.all(Promises).then((res)=>{
 	
 		 	 let channalPromises=res.map((item)=>{
 		 	 	return axios.get('https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id='+item.data.items[0].snippet.channelId+'&fields=items%2Fsnippet%2Fthumbnails%2Fmedium&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')
 		 	 })
-		 	 Promise.all(channalPromises).then((channalres)=>{
+		 	  Promise.all(channalPromises).then((channalres)=>{
 		 	 	
 		 	 	  let infos=res.map((item,index)=>{
 		 	 	  	 return {
@@ -220,9 +232,10 @@ let WebAPI={
 		 	 	  	 }
 		 	 	  })
 		 	 	  dispatch(fetchCollect(infos))
-		 	 	   dispatch(setInput({key:'fetching',value:false}))
+		 	 	  dispatch(setInput({key:'fetching',value:false}))
+		 	 	  return true
 		 	 })
-		 })
+		 }).catch((err)=>{console.log(err)})
 	},
 	getTrends:(dispatch)=>{
 		dispatch(isGetTrends(true))
@@ -265,9 +278,10 @@ let WebAPI={
 	},
 	editAvatar:(dispatch,file)=>{
 		dispatch(isEditAvatar(true))
+		
 		if(file==='delete'){
-			return axios.delete('api/upload?token='+getCookie('token')).then(({data})=>{
-				console.log(data)
+			return axios.delete('/api/upload?token='+getCookie('token')).then(({data})=>{
+				
 				if(data.success){
 					dispatch(editedAvatar(data.avatar))
 					dispatch(isEditAvatar(false))
@@ -278,10 +292,10 @@ let WebAPI={
 				}
 			})
 		}
-		const data = new FormData()
+		let data = new FormData()
 		 data.append('avatar',file)
-		 console.log(data)
-		axios.put('api/upload?token='+getCookie('token'),data).then(({data})=>{
+		
+		axios.post('/api/upload?token='+getCookie('token'),data).then(({data})=>{
 			if(data.success){
 				dispatch(editedAvatar(data.avatar))
 				dispatch(isEditAvatar(false))
@@ -292,7 +306,62 @@ let WebAPI={
 			}
 		})
 	},
-
-
+	fetchmy:(dispatch,type,arr)=>{
+		  if(!arr)return
+		let promises=arr.map((item)=>{
+			if(item.type==='image'){
+				return axios.get('https://api.unsplash.com/photos/'+item.id+'?client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+			}else {
+				return Promise.all([axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+item.id+'&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A'),axios.get('https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='+item.id+'&fields=items%2Fstatistics&key=AIzaSyC3RuAjIyRt6vsLE3KMJzVMx9LSWDxgb0A')])
+			}
+		})
+		return Promise.all(promises).then((reses)=>{
+		 	 let data=reses.map((res,index)=>{
+		 	 	 if(arr[index].type==='image'){
+		 	 	 	
+		 	 	 	return ({
+		 	 	 		type:'image',
+		 	 	 		thumbnail:res.data.urls,
+		 	 	 		likes:res.data.likes,
+		 	 	 		id:arr[index].id
+		 	 	 	})
+		 	 	 }else{
+		 	 	 	
+		 	 	 	return ({
+		 	 	 		type:'video',
+		 	 	 		id:arr[index].id,
+		 	 	 		likes:res[1].data.items[0].statistics.likeCount,
+			  	 	    comment:res[1].data.items[0].statistics.commentCount,
+		 	 	 		thumbnail:res[0].data.items[0].snippet.thumbnails
+		 	 	 	})
+		 	 	 }
+		 	 });
+		 	 if(type==='likeslist'){
+		 	 	dispatch(getMylikes(data));
+		 	 	return true
+		 	 }else{
+		 	 	dispatch(getMyCollect(data))
+		 	 	return true
+		 	 }
+		 })
+	},
+	editProfile:(dispatch,data)=>{
+		return axios.post('/api/editProfile?token='+getCookie('token'),data).then(({data})=>{
+			if(data.token){
+			
+				document.cookie='token='+data.token
+			}
+			if(data.success){
+				if(data.user){
+				dispatch(updateUser(data.user))
+				}
+				dispatch(editAvatarStatus({message:data.message,date:Date.now()}))
+				return true
+			}else {
+				dispatch(editAvatarStatus({message:data.message,date:Date.now()}))
+				return false
+			}
+		})
+	}
 };
 export default WebAPI

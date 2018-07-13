@@ -3,21 +3,28 @@ import LoginPage from '../loginPage';
 import MainPage from '../mainPage'
 import {BrowserRouter as Router} from 'react-router-dom'
 class SwitchC extends React.Component {
-	constructor(props){
-		super(props)
-	}
+
 	componentWillMount(){
 		let {checkAuthor} =this.props
 		checkAuthor()
 	}
 	componentDidMount(){
-		window.addEventListener('resize',this.props.getScreen)
+		var timeout;
+		this.debounced=function(){
+
+			if(timeout)clearTimeout(timeout);
+			timeout=setTimeout(()=>{this.props.getScreen()},500)
+		}.bind(this)
+		window.addEventListener('resize',this.debounced)
+		
 	}
+
 	componentWillUnmount(){
-		window.removeEventListener('resize',this.props.getScreen)
+		window.removeEventListener('resize',this.debounced)
 	}
+	
 	render(){
-		return (<React.Fragment>{this.props.isCheck?'':(<React.Fragment>{this.props.isAuthorized ?(<Router><MainPage/></Router>):(<LoginPage/>)}</React.Fragment>)}</React.Fragment>)
+		return (<Router>{this.props.isCheck?'':(<React.Fragment>{this.props.isAuthorized ?(<MainPage/>):(<LoginPage/>)}</React.Fragment>)}</Router>)
 	}
 }
 	

@@ -3,7 +3,7 @@ import { isCardInit } from '../../actions'
 import ImgBox from '../../components/imgBox'
 import VideoBox from '../../components/videoBox'
 export const ImgBoxContainer =connect(
-	 null,
+	null,
 	 (dispatch)=>({
 	 	isCardInit:()=>{
 	 		dispatch(isCardInit(false))

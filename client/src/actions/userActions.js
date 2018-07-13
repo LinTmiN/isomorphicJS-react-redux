@@ -1,9 +1,8 @@
 import { createAction } from 'redux-actions';
-import WebAPI from '../utils/WebAPI'
+import WebAPI from '../utils/WebAPI.js';
 export const requestLogin = createAction('REQUEST_LOGIN');
 export const receiveUser = createAction('RECEIVE_USER');
 export const loginError = createAction('LOGIN_ERROR');
-export const checkAuth = createAction('CHECK_AUTH',WebAPI.checkAuth);
 export const registerStart = createAction('REGISTER_START');
 export const registerSuccess = createAction ('REGISTER_SUCCESS');
 export const setAuth= createAction('SET_AUTH');
@@ -18,4 +17,7 @@ export const isGetTrends =createAction('IS_GET_TRENDS')
 export const isEditAvatar = createAction('IS_EDIT_AVATAR')
 export const editedAvatar = createAction('EDITED_AVATAR')
 export const editAvatarStatus =createAction('EDIT_AVATAR_STATUS')
+export const getMyCollect =createAction('GET_MY_COLLECT')
+export const getMylikes =createAction("GET_MY_LIKES")
+export const updateUser=createAction('UPDATE_USER')
 

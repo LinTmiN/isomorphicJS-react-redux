@@ -1,3 +1,5 @@
+
+
 ._mbct{
 	width:100%;
 	background: white;
@@ -12,34 +14,39 @@
 
 ._navbar{
 	width:987px;
-	height:100%;
+	height:77px;
 	display: flex;
-	margin:25px auto;
 	justify-content: space-between;
 	flex-direction: row;
  	align-items: center;
  	align-self: center;
- 	transition: all 0.2s ease-in-out;
+ 	transition: height 0.2s ease-in-out;
  	padding: 0 30px;
+ 	margin:0 auto;
+ 	align-content:center;
+ 	will-change:height;
 }
 ._navbarc{
-	margin:7px auto;
+	height: 44px;
 }
 ._search{
 	display: inline-flex;
 }
 ._navl{
-	font-family:'Pacifico','cursive';
+	
 	
 }
 ._A1{
 	font-size: 25px;
-	line-height: 20px;
+	line-height: 30px;
     vertical-align:middle;
 	opacity: 1;
-	
+	font-family:'Eater','cursive';
 	padding-left: 10px;
 	transition: opacity 0.2s ease-in-out;
+	border-left:1px solid black;
+	margin-left:15px;
+	padding-left: 15px;
 }
 ._A1C{
 	
@@ -48,47 +55,81 @@
 .right{
 	font-size: 15px;
 	font-weight: normal;
+	display: flex;
+	justify-content:flex-end;
 
 }
-.right>._A2{
+.right ._Myicon{
+	width: 100%;
+	height: 100%;
+}
+._A2{
 	padding:5px;
 	width:55px;
 	height:55px;
 	cursor: pointer;
 }
-.right>._noLink{
+._noLink{
 	max-height: 32.5px;
 	position: relative;
 }
 ._LogoLink{
 display: flex;
 align-items: center;
+
 }
+
 ._mbsc{
-	transition:all 0.5s ease-in-out;
+	align-self: center;
+
 }
-@media screen and (max-width:545px){
-	._navl{
-		display: none;
+
+@font-face {font-family: "iconfont";
+  src: url('../../media/icon/iconfont.eot?t=1530690448624'); /* IE9*/
+  src: url('../../media/icon/iconfont.eot?t=1530690448624#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('../../media/icon/iconfont.ttf?t=1530690448624') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../../media/icon/iconfont.svg?t=1530690448624#iconfont') format('svg'); /* iOS 4.1- */
+}
+._likesIcon{
+	cursor: pointer;
+}
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:24px;
+  font-weight: 600;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhuye:before { content: "\f0005"; }
+
+.icon-home:before { content: "\e670"; }
+._handleShow{
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	cursor:default;
+}
+@media (min-width: 545px){
+	._collecIcon{
+	display: none!important;
 	}
-	._navbar{
-		justify-content: center;
-		align-items: flex-end;
-		flex-wrap: wrap;
-		align-content:flex-end;
+}
+@media (max-width: 600px){
+	._A1{
+		font-size:16px;
 	}
-	.right{
-		box-sizing: border-box;
-		width: 100%;
-		background: white;
-		height:35px;
-		position: fixed;
-		bottom: 0px;
-		display: flex;
-		justify-content: space-around;
-	}
-	.right>._A2{
-		padding-top: 7px;
-		height: 100%
-	}
+}
+
+	._barcon{
+	display: flex;
+	justify-content:center!important;
+	align-items: center!important;
+	width: 100%;
+	height: 100%;
+	position: relative;
 }

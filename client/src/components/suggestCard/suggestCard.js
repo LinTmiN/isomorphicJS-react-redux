@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button,Card,Icon}from 'semantic-ui-react'
-import faker from 'faker';
+import {image,name} from 'faker/locale/en';
 import './suggestCard.css'
-const fakeUser=Array.apply(null,{length:3}).map((a)=>({avatar:faker.image.avatar(),username:faker.name.findName(),job:faker.name.jobTitle()}))
+const fakeUser=Array.apply(null,{length:3}).map((a)=>({avatar:image.avatar(),username:name.findName(),job:name.jobTitle()}))
 
 const userList=fakeUser.map((user,index)=>(
  <div key={index} className={'mygrid'}>

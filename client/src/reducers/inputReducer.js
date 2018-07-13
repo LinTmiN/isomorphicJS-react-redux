@@ -2,7 +2,7 @@ import {handleActions} from 'redux-actions';
 import { InputState } from '../constants/models';
 
 
-import { SET_INPUT } from '../constants/actionTypes'
+
 const inputReducer = handleActions({
 	SET_INPUT:(state,{payload})=>{
 		return state.set(payload.key,payload.value)
@@ -14,8 +14,14 @@ const inputReducer = handleActions({
 	GET_SCROLL:(state,{payload})=>{
 		return state.merge({scrollTop:payload})
 	},
-	SHOW_TRENDS:(state,{payload})=>{
-		return state.merge({showTrends:payload})
-	}
+
+	SWITCH_TYPE:(state)=>{
+		return state.merge({username:'',email:"",password:""})
+	},
+	VALIDATE:(state,{payload})=>{
+		return state.merge({validate:payload})
+	},
+	
+
 },InputState)
 export default inputReducer;

@@ -18,10 +18,10 @@ export default connect(
 	(dispatch)=>({
 		firstResult:()=>{
 			dispatch(isInit(true))
-			axios.get('https://api.unsplash.com/photos/curated?page=1&per_page=24&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
+			axios.get('https://api.unsplash.com/photos?page=1&per_page=24&order_by=popular&client_id=8e49ffe791fa753b1d76486427f9f2020b38e6599079c929a49b5ac197767992')
 			.then(({data})=>{
 				dispatch(initResult({key:'imageResult',value:data}))
-				dispatch(preValue('rementupian热'))
+				dispatch(preValue('rementupian'))
 				dispatch(setPage(2))
 				dispatch(isInit(false))
 				dispatch(setInput({key:'total',value:Number.POSITIVE_INFINITY}))
@@ -35,7 +35,7 @@ export default connect(
 
 		}),
 	(stateProps,dispatchProps,ownProps)=>{
-		const {page,preValue} = stateProps;
+		const {preValue} = stateProps;
 		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{

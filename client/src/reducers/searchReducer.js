@@ -3,7 +3,7 @@ import { SearchState } from '../constants/models';
 
 const searchReducer =handleActions({
 	REQUEST_DATA:(state,{payload})=>{
-		return state.merge({issearching:payload})
+		return state.merge({isSearching:payload})
 	},
 	INIT_RESULT:(state,{payload})=>{
 		 
@@ -34,7 +34,7 @@ const searchReducer =handleActions({
 		state.set('isInit',payload)
 	),
 	IS_CARD_INIT:(state,{payload})=>{
-		console.log('isCardInit'+payload)
+		
 	return	state.set('isCardInit',payload)
 	}
 	

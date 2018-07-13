@@ -1,12 +1,13 @@
 import React from 'react'
 import LoginBar from '../loginBar';
 import LoginBox from '../../containers/loginBoxContainer';
-import BottomBar from '../bottomBar';
-import {connect} from 'react-redux'
+
+import Mainbottom from '../mainbottom'
+
 export default ()=>(
    <div>
    	<LoginBar/>
    	<LoginBox/>
-    <BottomBar/>
+    <Mainbottom/>
    </div>
 )

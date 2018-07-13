@@ -10,15 +10,17 @@
 	border-top-left-radius:4px;
 	border-top-right-radius:4px;
 	padding:0 15px;
+	z-index:999;
 	
 }
 ._popupc-enter{
 	bottom:-44px;
 	
 }
+
 ._popupc-enter-active{
     bottom:0;
-    transition:all 500ms ease-out;
+    transition:all 300ms ease-out;
 }
 ._popupc-exit{
 	bottom:0;
@@ -26,7 +28,7 @@
 }
 ._popupc-exit-active{
     bottom:-44px;
-    transition:all 500ms ease-out;
+    transition:all 300ms ease-out;
 }
 ._popup>h4{
 	font-size:15px;
@@ -40,5 +42,6 @@
 @media screen and (max-width:725px){
 	._popupres{
 		width:100%;
+
 	}
 }

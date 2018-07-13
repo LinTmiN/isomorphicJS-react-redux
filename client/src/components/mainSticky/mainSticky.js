@@ -1,9 +1,9 @@
 import React from 'react';
 import {Sticky} from 'semantic-ui-react'
 import {connect } from 'react-redux'
-import './mainSticky.css'
-import axios from 'axios'
-import {withRouter} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
+
+
 import O from './o'
 
 class MainSticky extends React.PureComponent{
@@ -16,7 +16,7 @@ class MainSticky extends React.PureComponent{
                 <Sticky bottomOffset={50} context={this.props.context} offset={80} pushing>
                 <div className='_msct2'>
 	                  <div className='_msif'>
-	                  	 <div className='_msifim'> <img alt={`${userinfo.username}'s avatar`} src={userinfo.avatar.path} /></div>
+	                  	<NavLink to='/user'> <div className='_msifim'> <img alt={`${userinfo.username}'s avatar`} src={userinfo.avatar.path} /></div></NavLink>
 	                  	 <div className='_msifus'>
 	                  	    <div className='_msifname'><span>{userinfo.username}</span></div>
 	                  	    <div className='_msifemail'><span>{userinfo.email}</span></div>

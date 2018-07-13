@@ -4,7 +4,7 @@
 	background-repeat:no-repeat;
 	background-position: 50% 0;
 	overflow: hidden;
-	background-image: url('https://www.instagram.com/static/images/homepage/home-phones.png/38825c9d5aa2.png');
+	background-image: url('../../media/38825c9d5aa2.png');
 }
 .Homeimg{
 	animation:mymove 5s infinite;
@@ -21,4 +21,112 @@
 	50% {background-image: url('../../media/home3.jpg')}
 	75% {background-image: url('../../media/home4.jpg')}
 	100% {background-image: url('../../media/home1.jpg')}
+}
+._message{
+	height:70px;
+	background-color: white!important;
+	vertical-align: middle;
+	line-height: 35px!important;
+	font-size:14px!important;
+	text-align: center;
+}
+._inputcontain{
+	margin:10px 0;
+	display: flex;
+	flex-direction:row;
+	box-sizing: border-box;
+	position: relative;
+	border:1px solid #efefef;
+	border-radius: 1px;
+}
+._myinput{
+	box-sizing: border-box;
+	flex-grow:1;
+	
+}
+._myinputfocus{
+	border:1px solid #b2b2b2;
+}
+._myinputlabel{
+	color:#999;
+	font-size: 12px;
+	position:absolute;
+	height:36px;
+	line-height: 36px;
+	left:8px;
+	transition:transform 0.1s ease;
+	transform-origin:left;
+	user-select:none;
+	pointer-events:none;
+}
+._myinputlabelfocus{
+   transform: scale(.83333) translateY(-10px);
+}
+
+._myinput>input{
+	padding-right:25px;
+	padding:7px ;
+	border:1px solid transparent;
+	padding-left:8px;
+	
+	width:100%;
+	height: 100%;
+	background:#fafafa;
+	height:36px;
+	font-size: 16px;
+	text-overflow:ellipsis;
+	
+}
+._myinput>._input{
+	padding-top:15px;
+	font-size: 12px;
+}
+._ipdivb{
+	
+	border:none;
+	background:#fafafa;
+	outline: none;
+	font-size:12px;
+	display: flex;
+	
+}
+._passwordshow{
+		height:100%;
+	border:none;
+	background:#fafafa;
+	outline: none;
+	font-size:12px;
+	cursor: pointer;
+	flex-basis: 45px;
+}
+input:focus, textarea:focus {
+
+    outline: none;
+
+}
+._mysegment{
+	padding-left:35px!important;
+	padding-right:35px!important;
+}
+._tiaokuan{
+	color:#999;
+	margin:10px 30px;
+}
+._tiaokuan>span{
+	font-weight: bold;
+}
+._download{
+	font-size:14px;
+	margin:25px 0;
+}
+._downloadsrc{
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+._downloadsrc img{
+	height:40px;
+	width: auto;
+	cursor: pointer;
 }

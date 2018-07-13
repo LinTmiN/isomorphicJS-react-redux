@@ -2,55 +2,82 @@ import React from "react";
 import "./explore.css";
 import { Loader} from 'semantic-ui-react'
 import {ImgBoxContainer} from '../../containers/boxContainer'
-import VideoBox from '../videoBox'
 
-class ImgExplore extends React.Component {
+class ImgExplore extends React.PureComponent {
 	constructor(props){
 		super(props)
 		this.myref=React.createRef()
 		this.imgComplete=this.imgComplete.bind(this)
 		this.handleScroll=this.handleScroll.bind(this)
+
 	}
  	isScrolling(){
  		const { scrollTop}=document.documentElement;
 		const { clientHeight,scrollHeight}=document.documentElement;
-		return scrollTop+clientHeight+1200>=scrollHeight
+		return scrollTop+clientHeight+200>=scrollHeight
  	}
  	handleScroll(){
- 		let scrollY=window.scrollY||document.documentElement.scrollTop
- 		if(this.lastScroll===scrollY){return}else{
+ 		let scrollY=window.scrollY?window.scrollY:document.documentElement.scrollTop;
+ 		if(this.lastScroll===scrollY||this.props.isInit){return}else{
  			this.lastScroll=scrollY	
  		}
- 		console.log('ssaffc')
- 		console.log(this.imgComplete())
+ 		
  		if(this.imgComplete()){this.props.finishAdd()}
  		if(this.isScrolling()&&this.lastPage!==this.props.page&&!this.props.isAdding){
  			this.lastPage=this.props.page
- 			console.log('sc')
+ 			
  			this.length=this.props.imageresult.length
  			this.props.updateResult(this.props.page)
  		}
  	}
 	componentDidMount(){		
-		// const { scrollTop}=document.documentElement;
-		// const { clientHeight,scrollHeight}=document.documentElement;
-		// 	if(scrollTop+clientHeight+40>=scrollHeight){
+		 let that=this;
+    that.InterSectionObserver=new IntersectionObserver((entries)=>{
+         
+       entries.forEach((entry)=>{
+            if(entry.isIntersecting){
+                if(entry.target.dataset.src){
+                  let lazyImage = entry.target,
+                      newImg=new Image(),
+                      src=lazyImage.dataset.src,
+                      srcset=lazyImage.dataset.srcset;
+                  newImg.src=src;
+                  newImg.srcset=srcset
+                  newImg.onload=()=>{
+                     lazyImage.src=src
+                     lazyImage.srcset=srcset
+                     lazyImage.classList.remove('img-small');
+                     lazyImage.classList.add('img-end');
+                     
+                     that.InterSectionObserver.unobserve(lazyImage);
+                  }
+
+                }
+            }
+       })
+    },{threshold:[0,0.25,0.5,0.75,1]})
+      let lazyImages = [].slice.call(document.querySelectorAll(".img-small"));
+      lazyImages.forEach((lazyImage)=>{
+        this.InterSectionObserver.observe(lazyImage)
+      })
+		 if(!this.props.isInit){
 			this.props.firstResult()
-		// }
+		}
+			
+		
 		this.check = setInterval(this.handleScroll,100)
 	
 		
 	}
 	componentWillUnmount(){
 		clearInterval(this.check)
-
+		this.InterSectionObserver.disconnect()
 	}
-	shouldComponentUpdate(nS,nP){
-		if(this.state!==nS||this.props!==nP){
-			return true
-		}else{
-			return false
-		}
+	componentDidUpdate(){
+		let lazyImages = [].slice.call(document.querySelectorAll(".img-small"));
+      lazyImages.forEach((lazyImage)=>{
+        this.InterSectionObserver.observe(lazyImage)
+      })
 	}
 	imgComplete(){
 		const imgs=this.myref.current.querySelectorAll('img')
@@ -64,32 +91,64 @@ class ImgExplore extends React.Component {
 	}
 	
 	render(){
-		let BoxList,Load
-		if(this.props.imageresult.length>0){
-			console.log(this.length+'sfsf'+this.props.imageresult.length)
-			Load=this.length!==this.props.imageresult.length?<Loader className='myloader' active inline='centered' size='medium'/>:'end'
-		     BoxList=this.props.imageresult.map((i,index)=>(<ImgBoxContainer history={this.props.history}   key={index} info={i}/>))
+		let BoxList,Load,List,
+			{imageresult,history}=this.props;
+		if(imageresult.length>0){
+			
+			Load=this.length!==imageresult.length?<Loader className='myloader' active inline='centered' size='medium'/>:'end';
+		    List=imageresult.map((i,index)=>(<ImgBoxContainer history={history} key={index} info={i}/>))
+		 	BoxList=List.reduce((a,ImgBox,index)=>{
+		 		let increase=100*imageresult[index].height/imageresult[index].width.toFixed(2);
+
+		 		if(index<3){
+		 			
+		 			a[index].push(ImgBox)
+		 			a[index].height = increase
+		 			return a
+		 		}else{
+		 			let min=Math.min.apply(null,[a[0].height,a[1].height,a[2].height])
+		 			
+		 			if(a[0].height===min){
+		 				a[0].push(ImgBox)
+		 				a[0].height +=increase
+		 				
+		 			}else if(a[1].height===min){
+		 				a[1].push(ImgBox)
+		 				a[1].height +=increase
+		 			
+		 			}else if(a[2].height===min){
+		 				a[2].push(ImgBox)
+		 				a[2].height +=increase
+		 				
+		 			}
+
+		 			return a
+		 		}
+		 	},[[],[],[]])
 		 }else{
-		 	Load=''
+		 	 Load=''
 			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>Sorry,we can't find this!</div>
 		 }
 		return (
+			<React.Fragment>
 		<article ref={this.myref}  className='iep1'>
 			<h1>Explore</h1>
 		{this.props.isInit?( 
       
-        <Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader>
+        <div className='loaderBox'><Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader></div>
      
 
       
-    ):<div className='imgExplore'>
-					{BoxList}
-
+    ):<div style={{height:'auto'}} className='imgExplore'>
+					<div  ref={(r)=>this.listOne=r} className='_exRow'>{BoxList[0]}</div>
+					<div ref={(r)=>this.listTwo=r} className='_exRow'>{BoxList[1]}</div>
+					<div  ref={(r)=>this.listThree=r} className='_exRow'>{BoxList[2]}</div>
 		  	</div>}	
-		   {this.props.isInit?'':Load}
+		   
 		 	 
 		</article>
-
+			{this.props.isInit?'':Load}
+			</React.Fragment>
 		)
 	}
 }

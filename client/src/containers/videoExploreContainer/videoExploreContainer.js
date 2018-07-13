@@ -3,7 +3,7 @@ import VideoExplore from '../../components/videoExplore';
 import { connect} from 'react-redux';
 import {isAdding } from '../../actions'
 import WebAPI from '../../utils/WebAPI'
-import {withRouter} from 'react-router-dom'
+
 export default connect(
 
 	(state)=>({
@@ -30,7 +30,7 @@ export default connect(
 
 		}),
 	(stateProps,dispatchProps,ownProps)=>{
-		const {page,preValue} = stateProps;
+		const {preValue} = stateProps;
 		const {updateResult}=dispatchProps;
 		
 				return Object.assign({},stateProps,dispatchProps,ownProps,{

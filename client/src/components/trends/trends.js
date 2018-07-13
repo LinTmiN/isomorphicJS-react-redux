@@ -1,7 +1,7 @@
 import React from 'react';
 import './trends.css'
 import TrendBox from './trendBox'
-import {Feed,Icon,Loader} from 'semantic-ui-react'
+import {Icon,Loader} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import WebAPI from '../../utils/WebAPI'
 class Trends extends React.Component{
@@ -19,15 +19,15 @@ class Trends extends React.Component{
 
 		return (
 			<React.Fragment>
-			<div style={{width:width}} className='_trendsBox _responsiveTrendBox'>
-			   <div className='_trendBoxContain'>
-				  	{isGetTrends?(<div style={{paddingTop:'25px',paddingBottom:'25px'}}><Loader active inline='centered' /></div>):(trendsList.length===0?<div className='_trendsnone'><Icon style={{alignSelf:'center',fontWeight:'normal',fontSize:'45px'}} size='huge' name='heart outline'/><span>帖子动态</span><span>你收藏或点赞的帖子会显示在这里</span></div>:trendsList.reverse())}
+				<div style={{width:width}} className='_trendsBox _responsiveTrendBox'>
+				   <div className='_trendBoxContain'>
+					  	{isGetTrends?(<div style={{paddingTop:'25px',paddingBottom:'25px'}}><Loader active inline='centered' /></div>):(trendsList.length===0?<div className='_trendsnone'><Icon style={{alignSelf:'center',fontWeight:'normal',fontSize:'45px'}} size='huge' name='heart outline'/><span>帖子动态</span><span>你收藏或点赞的帖子会显示在这里</span></div>:trendsList.reverse())}
+					</div>
 				</div>
-			</div>
-			<div className='_jiao _responsivejiao'>	
-			</div> 
-			<div className='_kuang __responsivekuang'>	
-			</div>
+				<div className='_jiao _responsivejiao'>	
+				</div> 
+				<div className='_kuang __responsivekuang'>	
+				</div>
 			</React.Fragment>
 		)
 	}

@@ -1,0 +1,222 @@
+._myprogress{
+	background: linear-gradient(to right,#F6076C, #8E11FF,#F90895,#FFC900,#F6076C);
+	z-index:9999;
+	width:100%;
+	background-size:1400%;
+	position: fixed;
+	top:0;
+	height:3px;
+	animation:move 2s ease infinite,wd 0.5s ease 1;  
+	
+}
+
+@keyframes wd{
+	from {
+        width:0
+    }
+    to {
+        width:100%
+    }
+
+}
+.img-small {
+  filter: blur(20px);
+ 
+  transform: scale(1);
+}
+._uspboxmmModal{
+	width: 100%;
+	height:100%;
+	background-color:rgba(0,0,0,.3);
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color:white;
+
+}
+/*user avatar*/
+._userpagemain{
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+._uspageavatar{
+	display: block;
+	outline: none;
+	border: 0;
+	background:none;
+	padding:0;
+	cursor:pointer;
+	padding-bottom: 0;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+._avatarlist{
+ 	margin-right: 30px;
+	flex-grow: 1;
+}
+._mymodal{
+	background-color: rgba(0,0,0,0.4);
+	overflow:hidden!important;
+	z-index: 99999;
+}
+._avatarbuttonlist{
+	width:400px;
+	background-color: white;
+	border-radius: 12px;
+	display: flex;
+	padding: 32px;
+	flex-direction:column;
+	justify-content: center;
+
+
+}
+._avatarlistContain{
+ width:100%;
+ display: flex;
+ flex-direction:column;
+}
+._avatarlistTitle{
+	margin-bottom: 18px;
+}
+._avatarlistTitle>h4{
+  font-size: 18px;
+  text-align: center;
+}
+._avatarbuttonGroup{
+	display: flex;
+	flex-direction: column;
+	margin:0 -32px -32px;
+}
+._avatarbuttonGroup>button{
+	border:0;
+	padding:0;
+	background: none;
+	border-top:1px solid #efefef;
+	line-height: 48px;
+	cursor:pointer;
+}
+._bluebutton{
+	color:#3897f0;
+	font-weight: 600;
+}
+._redbutton{
+	color:#ed4956;
+	font-weight: 600;
+}
+._editavatarloader{
+	position: absolute!important;
+	top:50%!important;
+	left:50%!important;
+	transform:translate(-50%,-50%)!important;
+}
+._jsklagjl{
+	width:150px;
+	height: 150px;
+		border-radius: 50%;
+	overflow:hidden;
+	margin:0 auto;
+}
+/*user avatar*/
+
+
+.mymodal {
+	background-color: rgba(0,0,0,0.7);
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	overflow: hidden;
+	    overflow-y: auto;
+}
+.mymodal::-webkit-scrollbar{
+	width:0;
+}
+.mybody{
+	position: fixed;
+	overflow-y:scroll;
+	width:100%;
+}
+._cdtai{
+	    background: 0 0;
+    border: 0;
+    color: #262626;
+    font-size: inherit;
+    min-height: 20px;
+    max-height: 56px;
+    outline: 0;
+    padding: 0;
+    resize: none;
+    display: -webkit-flex;
+    display: flex;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+._msif{
+	display: flex;
+	border-bottom: 1px solid #efefef;
+	width: 100%;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+._msifim{
+	width:50px;
+	height:50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+._msifim>img{
+	width:100%;
+	height:100%;
+}
+._msifus{
+	padding-left:15px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+}
+._cdta{
+	min-height: 56px;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top: 1px solid #efefef;
+	
+ 
+}
+._msifname{
+	font-weight: 600;
+	font-size: 13px;
+	vertical-align: middle;
+	line-height: 20px;
+	font-family: Arial;
+	color:#262626;
+	text-align: left;
+}
+._msifemail{
+	font-size: 11px;
+	color:#999;
+	text-align: left;
+	vertical-align: middle;
+}
+.img-default{
+	transition:all 1s ease;
+	
+	transform: scale(1);
+}
+.img-end{
+	opacity:1;
+	filter:blur(0px);
+	
+}	

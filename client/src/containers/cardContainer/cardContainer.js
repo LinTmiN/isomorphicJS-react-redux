@@ -12,7 +12,7 @@ export default connect(
 		isCardInit:state.getIn(['search','isCardInit']),
 		collect:state.getIn(['user','collect']),
 		screen:state.getIn(['input','screen']),
-		userInfo:state.getIn(['user','userInfo']).toJS()
+		userInfo:state.getIn(['user','userInfo']).toJS(),
 	}),
 	(dispatch)=>({
 		updateResult:(value,page)=>(type)=>{

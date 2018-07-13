@@ -1,0 +1,73 @@
+._uspbox{
+	display:flex;
+	flex-direction:row;
+	margin-top:26px;
+	box-sizing: border-box;
+}
+._uspbox:first-child{
+	margin-top:0;
+}
+._uspboxm{
+	
+	box-sizing: border-box;
+	
+	position: relative;
+	width:calc((100% - 56px)/3);
+	padding-top: calc((100% - 56px)/3);
+	
+}
+._usblink{
+	display: block;
+	box-sizing: border-box;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	background:white;
+	overflow:hidden;
+}
+._usb{
+	margin-right:28px;
+}
+._usb:last-child{
+	margin-right:0px;
+}
+._uspboxmm{
+	position: relative;
+	width:100%;
+	height: 100%;
+
+}
+
+._uspboxmm img{
+	display: block;
+ 
+}
+._boxicon{
+	position: absolute;
+	z-index:5;
+	right:5px;
+	top:10px;
+	font-size:20px;
+	
+	color:#DDDBDB;
+}
+._uspboxmmModal div{
+	color:#F7F6F6;
+	margin-right:15px;
+}
+._uspboxmmModal span{
+	font-weight:600;
+	font-size: 16px;
+}
+@media (max-width: 725px){
+	._uspboxm{
+		width:calc((100% - 6px)/3);
+		padding-top:calc((100% - 6px)/3);
+	}
+	._usb{margin-right:3px;}
+	._uspbox{
+		margin-top:3px;
+	}
+}

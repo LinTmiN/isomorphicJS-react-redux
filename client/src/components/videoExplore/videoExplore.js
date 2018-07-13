@@ -1,7 +1,7 @@
 import { Loader} from 'semantic-ui-react'
 import React from "react";
 import {VideoBoxContainer} from '../../containers/boxContainer'
-import faker from 'faker'
+
 
 class VideoExplore extends React.PureComponent {
 	constructor(props){
@@ -19,7 +19,7 @@ class VideoExplore extends React.PureComponent {
  	}
  	handleScroll(){
  		let scrollY=window.scrollY||document.documentElement.scrollTop
- 		if(this.lastScroll===scrollY){return}else{
+ 		if(this.lastScroll===scrollY||this.props.isInit){return}else{
  			this.lastScroll=scrollY
  		}
  		
@@ -30,7 +30,43 @@ class VideoExplore extends React.PureComponent {
  			this.props.updateResult(this.props.page)
  		}
  	}
-	componentDidMount(){		
+ 	componentDidUpdate(){
+		let lazyImages = [].slice.call(document.querySelectorAll(".img-small"));
+      lazyImages.forEach((lazyImage)=>{
+        this.InterSectionObserver.observe(lazyImage)
+      })
+		this.setState({
+			url:this.props.location.pathname.indexOf('/collect')===-1?true:false
+		})
+	}
+	componentDidMount(){
+		 let that=this;
+    that.InterSectionObserver=new IntersectionObserver((entries)=>{
+         
+       entries.forEach((entry)=>{
+            if(entry.isIntersecting){
+                if(entry.target.dataset.src){
+                  let lazyImage = entry.target,
+                      newImg=new Image();
+                      newImg.src=lazyImage.dataset.src;
+                      newImg.srcset=lazyImage.dataset.srcset;
+                      newImg.onload=()=>{
+                         lazyImage.src=lazyImage.dataset.src;
+                         lazyImage.srcset=lazyImage.dataset.srcset;
+                         lazyImage.classList.remove('img-small');
+                     	 lazyImage.classList.add('img-end');
+                         
+                         that.InterSectionObserver.unobserve(lazyImage);
+                      }
+
+                }
+            }
+       })
+    },{threshold:[0,0.25,0.5,0.75,1]})
+      let lazyImages = [].slice.call(document.querySelectorAll(".img-small"));
+      lazyImages.forEach((lazyImage)=>{
+        this.InterSectionObserver.observe(lazyImage)
+      })		
 		   if(!this.props.isInit){
 			this.props.firstResult()
 		}
@@ -39,7 +75,7 @@ class VideoExplore extends React.PureComponent {
 	}
 	componentWillUnmount(){
 		clearInterval(this.check)
-
+		this.InterSectionObserver.disconnect()
 	}
 
 	imgComplete(){
@@ -57,8 +93,8 @@ class VideoExplore extends React.PureComponent {
 		let BoxList,Load
 		
 		if(this.props.videoresult.length>0){
-			console.log(this.length+'sfsf'+this.props.videoresult.length)
-      		Load=this.length!==this.props.videoresult.length?<Loader style={{marginBottom:'100px'}} active inline='centered' size='medium'></Loader>:'end'
+			
+      		Load=this.length!==this.props.videoresult.length?<Loader  className='myloader' active inline='centered' size='medium'/>:'end'
       		BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
 			Load=''
@@ -67,7 +103,7 @@ class VideoExplore extends React.PureComponent {
 		return (
 		<article ref={this.myref}  className='iep1'>
 			<h1>Explore</h1>
-	{this.props.isInit?(<Loader className='_ieloader' style={{margin:'50px auto'}} active inline='centered' size='medium'></Loader>
+	{this.props.isInit?(<div className='loaderBox'><Loader className='_ieloader'  active inline='centered' size='medium'></Loader></div>
     ):<div className='videoExplore'>{BoxList}</div>}
      {this.props.isInit?'':Load}
 		</article>

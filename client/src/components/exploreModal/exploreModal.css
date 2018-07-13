@@ -6,7 +6,9 @@
 	display: flex;
 	justify-content: center;
 	animation:fadeIn 0.75s ease-in-out  1 normal;
+	z-index: 1000;
 }
+._lsfw{position: static;}
 ._exmlmain{
 	width:100%;
 	height:100%;
@@ -14,25 +16,27 @@
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	
 	position: relative;
 	transform-style: preserve-3d;
+	overflow: hidden;
 	
 }
 
 ._3dex{
 	display: flex;
-	box-sizing:content-box;
+	box-sizing:border-box;
 	width:300px;
 	height:100%;
-	border-right:46px solid transparent;
-	border-left:46px solid transparent;
-	border-bottom:46px solid transparent;
+	
+	
 	backface-visibility: hidden;
 	flex-direction: column;
 	position: absolute;
-	padding:20px 0;
-	margin-bottom: 40px;
+	top:0;
+	left:50%;
+	margin-left:-150px;
+	padding-bottom:20px;
+	
 }
 ._3dexuser{
 	display: flex;
@@ -45,7 +49,6 @@
 	display: flex;
 	align-items: center;
 	
-	padding-top:15px;
 }
 ._3davatar{
 	width:30px;
@@ -74,9 +77,12 @@
 	outline: none;
 	cursor: pointer;
     position: absolute;
-	right:-35px;
+	
 	color:white;
 	font-weight:400;
+}
+._3dbuttonR{
+	right:-45px;
 }
 ._3dembed{
 	position: relative;
@@ -94,14 +100,7 @@
 	top:50%;
 	font-weight: 600;
 }
-@media screen and (max-width:360px){
-	._3dbutton1{
-		right:0;
-	}
-	._3dbutton3{
-		left:0;
-	}
-}
+
 @keyframes fadeIn{
 	from{
 		background: white;
@@ -116,36 +115,50 @@
 }
 .rtl{
 	transform:rotateY(0deg) translateZ(0px);
-	
+	-ms-transform:rotateY(0deg) translateZ(0px);
 }
 .rtl-enter{
 	transform:rotateY(90deg)  translateZ(150px);
+	-ms-transform:rotateY(90deg)  translateZ(150px);
 }
 .rtl-enter-active{
-	transition:all 0.5s ease-in-out;
+	transition:all 0.3s ease-in-out;
+	-ms-transition:all 0.3s ease-in-out;
 	transform:rotateY(0deg)  translateZ(150px);
+	-ms-transform:rotateY(0deg)  translateZ(150px);
 }
 .rtl-exit{
 	transform:rotateY(0deg)  translateZ(150px);
+	-ms-transform:rotateY(0deg)  translateZ(150px);
 }
 .rtl-exit-active{
 	transform:rotateY(-90deg)  translateZ(150px);
-	transition:all 0.5s ease-in-out;
+	-ms-transform:rotateY(-90deg)  translateZ(150px);
+	transition:all 0.3s ease-in-out;
+	-ms-transition:all 0.3s ease-in-out;
 }
+
 .ltr{
 	transform:rotateY(0deg) translateZ(150px);
+	-ms-transform:rotateY(0deg) translateZ(150px);
  }
  .ltr-enter{
  	transform:rotateY(-90deg)  translateZ(150px);
+ 	-ms-transform:rotateY(-90deg)  translateZ(150px);
  }
  .ltr-enter-active{
- 	transition:all 0.5s ease-in-out;
+ 	transition:all 0.3s ease-in-out;
+ 	-ms-transition:all 0.3s ease-in-out;
 	transform:rotateY(0deg)  translateZ(150px);
+	-ms-transform:rotateY(0deg)  translateZ(150px);
  }
  .ltr-exit{
  	transform:rotateY(0deg)  translateZ(150px);
+ 	-ms-transform:rotateY(0deg)  translateZ(150px);
  }
  .ltr-exit-active{
  	transform:rotateY(90deg)  translateZ(150px);
- 	transition:all 0.5s ease-in-out;
+ 	-ms-transform:rotateY(90deg)  translateZ(150px);
+ 	-ms-transition:all 0.3s ease-in-out;
+ 	transition:all 0.3s ease-in-out;
  }

@@ -1,6 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import promise from 'redux-promise';
-import reduxThunk from 'redux-thunk';
+import { createStore,applyMiddleware } from 'redux';
 import Immutable from 'immutable';
 import {createLogger} from 'redux-logger'
 import rootReducer from '../reducers'
@@ -17,7 +15,7 @@ const logger = createLogger({
 const initialState=Immutable.fromJS({
       user:UserState,
       input:InputState,
-      search:SearchState
+      search:SearchState,
 });
 export default createStore(
 	rootReducer,

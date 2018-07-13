@@ -1,0 +1,208 @@
+
+._accountsmain{
+	margin:60px 28px 0;
+	max-width:calc(100% - 20px);
+	flex-grow: 1;
+	background:white;
+	border:1px solid #dbdbdb;
+	display: flex;
+	flex-direction:row;
+
+}
+._tabAc{
+	flex-basis: 236px;
+	border-right:1px solid #dbdbdb;
+}
+._tabAL{
+    padding:16px 16px 16px 30px;
+    width: 100%;
+    font-size: 16px;
+    color:#262626;
+    border:2px solid transparent;
+    text-align: left;
+}
+._tabALactive{
+	font-weight: 600;
+	border-left:2px solid black;
+}
+._tabAL:hover{
+	background-color:#FCFBFB;
+	border-left:2px solid #E9E5E5
+}
+._tabALactive:hover{
+	font-weight: 600;
+	border-left:2px solid black;
+	background-color:white;
+}
+._editform{
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+}
+
+._editacountava{
+	width:38px;
+	height: 38px;
+	margin-left:124px;
+	margin-right:32px;
+}
+._acHeader{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-start;
+	align-items: center;
+	margin:16px 0;
+}
+._acEditAva{
+
+	display: block;
+	flex-direction:column;
+	text-align:left;
+	letter-spacing:1px;
+	line-height:14px;
+}
+._acEditAva h1{
+	font-size:20px;
+	margin:0;
+	padding:0;
+	font-weight: 400;
+	min-height: 25px;
+}
+._acEditAva span{
+	color:#3897f0;
+	font-size:14px;
+	cursor:pointer;
+}
+._EDform{
+	display: flex;
+	flex-direction: column;
+	align-items:stretch;
+	-webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-shrink: 0;
+    margin-top:40px;
+    padding-bottom:40px;
+}
+._EDformBox{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-start;
+	align-items: center;
+	margin-top:20px;
+	
+	flex-shrink: 1;
+}
+._EDheader{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-start;
+	align-items: center;
+	margin-top:20px;
+	
+	flex-shrink: 1;
+}
+._EDformAside{
+    padding-left:32px;
+    padding-right: 32px;
+	flex:0 0 194px;
+	text-align: right;
+	font-size:16px;
+	font-weight:600;
+	align-self:flex-start;
+	line-height:32px;
+}
+._EDformInput{
+	flex-grow:0;
+	flex-shrink: 1;
+	width: 336px;
+}
+._EDformInput input,._EDformInput select{
+	width: 100%;
+	border:1px solid #efefef;
+	padding:0 10px;
+	height: 32px;
+	border-radius:5px;
+	font-size:12px;
+	
+}
+
+._EDformInput select{
+   max-width: 120px;
+   text-align: left;
+
+}
+._EdformSelect{
+	justify-content:flex-start;
+	display: flex;
+}
+._EDform ._EDformInput ._selectCount{
+	padding:5;
+	line-height:32px;
+}
+._EDformInput textarea{
+	width: 100%;
+	border:1px solid #efefef;
+	padding:5px 10px;
+	height: 32px;
+	border-radius:5px;
+	max-width:335px;
+	min-height:80px;
+	flex-shrink:1;
+	    resize: vertical;
+}
+._EDformInput span{
+	display: block;
+	text-align: left;
+	font-weight: 600;
+	font-size: 14px;
+	color:#999;
+}
+
+._EDformInput input:focus,._EDformInput textarea:focus{
+	border:1px solid #84B9FA;
+	
+}
+
+@media (max-width: 540px){
+	._accountsmain{
+		margin: 0;
+		max-width: 100%;
+	}
+	
+	._tabAc{
+		display: none;
+	}
+}
+@media (max-width:725px){
+	._accountsmain{
+		margin:60px auto 0;
+	}
+}
+
+@media (max-width: 840px){
+	
+	._EDformBox{
+		flex-direction:column;
+
+	}
+	._EDformAside{
+		flex-basis: auto;
+	}
+	._EDformInput{
+		width: 100%;
+		padding:0 35px;
+	}
+	._EDformInput textarea{
+		max-width:100%
+	}
+	._EDheader{
+		padding:0 30px;
+	}
+	._EDavasize{
+		margin-left:0;
+	}
+	._tabAc{
+		flex-basis:auto;
+	}
+	
+}

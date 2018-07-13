@@ -36,7 +36,7 @@ class TrendBox extends React.Component{
 	}
 	render(){
 		let {trend,history}=this.props
-		console.log(trend)
+	
 		return (
 
 			 <div onClick={()=>{history.push(`/detail/${trend.type}/${trend.id}`)}} className='_msif _trendBox'>

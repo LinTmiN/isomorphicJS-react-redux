@@ -1,85 +1,320 @@
-._uspageavatar{
-	display: block;
-	outline: none;
-	border: 0;
-	background:none;
-	padding:0;
-	cursor:pointer;
-	padding-bottom: 0;
+
+/*user info page*/
+._uspage{
+	padding:0 28px;
+	width: 100%
+}
+._uspageheader{
+	padding-top:60px;
+	display: flex;
+	flex-direction:row;
+	margin-bottom: 45px;
+}
+._infosection{
+	flex-grow: 2;
+}
+._buttonlink{
+	width: auto;	
+	padding-right: 15px;
+	padding-left: 15px;
+}
+._buttonlink span{
 	width: 100%;
 	height: 100%;
-	position: relative;
+	
 }
-._avatarlist{
-	border-radius: 50%;
-	overflow:hidden;
-	width:75px;
-	height: 75px;
+._buttonlink button {
+	outline: none;
+	background:0 0;
+	border:none;
+	color:#262626;
+	cursor:pointer;
+	font-weight: 600;
+	font-size: 14px;
+	border:1px solid #dbdbdb;
+	
+	border-radius: 3px;
+	padding:5px 24px;
 }
-._mymodal{
-	background-color: rgba(0,0,0,0.4);
-	overflow:hidden!important;
-	z-index: 99999;
+._iconbutn{
+	font-size:22px!important;
+	line-height:12px!important;
 }
-._avatarbuttonlist{
-	width:400px;
-	background-color: white;
-	border-radius: 12px;
+button{
+	border:none;
+	outline: none;
+	cursor: pointer;
+	background:0 0;
+}
+._uspnam{
 	display: flex;
-	padding: 32px;
-	flex-direction:column;
-	justify-content: center;
+	flex-wrap: wrap;
+}
+._uspnam h1{
+	font-size: 32px;
+	line-height: 32px;
+	font-weight: 200;
+	font-family: 'BlinkMacSystemFont'
+}
+._setbutn{
+	order:1;
+}
+._userul{
+	text-align: left;
+	font-size: 14px;
+	display: flex;
+	
+}
+._userul li{
+	margin-right: 45px;
+	font-size: 16px;
+	line-height: 32px;
+    font-weight: 400;
+    color:#999;
+}
+._userul li>span{
+	font-weight:800;
+	padding-right: 5px;
+	color:black;
+	padding-left: 5px;
+}
+._selfpage{
+	
+	font-size: 14px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	text-align: left;
+	margin-top:25px;
+}
+._selfpage h1{
+	font-weight:normal;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 14px;
+	margin:0;
+	display: inline;
+}
+._selfpage p{
+	margin: 0;
+	line-height: 14px;
+	display: inline;
+	margin-top:10px;
+	margin-bottom:5px;
+}
+._selfpage a{
+	padding-left: 0;
+	color:#003569;
+	font-weight:600;
+	display: block;
+	line-height: 14px;
 
 }
-._avatarlistContain{
- width:100%;
- display: flex;
- flex-direction:column;
+._ustablink{
+	color:#999;
 }
-._avatarlistTitle{
-	margin-bottom: 18px;
+._ustablink:hover{
+	color:#999;
 }
-._avatarlistTitle>h4{
-  font-size: 18px;
-  text-align: center;
+._usptab{
+	
+	border-top:1px solid #efefef;
+	color:#999;
+	display: flex;
+	justify-content: center;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 1px;	
 }
-._avatarbuttonGroup{
+._usptab ._uspmyLink{
+	height: 52px;
+	display: flex;
+	flex-direction:row;
+	align-items:center;
+	margin:0 30px;
+	line-height: 12px;
+	border-top:1px solid transparent;
+	outline: none;
+	cursor: pointer;
+	 -webkit-tap-highlight-color:transparent
+
+}
+._usptab ._usptabhover{
+	border-top:1px solid black;
+	color:black;
+}
+
+/*user info page*/
+/*user likes*/
+._userNonelikes{
+	width: 380px;
+	height: 380px;
+}
+._userpagelikes{
+	display: flex;
+}
+._userpagelikesD{
+	background-color: white;
+	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	margin:0 -32px -32px;
+	justify-content: center;
+	align-items: center;
 }
-._avatarbuttonGroup>button{
-	border:0;
+._userpagelikesD>div{
+	display: flex;
+	width: auto;
+	flex-direction:row;
+	margin-top:15px;
+}
+
+._dn{
+	height: 40px;
+}
+._dn>img{
+	width: auto;
+}
+/*user likes*/
+/*user collect*/
+._collectnone{
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+	align-items: center;
+	height: 280px;
+}
+._colletnoneIcon{
+	font-size:25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border:2px solid black;
+	border-radius:42px;
+	width:65px;
+	height: 65px;
+	line-height:25px;
+	text-align: center;
+}
+._collectnone h3{
+	font-size:28px;
+	font-weight: 400;
+}
+._nonep{
+	max-width:287px;
+	font-size:14px;
+	width:auto;
+}
+._collectTips{
+	color:#999;
+	font-size: 12px;
+	margin-top: 28px;
+	margin-bottom:15px;
+	text-align: left;
+}
+/*user collect*/
+
+ul{
 	padding:0;
-	background: none;
-	border-top:1px solid #efefef;
-	line-height: 48px;
-	cursor:pointer;
+	margin:0;
+	list-style: none;
 }
-._bluebutton{
-	color:#3897f0;
-	font-weight: 600;
+._collectAnimation-exit{
+	transition:opacity 0.3s ease-in-out;
+	opacity:0;
+	position: absolute;
+	top:0;
 }
-._redbutton{
-	color:#ed4956;
-	font-weight: 600;
+@media screen and (max-width: 821px){
+	._userpagelikes{
+		flex-direction:column;
+
+	}
+	._userpagelikesD{
+		order: -1;
+		padding:40px;
+	}
+	._userNonelikes{
+		width: 100%;
+		height: 100%;
+	}
 }
-._editavatarloader{
-	position: absolute!important;
-	top:50%!important;
-	left:50%!important;
-	transform:translate(-50%,-50%)!important;
-}
-._jsklagjl{
-	width:150px;
-	height: 150px;
-}
-@media screen and (max-width:725px){
+
+@media (max-width:725px){
+	._collectTips{
+		text-align: center;
+	}
+	._uspage{
+		padding:0;
+	}
+	._avatarlist{flex-grow: 0;}
+	._userNonelikes{
+		width: 100%;
+		height: 100%;
+	}
 	._avatarbuttonlist{
 		width: 260px;
+	}
+	._userul{
+		padding:12px 0;
+		border:1px solid #efefef;
+		margin-top: 25px;
+	}
+	._userul li{
+		flex-grow:1;
+		text-align: center;
+		margin-right: 0;
+		display: flex;
+		flex-direction:column;
+		
+		font-size: 14px;
+		line-height:14px;
+		font-weight: 400;
+	}
+	._userul li>span{
+		padding-right: 0;
+		padding-left: 0;
 	}
 	._jsklagjl{
 	width:75px;
 	height: 75px;
 }
+   ._uspageheader{
+	padding-top:15px;
+	margin:0 16px;
+   }
+   ._uspnam h1{
+		font-size: 22px;
+		line-height: 22px;
+
+   }
+   ._buttonlink{
+   	order:2;
+   	flex-grow: 1;
+   	padding-left:0;
+   	width: 100%
+   }
+   ._buttonlink button{
+   	width: 100%
+   }
+   ._selfpage{
+   	 margin-left:16px;
+   	 margin-right:16px;
+   }
+   ._usptab{
+   	justify-content: space-around;
+   	font-size:24px;
+   	border-bottom:1px solid #efefef;
+
+   }
+   ._usptab ._uspmyLink{
+   	margin-right: 0;
+	line-height: 24px;
+   }
+   ._usptab ._usptabhover{
+   	 border-top:1px solid transparent;
+   	 color:#5774F8;
+   	 outline: none;
+
+   }
 }
