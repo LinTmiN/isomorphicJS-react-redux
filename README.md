@@ -8,6 +8,7 @@
 6.semantic-ui-react</br>
 7.react-transition-group</br>
 其他零碎技术</br>
+
 后端技术栈：</br>
 1.NODE</br>
 2.Express</br>
@@ -15,9 +16,11 @@
 4.MongoDB</br>
 5.mongoose</br>
 6.json web token</br>
+
 数据来源：</br>
 1.Youtube Data v3 API</br>
 2.Unsplash</br>
+
 实现功能：</br>
 1.登录注册</br>
 2.点赞</br>
