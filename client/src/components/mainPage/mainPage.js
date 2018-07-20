@@ -9,7 +9,7 @@ import {showTrends} from '../../actions'
 import '../../commoncss.css'
 import '../../responsiveCss.css'
 import './sf.css'
-import ModalContainer from '../../containers/modalContainer'
+
 import Loadable from 'react-loadable';
 function Loading(props) {
   if (props.error) {
@@ -22,6 +22,10 @@ function Loading(props) {
     return null;
   }
 }
+const ModalContainer=Loadable({
+  loader:()=>import('../../containers/modalContainer'),
+  loading:Loading,
+})
 const CollectPage =Loadable({
   loader:()=>import('../collectPage'),
   loading:Loading,
