@@ -31,3 +31,21 @@
 7.个人资料、密码更改</br>
 8.无限滚动</br>
 
+### 大致效果：</br>
+1.用户界面
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(3).png' />
+2.搜索结果</br>
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(4).png' />
+3.动态</br>
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(5).png' />
+4.视频结果</br>
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(6).png' />
+5.收藏页面</br>
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(7).png' />
+6.资料修改
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(8).png' />
+7.浏览
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(2).png' />
+7.手机端
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(1).png' />
+<img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(9).png' />
