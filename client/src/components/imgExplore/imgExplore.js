@@ -95,7 +95,7 @@ class ImgExplore extends React.PureComponent {
 			{imageresult,history}=this.props;
 		if(imageresult.length>0){
 			
-			Load=this.length!==imageresult.length?<Loader className='myloader' active inline='centered' size='medium'/>:'end';
+			Load=imageresult.length>this.length?<Loader className='myloader' active inline='centered' size='medium'/>:'';
 		    List=imageresult.map((i,index)=>(<ImgBoxContainer history={history} key={index} info={i}/>))
 		 	BoxList=List.reduce((a,ImgBox,index)=>{
 		 		let increase=100*imageresult[index].height/imageresult[index].width.toFixed(2);
@@ -127,7 +127,7 @@ class ImgExplore extends React.PureComponent {
 		 	},[[],[],[]])
 		 }else{
 		 	 Load=''
-			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>Sorry,we can't find this!</div>
+			 BoxList=<div style={{margin:'0 auto',fontSize:'25px',textAlign:'center'}}>抱歉，搜索不到</div>
 		 }
 		return (
 			<React.Fragment>

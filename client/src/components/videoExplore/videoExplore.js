@@ -94,7 +94,7 @@ class VideoExplore extends React.PureComponent {
 		
 		if(this.props.videoresult.length>0){
 			
-      		Load=this.length!==this.props.videoresult.length?<Loader  className='myloader' active inline='centered' size='medium'/>:'end'
+      		Load=this.props.videoresult.length>this.length?<Loader  className='myloader' active inline='centered' size='medium'/>:''
       		BoxList=this.props.videoresult.map((i,index)=>(<VideoBoxContainer history={this.props.history} mykey={index} key={index} info={i} />))
 		}else{
 			Load=''
