@@ -49,3 +49,10 @@
 7.手机端
 <img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(1).png' />
 <img src='https://raw.githubusercontent.com/LinTmiN/lifecams/master/post/1%20(9).png' />
+## 使用：
+`1.需要mongoDB并启动` </br>
+`2.科学上网
+  `
+`npm install 
+ npm run server
+`
