@@ -21,6 +21,7 @@ const inputReducer = handleActions({
 	VALIDATE:(state,{payload})=>{
 		return state.merge({validate:payload})
 	},
+	CLEAR_ALL:(state)=>state.merge({username:'',email:'',password:''})
 	
 
 },InputState)

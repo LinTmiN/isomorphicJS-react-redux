@@ -10,14 +10,14 @@ class MyInput extends React.Component{
 		}
 	}
 	render(){
-		let {passwordShowhide,icon,value,placeholder,inputType,onBlur,onFocus,onChange,...rest}=this.props
-		
+		let {passwordShowhide,icon,value,placeholder,inputType,onBlur,onFocus,onChange,...rest}=this.props,
+			id=inputType+Math.random()*10+5+Date.now()
 		return (
 			<div className={this.state.focus?'_inputcontain _myinputfocus':'_inputcontain'}>
 			<div className="_myinput"> 
-     			 <label  className={value!==undefined?(value.length===0?"_myinputlabel":'_myinputlabel _myinputlabelfocus'):(this.state.value.length===0?'_myinputlabel':'_myinputlabel _myinputlabelfocus')} htmlFor={inputType+Date.now()}>{placeholder}</label>
+     			 <label  className={value!==undefined?(value.length===0?"_myinputlabel":'_myinputlabel _myinputlabelfocus'):(this.state.value.length===0?'_myinputlabel':'_myinputlabel _myinputlabelfocus')} htmlFor={id}>{placeholder}</label>
 		      		<input  className={value!==undefined?(value.length===0?"":'_input'):(this.state.value.length===0?'':'_input')}  
-		        		id={inputType+Date.now()}
+		        		id={id}
 		        		{...rest}
 		        		onChange={(e)=>{if(onChange){onChange(e)};if(!value){this.setState({value:e.target.value})}}}
 		        		value={value!==undefined?value:this.state.value}  

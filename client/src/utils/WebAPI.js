@@ -14,6 +14,8 @@ import {
 	validate,
 	getMyCollect,
 	getMylikes,
+	registerEnd,
+	clearAll,
 	preValue,updateUser,initResult,addResult,isInit,receiveCollect,isCheck,isAdding,fetchCollect,getTrends,isGetTrends,isEditAvatar,editedAvatar,editAvatarStatus
 } from '../actions';
 
@@ -105,6 +107,8 @@ let WebAPI={
 			}else if(data.success===true){
 				
 				this.a.login(dispatch,user.email,user.password);
+				dispatch(registerEnd())
+				dispatch(clearAll())
 				return true
 			}
 		})

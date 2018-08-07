@@ -19,7 +19,7 @@ const userReducers = handleActions({
 	REGISTER_FAILED:(state,{payload})=>(
 		state.merge({isRegister:false,loginError:payload})
 	),
-	REGISTER_SUCCESS:(state)=>(
+	REGISTER_END:(state)=>(
 		state.merge({isRegister:false})
 	),
 	SET_AUTH:(state,{payload})=>(

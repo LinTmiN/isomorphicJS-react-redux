@@ -39,8 +39,8 @@ class MainBar extends React.PureComponent{
         this.setState({
           hasScroll:false
         })
-      }
     }
+      }
  componentWillUnmount(){
   clearTimeout(this.time)
  }

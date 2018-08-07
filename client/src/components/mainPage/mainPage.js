@@ -4,12 +4,11 @@ import MainBar from '../mainBar';
 import { Route,Switch,withRouter,Redirect } from 'react-router-dom'
 
 
-import {connect} from 'react-redux'
-import {showTrends} from '../../actions'
+
 import '../../commoncss.css'
 import '../../responsiveCss.css'
 import './sf.css'
-
+import ModalContainer from '../../containers/modalContainer'
 import Loadable from 'react-loadable';
 function Loading(props) {
   if (props.error) {
@@ -22,10 +21,7 @@ function Loading(props) {
     return null;
   }
 }
-const ModalContainer=Loadable({
-  loader:()=>import('../../containers/modalContainer'),
-  loading:Loading,
-})
+
 const CollectPage =Loadable({
   loader:()=>import('../collectPage'),
   loading:Loading,
@@ -67,7 +63,7 @@ class NoMatch extends React.Component{
 class MainPage extends React.Component{
   
    render(){  
-    let {showTrends}=this.props 
+   
     return (
     <section className='_allcontain' >
        <ScrollToTop>
